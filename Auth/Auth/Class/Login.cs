@@ -4,13 +4,13 @@ using System.Data;
 using System.Linq;
 using System.Web;
 
-namespace Auth
+namespace Auth.Class
 {
     public class Login
     {
         public Boolean Check(string pUserName, string pPassword)
         {
-            Boolean lRet = true;
+            Boolean lRet = false;
 
             String lSQL = "SELECT 1";
             lSQL += " FROM T_User";

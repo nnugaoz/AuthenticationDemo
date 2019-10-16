@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Auth.Class;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -20,11 +21,11 @@ namespace Auth
             Login lLogin = new Login();
             if (lLogin.Check(lUserName, lPassword))
             {
-                context.Response.Redirect("home.html");
+                context.Response.Redirect("/Html/home.html");
             }
             else
             {
-                context.Response.Redirect("login.html");
+                context.Response.Redirect("/Html/login.html");
             }
         }
 
