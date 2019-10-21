@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <meta charset="utf-8" />
+    <script src="../JavaScript/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $.ajax({
+                url: "/Handler/user.ashx"
+                , type: "get"
+                , success: function (pData) {
+                    var lData = JSON.parse(pData);
+                    var lHtml = "";
+                    lHtml += "<table>";
+                    lHtml += "<tr>";
+                    lHtml += "<th>";
+                    lHtml += "用户名";
+                    lHtml += "</th>";
+                    lHtml += "<th>";
+                    lHtml += "密码";
+                    lHtml += "</th>";
+                    lHtml += "</tr>";
+
+                    for (var i = 0; i < lData.Table.length; i++) {
+                        lHtml += "<tr>";
+                        lHtml += "<td>";
+                        lHtml += lData.Table[i].UserName;
+                        lHtml += "</td>";
+                        lHtml += "<td>";
+                        lHtml += lData.Table[i].Password;
+                        lHtml += "</td>";
+                        lHtml += "</tr>";
+                    }
+                    lHtml += "</table>";
+                    $("#userList").html(lHtml);
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    用户管理
+    <div id="userList">
+
+    </div>
+    <a href="/Html/register.html">新增用户</a>
+</body>
+</html>

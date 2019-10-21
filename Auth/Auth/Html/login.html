@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <script src="/JavaScript/jquery-3.4.1.min.js"></script>
+    <script>
+        $(function () {
+            $("#btnRegister").click(function (event) {
+                window.location.href = "/Html/register.html";
+            });
+        });
+    </script>
+</head>
+<body>
+    登录
+    <form action="/Handler/login.ashx" method="post">
+        用户名:<input type="text" id="txtUserName" name="txtUserName" />
+        密码:<input type="password" id="txtPassword" name="txtPassword" />
+        <input type="submit" id="btnLogin" name="btnLogin" value="登录" />
+        <input type="button" id="btnRegister" name="btnRegister" value="注册" />
+    </form>
+</body>
+</html>
