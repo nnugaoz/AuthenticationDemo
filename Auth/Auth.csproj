@@ -72,7 +72,8 @@
     <Content Include="Html\product.html" />
     <Content Include="Html\record.html" />
     <Content Include="Html\report.html" />
-    <Content Include="Html\role.html" />
+    <Content Include="Html\Role\roleList.html" />
+    <Content Include="Html\Role\roleAdd.html" />
     <Content Include="Html\user.html" />
     <Content Include="Html\weighting.html" />
     <Content Include="JavaScript\jquery-3.4.1.min.js" />
@@ -87,6 +88,9 @@
     </Compile>
     <Compile Include="Class\Login.cs" />
     <Compile Include="Class\MsSqlAccess.cs" />
+    <Compile Include="Handler\role.ashx.cs">
+      <DependentUpon>role.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Handler\user.ashx.cs">
       <DependentUpon>user.ashx</DependentUpon>
     </Compile>
@@ -100,6 +104,7 @@
     <Content Include="packages.config" />
     <Content Include="Handler\register.ashx" />
     <Content Include="Handler\user.ashx" />
+    <Content Include="Handler\role.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -107,6 +112,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <meta charset="utf-8" />
+    <script src="/JavaScript/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $.ajax(
+                {
+                    type: "get",
+                    url: "/Handler/role.ashx?RequestMethod=ROLE_LIST",
+                    success: function (pData) {
+                        var lData = JSON.parse(pData);
+                        var lHtml = "";
+                        $("#RoleListBody").html("");
+
+                        for (var i = 0; i < lData.Table.length; i++) {
+                            lHtml += "<tr>";
+                            lHtml += "<td>";
+                            lHtml += lData.Table[i].RoleName
+                            lHtml += "</td>";
+                            lHtml += "</tr>";
+                        }
+                        $("#RoleListBody").html(lHtml);
+                    }
+                }
+                );
+        });
+    </script>
+</head>
+<body>
+    角色管理
+    <div id="RoleList">
+        <table>
+            <thead>
+                <tr>
+                    <th>角色名称</th>
+                </tr>
+            </thead>
+            <tbody id="RoleListBody"></tbody>
+        </table>
+    </div>
+    <a href="roleAdd.html">添加</a>
+</body>
+</html>
