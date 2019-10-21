@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 
@@ -13,12 +14,23 @@ namespace Auth
 
         public void ProcessRequest(HttpContext context)
         {
-            context.Response.ContentType = "text/plain";
+
             string lUserName = context.Request.Form["txtUserName"].ToString();
             string lPassword = context.Request.Form["txtPassword"].ToString();
 
+            using (SqlConnection lSqlConn = new SqlConnection())
+            {
+                lSqlConn.ConnectionString = "Data Source=127.0.0.1;Initial Catalog=Auth;User ID=sa;Password=1";
+                lSqlConn.Open();
 
-            context.Response.Write("Hello World");
+                SqlCommand lSqlCmd = new SqlCommand("INSERT INTO T_User(UserName,Password)VALUES('" + lUserName + "','" + lPassword + "')");
+                lSqlCmd.Connection = lSqlConn;
+
+                lSqlCmd.ExecuteNonQuery();
+
+            }
+
+            context.Response.Redirect("/Html/login.html");
         }
 
         public bool IsReusable

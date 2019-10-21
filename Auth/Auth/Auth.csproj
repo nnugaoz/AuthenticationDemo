@@ -19,6 +19,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -43,6 +44,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -61,7 +66,15 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Html\car.html" />
+    <Content Include="Html\carteam.html" />
     <Content Include="Html\home.html" />
+    <Content Include="Html\product.html" />
+    <Content Include="Html\record.html" />
+    <Content Include="Html\report.html" />
+    <Content Include="Html\role.html" />
+    <Content Include="Html\user.html" />
+    <Content Include="Html\weighting.html" />
     <Content Include="JavaScript\jquery-3.4.1.min.js" />
     <Content Include="Html\login.html" />
     <Content Include="Html\register.html" />
@@ -74,6 +87,9 @@
     </Compile>
     <Compile Include="Class\Login.cs" />
     <Compile Include="Class\MsSqlAccess.cs" />
+    <Compile Include="Handler\user.ashx.cs">
+      <DependentUpon>user.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Handler\register.ashx.cs">
       <DependentUpon>register.ashx</DependentUpon>
@@ -83,6 +99,7 @@
     <Content Include="Handler\login.ashx" />
     <Content Include="packages.config" />
     <Content Include="Handler\register.ashx" />
+    <Content Include="Handler\user.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
