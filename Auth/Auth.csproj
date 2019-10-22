@@ -69,6 +69,7 @@
     <Content Include="Html\car.html" />
     <Content Include="Html\carteam.html" />
     <Content Include="Html\home.html" />
+    <Content Include="Html\Page\pageList.html" />
     <Content Include="Html\product.html" />
     <Content Include="Html\record.html" />
     <Content Include="Html\report.html" />
@@ -76,9 +77,43 @@
     <Content Include="Html\Role\roleAdd.html" />
     <Content Include="Html\user.html" />
     <Content Include="Html\weighting.html" />
-    <Content Include="JavaScript\jquery-3.4.1.min.js" />
+    <Content Include="JavaScript\jQuery\jquery-3.4.1.min.js" />
     <Content Include="Html\login.html" />
     <Content Include="Html\register.html" />
+    <Content Include="JavaScript\zTree\css\awesomeStyle\awesome.css" />
+    <Content Include="JavaScript\zTree\css\awesomeStyle\img\loading.gif" />
+    <Content Include="JavaScript\zTree\css\demo.css" />
+    <Content Include="JavaScript\zTree\css\metroStyle\img\line_conn.png" />
+    <Content Include="JavaScript\zTree\css\metroStyle\img\loading.gif" />
+    <Content Include="JavaScript\zTree\css\metroStyle\img\metro.gif" />
+    <Content Include="JavaScript\zTree\css\metroStyle\img\metro.png" />
+    <Content Include="JavaScript\zTree\css\metroStyle\metroStyle.css" />
+    <Content Include="JavaScript\zTree\css\zTreeStyle\img\diy\1_close.png" />
+    <Content Include="JavaScript\zTree\css\zTreeStyle\img\diy\1_open.png" />
+    <Content Include="JavaScript\zTree\css\zTreeStyle\img\diy\2.png" />
+    <Content Include="JavaScript\zTree\css\zTreeStyle\img\diy\3.png" />
+    <Content Include="JavaScript\zTree\css\zTreeStyle\img\diy\4.png" />
+    <Content Include="JavaScript\zTree\css\zTreeStyle\img\diy\5.png" />
+    <Content Include="JavaScript\zTree\css\zTreeStyle\img\diy\6.png" />
+    <Content Include="JavaScript\zTree\css\zTreeStyle\img\diy\7.png" />
+    <Content Include="JavaScript\zTree\css\zTreeStyle\img\diy\8.png" />
+    <Content Include="JavaScript\zTree\css\zTreeStyle\img\diy\9.png" />
+    <Content Include="JavaScript\zTree\css\zTreeStyle\img\line_conn.gif" />
+    <Content Include="JavaScript\zTree\css\zTreeStyle\img\loading.gif" />
+    <Content Include="JavaScript\zTree\css\zTreeStyle\img\zTreeStandard.gif" />
+    <Content Include="JavaScript\zTree\css\zTreeStyle\img\zTreeStandard.png" />
+    <Content Include="JavaScript\zTree\css\zTreeStyle\zTreeStyle.css" />
+    <Content Include="JavaScript\zTree\js\jquery-1.4.4.min.js" />
+    <Content Include="JavaScript\zTree\js\jquery.ztree.all.js" />
+    <Content Include="JavaScript\zTree\js\jquery.ztree.all.min.js" />
+    <Content Include="JavaScript\zTree\js\jquery.ztree.core.js" />
+    <Content Include="JavaScript\zTree\js\jquery.ztree.core.min.js" />
+    <Content Include="JavaScript\zTree\js\jquery.ztree.excheck.js" />
+    <Content Include="JavaScript\zTree\js\jquery.ztree.excheck.min.js" />
+    <Content Include="JavaScript\zTree\js\jquery.ztree.exedit.js" />
+    <Content Include="JavaScript\zTree\js\jquery.ztree.exedit.min.js" />
+    <Content Include="JavaScript\zTree\js\jquery.ztree.exhide.js" />
+    <Content Include="JavaScript\zTree\js\jquery.ztree.exhide.min.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -105,6 +140,8 @@
     <Content Include="Handler\register.ashx" />
     <Content Include="Handler\user.ashx" />
     <Content Include="Handler\role.ashx" />
+    <Content Include="JavaScript\zTree\css\awesomeStyle\awesome.less" />
+    <Content Include="JavaScript\zTree\css\awesomeStyle\fa.less" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
