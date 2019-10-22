@@ -69,6 +69,7 @@
     <Content Include="Html\car.html" />
     <Content Include="Html\carteam.html" />
     <Content Include="Html\home.html" />
+    <Content Include="Html\Page\pageAdd.html" />
     <Content Include="Html\Page\pageList.html" />
     <Content Include="Html\product.html" />
     <Content Include="Html\record.html" />

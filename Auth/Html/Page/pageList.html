@@ -6,30 +6,81 @@
     <link href="../../JavaScript/zTree/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
     <script src="../../JavaScript/jQuery/jquery-3.4.1.min.js"></script>
     <script src="../../JavaScript/zTree/js/jquery.ztree.core.min.js"></script>
-
+    <script src="../../JavaScript/zTree/js/jquery.ztree.excheck.min.js"></script>
+    <script src="../../JavaScript/zTree/js/jquery.ztree.exedit.min.js"></script>
     <script type="text/javascript">
         $(function () {
-            var ztreeSettings = {};
-            var ztreeNodes = [
-                { name: "车辆管理" }
-            , { name: "车队管理" }
-            , { name: "货品管理" }
-            , { name: "车辆过磅" }
-            , { name: "称重记录" }
-            , { name: "统计报表" }
-            , { name: "用户管理", children: [{ name: "查看" }, { name: "编辑" }, { name: "新增" }] }
-            , { name: "角色管理", children: [{ name: "查看" }, { name: "编辑" }, { name: "新增" }] }
-            , { name: "系统功能", children: [{ name: "查看" }, { name: "编辑" }, { name: "新增" }] }
-            ];
-            zTreeObj = $.fn.zTree.init($("#SysPageList"), ztreeSettings, ztreeNodes);
+            InitSysPageList();
+
+            $("#lnkAdd").click(function () {
+                debugger;
+                var lSysPageTreeObj = $.fn.zTree.getZTreeObj("SysPageTree");
+                var lSelectedNodes = lSysPageTreeObj.getSelectedNodes();
+                var lSelectedNodeID = "";
+                var lSelectedNodeName = "";
+                if (lSelectedNodes.length > 0) {
+                    lSelectedNodeID = lSelectedNodes[0].id;
+                    lSelectedNodeName = lSelectedNodes[0].name;
+                }
+                window.location.href = "pageAdd.html?ParentID=" + lSelectedNodeID + "&ParentName=" + lSelectedNodeName;
+
+            })
         });
+
+        function InitSysPageList() {
+            var ztreeSettings = {
+                data: {
+                    simpleData: {
+                        enable: true
+                    }
+                }
+                , view: {
+                    showLine: false
+                    , selectedMulti: false
+                }
+                , key: {
+                    title: "name"
+                }
+                , callback: {
+                    onClick: InitSysPageList_OnClick
+                }
+            };
+
+            var ztreeNodes = [
+                { id: 1, pId: 0, name: "车辆管理", icon: "../../JavaScript/zTree/css/zTreeStyle/img/diy/1_open.png" }
+            , { id: 2, pId: 0, name: "车队管理", icon: "../../JavaScript/zTree/css/zTreeStyle/img/diy/1_open.png" }
+            , { id: 3, pId: 0, name: "货品管理", icon: "../../JavaScript/zTree/css/zTreeStyle/img/diy/1_open.png" }
+            , { id: 4, pId: 0, name: "车辆过磅", icon: "../../JavaScript/zTree/css/zTreeStyle/img/diy/1_open.png" }
+            , { id: 5, pId: 0, name: "称重记录", icon: "../../JavaScript/zTree/css/zTreeStyle/img/diy/1_open.png" }
+            , { id: 6, pId: 0, name: "统计报表", icon: "../../JavaScript/zTree/css/zTreeStyle/img/diy/1_open.png" }
+            , { id: 7, pId: 0, name: "用户管理", icon: "../../JavaScript/zTree/css/zTreeStyle/img/diy/1_open.png" }
+            , { id: 8, pId: 7, name: "查看", icon: "../../JavaScript/zTree/css/zTreeStyle/img/diy/2.png" }
+            , { id: 9, pId: 7, name: "编辑", icon: "../../JavaScript/zTree/css/zTreeStyle/img/diy/2.png" }
+            , { id: 10, pId: 7, name: "新增", icon: "../../JavaScript/zTree/css/zTreeStyle/img/diy/2.png" }
+            , { id: 11, pId: 0, name: "角色管理", icon: "../../JavaScript/zTree/css/zTreeStyle/img/diy/1_open.png" }
+            , { id: 12, pId: 11, name: "查看", icon: "../../JavaScript/zTree/css/zTreeStyle/img/diy/2.png" }
+            , { id: 13, pId: 11, name: "编辑", icon: "../../JavaScript/zTree/css/zTreeStyle/img/diy/2.png" }
+            , { id: 14, pId: 11, name: "新增", icon: "../../JavaScript/zTree/css/zTreeStyle/img/diy/2.png" }
+            , { id: 15, pId: 0, name: "系统功能", icon: "../../JavaScript/zTree/css/zTreeStyle/img/diy/1_open.png" }
+            , { id: 16, pId: 15, name: "查看", icon: "../../JavaScript/zTree/css/zTreeStyle/img/diy/2.png" }
+            , { id: 17, pId: 15, name: "编辑", icon: "../../JavaScript/zTree/css/zTreeStyle/img/diy/2.png" }
+            , { id: 18, pId: 15, name: "新增", icon: "../../JavaScript/zTree/css/zTreeStyle/img/diy/2.png" }
+            ];
+            var zTreeObj = $.fn.zTree.init($("#SysPageTree"), ztreeSettings, ztreeNodes);
+        }
+
+        function InitSysPageList_OnClick(event, treeId, treeNode, clickFlag) {
+
+        }
+
 
     </script>
 </head>
 <body>
     系统功能列表
-    <div id="SysPageList" class="ztree">
+    <div id="SysPageTree" class="ztree">
 
     </div>
+    <a href="" id="lnkAdd" name="lnkAdd">添加</a>
 </body>
 </html>
