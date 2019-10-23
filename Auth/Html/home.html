@@ -3,17 +3,28 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title></title>
+    <script src="../JavaScript/jQuery/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $.ajax({
+                type: "GET"
+                , url: "../Handler/home.ashx"
+                , success: function (pData) {
+                    var lData = JSON.parse(pData);
+                    var lMenuHtml = "";
+                    for (var i = 0; i < lData.Table.length; i++) {
+                        lMenuHtml += "<a href=" + lData.Table[i].Addr + ">" + lData.Table[i].PageName + "</a><br/>"
+                    }
+                    $("#divMenu").html(lMenuHtml);
+                }
+            });
+        });
+    </script>
 </head>
 <body>
     <a>首页</a><br />
-    <a href="/Html/car.html">车辆管理</a><br />
-    <a href="/Html/carteam.html">车队管理</a><br />
-    <a href="/Html/product.html">货品管理</a><br />
-    <a href="/Html/weighting.html">车辆过磅</a><br />
-    <a href="/Html/record.html">称重记录</a><br />
-    <a href="/Html/report.html">统计报表</a><br />
-    <a href="/Html/user.html">用户管理</a><br />
-    <a href="/Html/Role/roleList.html">角色管理</a><br />
-    <a href="/Html/Page/pageList.html">系统功能</a><br />
+    <div id="divMenu">
+
+    </div>
 </body>
 </html>

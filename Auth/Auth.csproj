@@ -122,6 +122,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class\Register.cs" />
+    <Compile Include="Handler\home.ashx.cs">
+      <DependentUpon>home.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Handler\login.ashx.cs">
       <DependentUpon>login.ashx</DependentUpon>
     </Compile>
@@ -150,6 +153,7 @@
     <Content Include="JavaScript\zTree\css\awesomeStyle\awesome.less" />
     <Content Include="JavaScript\zTree\css\awesomeStyle\fa.less" />
     <Content Include="Handler\page.ashx" />
+    <Content Include="Handler\home.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
