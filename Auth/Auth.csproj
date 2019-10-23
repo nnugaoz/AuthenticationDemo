@@ -66,10 +66,12 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="DBScript\Auth_script.sql" />
     <Content Include="Html\car.html" />
     <Content Include="Html\carteam.html" />
     <Content Include="Html\home.html" />
     <Content Include="Html\Page\pageAdd.html" />
+    <Content Include="Html\Page\pageEdit.html" />
     <Content Include="Html\Page\pageList.html" />
     <Content Include="Html\product.html" />
     <Content Include="Html\record.html" />
@@ -78,6 +80,7 @@
     <Content Include="Html\Role\roleAdd.html" />
     <Content Include="Html\user.html" />
     <Content Include="Html\weighting.html" />
+    <Content Include="JavaScript\Common\Common.js" />
     <Content Include="JavaScript\jQuery\jquery-3.4.1.min.js" />
     <Content Include="Html\login.html" />
     <Content Include="Html\register.html" />
@@ -124,6 +127,9 @@
     </Compile>
     <Compile Include="Class\Login.cs" />
     <Compile Include="Class\MsSqlAccess.cs" />
+    <Compile Include="Handler\page.ashx.cs">
+      <DependentUpon>page.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Handler\role.ashx.cs">
       <DependentUpon>role.ashx</DependentUpon>
     </Compile>
@@ -143,6 +149,7 @@
     <Content Include="Handler\role.ashx" />
     <Content Include="JavaScript\zTree\css\awesomeStyle\awesome.less" />
     <Content Include="JavaScript\zTree\css\awesomeStyle\fa.less" />
+    <Content Include="Handler\page.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <script src="../../JavaScript/jQuery/jquery-3.4.1.min.js"></script>
+    <script src="../../JavaScript/Common/Common.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            var lID = getParameterByName("ID", window.location.href);
+            var lName = getParameterByName("Name", window.location.href);
+            var lAddr = getParameterByName("Addr", window.location.href);
+            $("#txtID").val(lID);
+            $("#txtPageName").val(lName);
+            $("#txtAddr").val(lAddr);
+        });
+    </script>
+</head>
+<body>
+    <form action="../../Handler/page.ashx?RequestMethod=PAGE_EDIT" method="post">
+        <div id="divHiddenFields" style="visibility:hidden;">
+            模块编号:<input type="text" id="txtID" name="txtID" /><br />
+        </div>
+        模块名称:<input type="text" id="txtPageName" name="txtPageName" /><br />
+        模块地址:<input type="text" id="txtAddr" name="txtAddr" /><br />
+        <input type="submit" id="btnSubmit" name="btnSubmit" value="提交" />
+    </form>
+</body>
+</html>

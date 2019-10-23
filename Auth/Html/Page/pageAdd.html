@@ -1,10 +1,33 @@
 ﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title></title>
+    <script src="../../JavaScript/jQuery/jquery-3.4.1.min.js"></script>
+    <script src="../../JavaScript/Common/Common.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            var lParentID = getParameterByName("ParentID", window.location.href);
+            var lParentName = getParameterByName("ParentName", window.location.href);
+            if (lParentID != "") {
+                $("#txtParentPageID").val(lParentID);
+                $("#txtParentPageName").val(lParentName);
+            } else {
+                $("#txtParentPageID").val("");
+                $("#txtParentPageName").val("根模块");
+            }
+        });
+    </script>
 </head>
 <body>
-
+    <form action="../../Handler/page.ashx?RequestMethod=PAGE_ADD" method="post">
+        <div id="divHiddenFields" style="visibility:hidden;">
+            父级模块编号:<input type="text" id="txtParentPageID" name="txtParentPageID" /><br />
+        </div>
+        父级模块名称:<input type="text" id="txtParentPageName" name="txtParentPageName" /><br />
+        新增模块名称:<input type="text" id="txtNewPageName" name="txtNewPageName" /><br />
+        新增模块地址:<input type="text" id="txtNewPageAddr" name="txtNewPageAddr" /><br />
+        <input type="submit" id="btnSubmit" name="btnSubmit" value="提交" />
+    </form>
 </body>
 </html>

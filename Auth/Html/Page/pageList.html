@@ -13,17 +13,29 @@
             InitSysPageList();
 
             $("#lnkAdd").click(function () {
-                debugger;
                 var lSysPageTreeObj = $.fn.zTree.getZTreeObj("SysPageTree");
                 var lSelectedNodes = lSysPageTreeObj.getSelectedNodes();
                 var lSelectedNodeID = "";
                 var lSelectedNodeName = "";
                 if (lSelectedNodes.length > 0) {
-                    lSelectedNodeID = lSelectedNodes[0].id;
-                    lSelectedNodeName = lSelectedNodes[0].name;
+                    lSelectedNodeID = lSelectedNodes[0].ID;
+                    lSelectedNodeName = lSelectedNodes[0].PageName;
                 }
                 window.location.href = "pageAdd.html?ParentID=" + lSelectedNodeID + "&ParentName=" + lSelectedNodeName;
+            });
 
+            $("#lnkEdit").click(function () {
+                var lSysPageTreeObj = $.fn.zTree.getZTreeObj("SysPageTree");
+                var lSelectedNodes = lSysPageTreeObj.getSelectedNodes();
+                var lSelectedNodeID = "";
+                var lSelectedNodeName = "";
+                var lSelectedNodeAddr = "";
+                if (lSelectedNodes.length > 0) {
+                    lSelectedNodeID = lSelectedNodes[0].ID;
+                    lSelectedNodeName = lSelectedNodes[0].PageName;
+                    lSelectedNodeAddr = lSelectedNodes[0].Addr;
+                }
+                window.location.href = "pageEdit.html?ID=" + lSelectedNodeID + "&Name=" + lSelectedNodeName + "&Addr=" + lSelectedNodeAddr;
             })
         });
 
@@ -32,41 +44,35 @@
                 data: {
                     simpleData: {
                         enable: true
+                        , idKey: "ID"
+                        , pIdKey: "PID"
                     }
+                     , key: {
+                         name: "PageName"
+                        , title: "PageName"
+                     }
                 }
                 , view: {
                     showLine: false
                     , selectedMulti: false
                 }
-                , key: {
-                    title: "name"
-                }
+
                 , callback: {
                     onClick: InitSysPageList_OnClick
                 }
             };
 
-            var ztreeNodes = [
-                { id: 1, pId: 0, name: "车辆管理", icon: "../../JavaScript/zTree/css/zTreeStyle/img/diy/1_open.png" }
-            , { id: 2, pId: 0, name: "车队管理", icon: "../../JavaScript/zTree/css/zTreeStyle/img/diy/1_open.png" }
-            , { id: 3, pId: 0, name: "货品管理", icon: "../../JavaScript/zTree/css/zTreeStyle/img/diy/1_open.png" }
-            , { id: 4, pId: 0, name: "车辆过磅", icon: "../../JavaScript/zTree/css/zTreeStyle/img/diy/1_open.png" }
-            , { id: 5, pId: 0, name: "称重记录", icon: "../../JavaScript/zTree/css/zTreeStyle/img/diy/1_open.png" }
-            , { id: 6, pId: 0, name: "统计报表", icon: "../../JavaScript/zTree/css/zTreeStyle/img/diy/1_open.png" }
-            , { id: 7, pId: 0, name: "用户管理", icon: "../../JavaScript/zTree/css/zTreeStyle/img/diy/1_open.png" }
-            , { id: 8, pId: 7, name: "查看", icon: "../../JavaScript/zTree/css/zTreeStyle/img/diy/2.png" }
-            , { id: 9, pId: 7, name: "编辑", icon: "../../JavaScript/zTree/css/zTreeStyle/img/diy/2.png" }
-            , { id: 10, pId: 7, name: "新增", icon: "../../JavaScript/zTree/css/zTreeStyle/img/diy/2.png" }
-            , { id: 11, pId: 0, name: "角色管理", icon: "../../JavaScript/zTree/css/zTreeStyle/img/diy/1_open.png" }
-            , { id: 12, pId: 11, name: "查看", icon: "../../JavaScript/zTree/css/zTreeStyle/img/diy/2.png" }
-            , { id: 13, pId: 11, name: "编辑", icon: "../../JavaScript/zTree/css/zTreeStyle/img/diy/2.png" }
-            , { id: 14, pId: 11, name: "新增", icon: "../../JavaScript/zTree/css/zTreeStyle/img/diy/2.png" }
-            , { id: 15, pId: 0, name: "系统功能", icon: "../../JavaScript/zTree/css/zTreeStyle/img/diy/1_open.png" }
-            , { id: 16, pId: 15, name: "查看", icon: "../../JavaScript/zTree/css/zTreeStyle/img/diy/2.png" }
-            , { id: 17, pId: 15, name: "编辑", icon: "../../JavaScript/zTree/css/zTreeStyle/img/diy/2.png" }
-            , { id: 18, pId: 15, name: "新增", icon: "../../JavaScript/zTree/css/zTreeStyle/img/diy/2.png" }
-            ];
-            var zTreeObj = $.fn.zTree.init($("#SysPageTree"), ztreeSettings, ztreeNodes);
+            var ztreeNodes = [];
+            $.ajax({
+                type: "get"
+                , url: "../../Handler/page.ashx?RequestMethod=PAGE_LIST"
+                , success: function (pData) {
+                    var lData = JSON.parse(pData);
+                    ztreeNodes = lData.Table;
+
+                    $.fn.zTree.init($("#SysPageTree"), ztreeSettings, ztreeNodes);
+                }
+            });
         }
 
         function InitSysPageList_OnClick(event, treeId, treeNode, clickFlag) {
@@ -81,6 +87,7 @@
     <div id="SysPageTree" class="ztree">
 
     </div>
-    <a href="" id="lnkAdd" name="lnkAdd">添加</a>
+    <a href="javascript:void(0);" id="lnkAdd" name="lnkAdd">添加</a>
+    <a href="javascript:void(0);" id="lnkEdit" name="lnkEdit">编辑</a>
 </body>
 </html>
