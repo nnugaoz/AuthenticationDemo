@@ -3,10 +3,25 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title></title>
+    <script src="../../JavaScript/jQuery/jquery-3.4.1.min.js"></script>
+    <script src="../../JavaScript/zTree/js/jquery.ztree.core.min.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            var lFTreeSettings = {
+                
+            };
+
+            var lFTreeData = [{ name: "A", Children: [{name: "A-1" }] }];
+
+            $.fn.zTree.init($("#FTree"), lFTreeSettings, lFTreeData);
+        });
+    </script>
 </head>
 <body>
     <form action="/Handler/role.ashx?RequestMethod=ROLE_ADD" method="post">
         角色名称:<input type="text" id="Role_Name" name="Role_Name" /><br />
+        系统功能列表:<div id="FTree"></div>
         <input type="submit" id="Btn_Submit" name="Btn_Submit" value="提交" />
     </form>
 </body>
