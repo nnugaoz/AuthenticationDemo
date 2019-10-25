@@ -7,5 +7,6 @@ namespace Auth.Class
 {
     public class Register
     {
+
     }
 }

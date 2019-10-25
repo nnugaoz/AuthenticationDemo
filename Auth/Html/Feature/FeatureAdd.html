@@ -7,26 +7,42 @@
     <script src="../../JavaScript/Common/Common.js"></script>
     <script type="text/javascript">
         $(function () {
-            var lParentID = getParameterByName("ParentID", window.location.href);
-            var lParentName = getParameterByName("ParentName", window.location.href);
-            if (lParentID != "") {
-                $("#txtParentFeatureID").val(lParentID);
-                $("#txtParentFeatureName").val(lParentName);
+            var lPID = getParameterByName("ID", window.location.href);
+            
+            if (lPID == "") {                
+                $("#txtPID").val("");
+                $("#txtPName").val("根模块");
             } else {
-                $("#txtParentFeatureID").val("");
-                $("#txtParentFeatureName").val("根模块");
+                $.ajax({
+                    type: "get"
+                    , url: "/Handler/Feature.ashx?RequestMethod=FEATURE_QUERY_BY_ID&ID=" + lID
+                    , success: function (pData) {
+                        var lData = JSON.parse(pData);
+                        if (lData.Table.length > 0) {
+                            $("#txtID").val(lData.Table[0].ID);
+                            $("#txtPName").val(lData.Table[0].FName);
+                        }
+                    }
+                });
             }
+
         });
     </script>
 </head>
 <body>
     <form action="../../Handler/Feature.ashx?RequestMethod=FEATURE_ADD" method="post">
         <div id="divHiddenFields" style="visibility:hidden;">
-            父级模块编号:<input type="text" id="txtParentFeatureID" name="txtParentFeatureID" /><br />
+            父级模块编号:<input type="text" id="txtPID" name="txtPID" /><br />
         </div>
-        父级模块名称:<input type="text" id="txtParentFeatureName" name="txtParentFeatureName" /><br />
-        新增模块名称:<input type="text" id="txtNewFeatureName" name="txtNewFeatureName" /><br />
-        新增模块地址:<input type="text" id="txtNewFeatureAddr" name="txtNewFeatureAddr" /><br />
+        父级模块:<input type="text" id="txtPName" name="txtPName" /><br />
+        功能名称:<input type="text" id="txtFName" name="txtFName" /><br />
+        功能类型:
+        <input type="radio" id="radType0" name="radType" value="0" checked="checked" />
+        <label for="radType0">页面功能</label>
+        <input type="radio" id="radType1" name="radType" value="1" />
+        <label for="radType1">按钮功能</label><br />        
+        访问地址:<input type="text" id="txtAddr" name="txtAddr" /><br />
+        展示顺序:<input type="text" id="txtSort" name="txtSort" /><br />
         <input type="submit" id="btnSubmit" name="btnSubmit" value="提交" />
     </form>
 </body>

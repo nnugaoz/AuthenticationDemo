@@ -27,53 +27,39 @@ namespace Auth.Handler
                 case "ROLE_ADD":
                     AddRole(context);
                     break;
-
-            }
-            using (SqlConnection lSqlConn = new SqlConnection())
-            {
-
             }
         }
 
         private void AddRole(HttpContext context)
         {
             string lRoleName = context.Request.Form["Role_Name"].ToString();
-            using (SqlConnection lSqlConn = new SqlConnection())
+
+            MsSqlHelper lMsSqlHelper = new MsSqlHelper();
+            string lSQL = "";
+
+            lSQL = "INSERT INTO T_Role(RName)VALUES(@RName)";
+
+            SqlParameter[] lSqlParams = new SqlParameter[] { new SqlParameter("@RName", lRoleName) };
+
+            if (lMsSqlHelper.ExecuteSQL(lSQL, lSqlParams) > 0)
             {
-                lSqlConn.ConnectionString = "Data Source=.;Initial Catalog=Auth;User=sa;Password=1;";
-                lSqlConn.Open();
-
-                SqlCommand lSqlCmd = new SqlCommand("INSERT INTO T_Role(RoleName)VALUES(@RoleName)", lSqlConn);
-                SqlParameter lSqlParam = new SqlParameter("@RoleName", lRoleName);
-
-                lSqlCmd.Parameters.Add(lSqlParam);
-
-                if (lSqlCmd.ExecuteNonQuery() > 0)
-                {
-                    context.Response.Redirect("/Html/Role/roleList.html");
-                }
+                context.Response.Redirect("/Html/Role/roleList.html");
             }
         }
 
         private void GetRoleList(HttpContext context)
         {
-            using (SqlConnection lSqlConn = new SqlConnection())
-            {
-                lSqlConn.ConnectionString = "Data Source=.;Initial Catalog=Auth;User=sa;Password=1;";
-                lSqlConn.Open();
+            MsSqlHelper lMsSqlHelper = new MsSqlHelper();
+            string lSQL = "";
 
-                SqlCommand lSqlCmd = new SqlCommand();
-                lSqlCmd.Connection = lSqlConn;
-                lSqlCmd.CommandText = "SELECT RoleName FROM T_Role";
+            lSQL = "SELECT RName FROM T_Role";
 
-                SqlDataAdapter lSqlAdpt = new SqlDataAdapter(lSqlCmd);
-                DataSet lDS = new DataSet();
+            DataSet lDS = new DataSet();
 
-                lSqlAdpt.Fill(lDS);
+            lDS = lMsSqlHelper.GetData(lSQL);
 
-                context.Response.Write(JsonConvert.SerializeObject(lDS));
+            context.Response.Write(JsonConvert.SerializeObject(lDS));
 
-            }
         }
 
         public bool IsReusable

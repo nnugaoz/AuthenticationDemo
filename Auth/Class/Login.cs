@@ -14,13 +14,13 @@ namespace Auth.Class
 
             String lSQL = "SELECT 1";
             lSQL += " FROM T_User";
-            lSQL += " WHERE UserName='" + pUserName + "' AND Password='" + pPassword + "'";
+            lSQL += " WHERE UserName='" + pUserName + "' AND Pwd='" + pPassword + "'";
 
-            MsSqlAccess lMsSql = new MsSqlAccess();
+            MsSqlHelper lMsSql = new MsSqlHelper();
 
-            DataTable lDT = lMsSql.GetData(lSQL);
+            DataSet lDS = lMsSql.GetData(lSQL);
 
-            if (lDT != null && lDT.Rows.Count > 0)
+            if (lDS != null && lDS.Tables.Count > 0 && lDS.Tables[0].Rows.Count > 0)
             {
                 lRet = true;
             }

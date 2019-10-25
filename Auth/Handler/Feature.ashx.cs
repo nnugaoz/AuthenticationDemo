@@ -31,111 +31,131 @@ namespace Auth.Handler
                 case "FEATURE_EDIT":
                     FeatureEdit(context);
                     break;
+
+                case "FEATURE_QUERY_BY_ID":
+                    FeatureQueryById(context);
+                    break;
             }
+        }
+
+        private void FeatureQueryById(HttpContext context)
+        {
+            string lID = context.Request.Params["ID"].ToString();
+            string lSQL = "";
+            MsSqlHelper lMsSqlHelper = new MsSqlHelper();
+            SqlParameter[] lParams = null;
+
+            lSQL = "SELECT ID";
+            lSQL += ", FName";
+            lSQL += ", PID";
+            lSQL += ", Addr";
+            lSQL += ", Type";
+            lSQL += ", Sort";
+            lSQL += " FROM T_Feature";
+            lSQL += " WHERE ID=@ID";
+
+            lParams = new SqlParameter[]{
+                new SqlParameter("@ID",lID)
+            };
+
+            DataSet lDS = null;
+
+            lDS = lMsSqlHelper.GetData(lSQL, lParams);
+
+            context.Response.Write(JsonConvert.SerializeObject(lDS));
+
         }
 
         private void FeatureList(HttpContext context)
         {
             string lSQL = "";
             string lRetJson = "";
-            using (SqlConnection lSqlConn = new SqlConnection())
-            {
-                lSqlConn.ConnectionString = "Data Source=.;Initial Catalog=Auth;User=sa;Password=1;";
-                lSqlConn.Open();
+            MsSqlHelper lMsSqlHelper = new MsSqlHelper();
 
-                lSQL = "SELECT ";
-                lSQL += "ID";
-                lSQL += ",FeatureName";
-                lSQL += ",PID";
-                lSQL += ",Addr";
-                lSQL += " FROM T_Feature";
+            lSQL = "SELECT ";
+            lSQL += "ID";
+            lSQL += ", FName";
+            lSQL += ", PID";
+            lSQL += ", Addr";
+            lSQL += ", Type";
+            lSQL += " FROM T_Feature";
+            lSQL += " ORDER BY Sort";
+            DataSet lDS = null;
+            lDS = lMsSqlHelper.GetData(lSQL);
 
-                SqlCommand lSqlCmd = new SqlCommand(lSQL, lSqlConn);
-                SqlDataAdapter lSqlAdpt = new SqlDataAdapter(lSqlCmd);
-                DataSet lDS = new DataSet();
+            lRetJson = JsonConvert.SerializeObject(lDS);
 
-                lSqlAdpt.Fill(lDS);
-
-                lRetJson = JsonConvert.SerializeObject(lDS);
-
-                context.Response.Write(lRetJson);
-            }
-
+            context.Response.Write(lRetJson);
         }
 
         private void FeatureAdd(HttpContext context)
         {
-            string lParentID = context.Request.Form["txtParentFeatureID"].ToString();
-            string lParentName = context.Request.Form["txtParentFeatureName"].ToString();
-            string lNewFeatureName = context.Request.Form["txtNewFeatureName"].ToString();
-            string lNewFeatureAddr = context.Request.Form["txtNewFeatureAddr"].ToString();
+            string lPID = context.Request.Form["txtPID"].ToString();
+            string lFName = context.Request.Form["txtFName"].ToString();
+            string lAddr = context.Request.Form["txtAddr"].ToString();
+            string lType = context.Request.Form["radType"].ToString();
+            string lSort = context.Request.Form["txtSort"].ToString();
 
+            MsSqlHelper lMsSqlHelper = new MsSqlHelper();
             string lSQL = "";
 
-            using (SqlConnection lSqlConn = new SqlConnection())
-            {
-                lSqlConn.ConnectionString = "Data Source=.;Initial Catalog=Auth;User=sa;Password=1;";
-                lSqlConn.Open();
+            lSQL = "INSERT INTO T_Feature(";
+            lSQL += "ID";
+            lSQL += ", FName";
+            lSQL += ", PID";
+            lSQL += ", Addr";
+            lSQL += ", Type";
+            lSQL += ", Sort";
+            lSQL += ")VALUES(";
+            lSQL += "NEWID()";
+            lSQL += ", @FName";
+            lSQL += ", @PID";
+            lSQL += ", @Addr";
+            lSQL += ", @Type";
+            lSQL += ", @Sort";
+            lSQL += ")";
 
-                lSQL = "INSERT INTO T_Feature(";
-                lSQL += "ID";
-                lSQL += ", FeatureName";
-                lSQL += ", PID";
-                lSQL += ", Addr";
-                lSQL += ")VALUES(";
-                lSQL += "NEWID()";
-                lSQL += ",@FeatureName";
-                lSQL += ",@PID";
-                lSQL += ",@Addr";
-                lSQL += ")";
+            SqlParameter[] lSqlParams = new SqlParameter[] {
+                new SqlParameter("@FName",lFName)
+                ,new SqlParameter("@PID",lPID)
+                ,new SqlParameter("@Addr",lAddr)
+                ,new SqlParameter("@Type",lType)
+                ,new SqlParameter("@Sort",lSort)
+            };
 
-                SqlCommand lSqlCmd = new SqlCommand(lSQL, lSqlConn);
+            lMsSqlHelper.ExecuteSQL(lSQL, lSqlParams);
 
-                SqlParameter[] lSqlParams = new SqlParameter[] {
-                    new SqlParameter("@FeatureName",lNewFeatureName)
-                    ,new SqlParameter("@PID",lParentID)
-                    ,new SqlParameter("@Addr",lNewFeatureAddr)
-                };
-
-                lSqlCmd.Parameters.AddRange(lSqlParams);
-                lSqlCmd.ExecuteNonQuery();
-
-                context.Response.Redirect("../Html/Feature/FeatureList.html");
-            }
+            context.Response.Redirect("../Html/Feature/FeatureList.html");
         }
 
         private void FeatureEdit(HttpContext context)
         {
             string lID = context.Request.Form["txtID"].ToString();
-            string lName = context.Request.Form["txtFeatureName"].ToString();
+            string lName = context.Request.Form["txtFName"].ToString();
             string lAddr = context.Request.Form["txtAddr"].ToString();
+            string lType = context.Request.Form["radType"].ToString();
+            string lSort = context.Request.Form["txtSort"].ToString();
 
             string lSQL = "";
+            MsSqlHelper lMsSqlHelper = new MsSqlHelper();
 
-            using (SqlConnection lSqlConn = new SqlConnection())
-            {
-                lSqlConn.ConnectionString = "Data Source=.;Initial Catalog=Auth;User=sa;Password=1;";
-                lSqlConn.Open();
+            lSQL = "UPDATE T_Feature SET";
+            lSQL += " FName=@FName";
+            lSQL += ", Addr=@Addr";
+            lSQL += ", Type=@Type";
+            lSQL += ", Sort=@Sort";
+            lSQL += " WHERE ID=@ID";
 
-                lSQL = "UPDATE T_Feature SET";
-                lSQL += " FeatureName=@FeatureName";
-                lSQL += ", Addr=@Addr";
-                lSQL += " WHERE ID=@ID";
-
-                SqlCommand lSqlCmd = new SqlCommand(lSQL, lSqlConn);
-
-                SqlParameter[] lSqlParams = new SqlParameter[] {
-                    new SqlParameter("@FeatureName",lName)
+            SqlParameter[] lSqlParams = new SqlParameter[] {
+                    new SqlParameter("@FName",lName)
                     ,new SqlParameter("@Addr",lAddr)
                     ,new SqlParameter("@ID",lID)
+                     ,new SqlParameter("@Type",lType)
+                      ,new SqlParameter("@Sort",lSort)
                 };
 
-                lSqlCmd.Parameters.AddRange(lSqlParams);
-
-                lSqlCmd.ExecuteNonQuery();
-
-                context.Response.Redirect("../Html/Feature/FeatureList.html");
-            }
+            lMsSqlHelper.ExecuteSQL(lSQL, lSqlParams);
+            context.Response.Redirect("../Html/Feature/FeatureList.html");
         }
 
         public bool IsReusable

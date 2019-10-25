@@ -75,19 +75,20 @@
     <Content Include="Html\Feature\FeatureAdd.html" />
     <Content Include="Html\Feature\FeatureEdit.html" />
     <Content Include="Html\Feature\FeatureList.html" />
+    <Content Include="Html\Plan\PlanList.html" />
     <Content Include="Html\product.html" />
     <Content Include="Html\record.html" />
     <Content Include="Html\report.html" />
     <Content Include="Html\Role\roleList.html" />
     <Content Include="Html\Role\roleAdd.html" />
-    <Content Include="Html\user.html" />
+    <Content Include="Html\User\user.html" />
     <Content Include="Html\weighting.html" />
     <Content Include="Image\404.png" />
     <Content Include="Image\500.png" />
     <Content Include="JavaScript\Common\Common.js" />
     <Content Include="JavaScript\jQuery\jquery-3.4.1.min.js" />
     <Content Include="Html\login.html" />
-    <Content Include="Html\register.html" />
+    <Content Include="Html\User\register.html" />
     <Content Include="JavaScript\zTree\css\awesomeStyle\awesome.css" />
     <Content Include="JavaScript\zTree\css\awesomeStyle\img\loading.gif" />
     <Content Include="JavaScript\zTree\css\demo.css" />
@@ -122,7 +123,9 @@
     <Content Include="JavaScript\zTree\js\jquery.ztree.exedit.min.js" />
     <Content Include="JavaScript\zTree\js\jquery.ztree.exhide.js" />
     <Content Include="JavaScript\zTree\js\jquery.ztree.exhide.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class\Register.cs" />
@@ -133,7 +136,7 @@
       <DependentUpon>login.ashx</DependentUpon>
     </Compile>
     <Compile Include="Class\Login.cs" />
-    <Compile Include="Class\MsSqlAccess.cs" />
+    <Compile Include="Class\MsSqlHelper.cs" />
     <Compile Include="Handler\Feature.ashx.cs">
       <DependentUpon>Feature.ashx</DependentUpon>
     </Compile>
@@ -165,7 +168,9 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Model\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

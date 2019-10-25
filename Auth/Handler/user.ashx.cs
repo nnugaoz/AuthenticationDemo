@@ -16,25 +16,16 @@ namespace Auth.Handler
 
         public void ProcessRequest(HttpContext context)
         {
-            using (SqlConnection lSqlConn = new SqlConnection())
-            {
-                lSqlConn.ConnectionString = "Data Source=127.0.0.1;Initial Catalog=Auth;User=sa;Password=1";
-                lSqlConn.Open();
+            MsSqlHelper lMsSqlHelper = new MsSqlHelper();
 
-                SqlCommand lSqlCmd = new SqlCommand();
-                lSqlCmd.Connection = lSqlConn;
+            string lSQL = "SELECT UserName,Pwd FROM T_User";
 
-                lSqlCmd.CommandText = "SELECT UserName,Password FROM T_User";
+            DataSet lDS = new DataSet();
 
-                SqlDataAdapter lSqlAdpt = new SqlDataAdapter(lSqlCmd);
+            lDS = lMsSqlHelper.GetData(lSQL);
 
-                DataSet lDS = new DataSet();
+            context.Response.Write(JsonConvert.SerializeObject(lDS));
 
-                lSqlAdpt.Fill(lDS);
-
-                context.Response.Write(JsonConvert.SerializeObject(lDS));
-                
-            }
         }
 
         public bool IsReusable

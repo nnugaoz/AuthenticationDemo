@@ -8,11 +8,28 @@
     <script type="text/javascript">
         $(function () {
             var lID = getParameterByName("ID", window.location.href);
-            var lName = getParameterByName("Name", window.location.href);
-            var lAddr = getParameterByName("Addr", window.location.href);
-            $("#txtID").val(lID);
-            $("#txtFeatureName").val(lName);
-            $("#txtAddr").val(lAddr);
+
+            $.ajax({
+                type: "get"
+                , url: "/Handler/Feature.ashx?RequestMethod=FEATURE_QUERY_BY_ID&ID=" + lID
+                , success: function (pData) {
+                    var lData = JSON.parse(pData);
+
+                    if (lData.Table.length > 0) {
+                       
+                            $("#txtID").val(lData.Table[0].ID);
+                            $("#txtFName").val(lData.Table[0].FName);
+                            $("#txtAddr").val(lData.Table[0].Addr);
+                            if (lData.Table[0].Type == "0") {
+                                $("#radType0").prop("checked", "checked");
+                            } else if (lData.Table[0].Type == "1") {
+                                $("#radType1").prop("checked", "checked");
+                            }
+                            $("#txtSort").val(lData.Table[0].Sort);
+                    }
+                }
+            });
+
         });
     </script>
 </head>
@@ -21,8 +38,11 @@
         <div id="divHiddenFields" style="visibility:hidden;">
             模块编号:<input type="text" id="txtID" name="txtID" /><br />
         </div>
-        模块名称:<input type="text" id="txtFeatureName" name="txtFeatureName" /><br />
+        模块名称:<input type="text" id="txtFName" name="txtFName" /><br />
         模块地址:<input type="text" id="txtAddr" name="txtAddr" /><br />
+        模块类型:<input type="radio" id="radType0" name="radType" value="0" /><label for="radType0">页面功能</label>
+        <input type="radio" id="radType1" name="radType" value="1" /><label for="radType1">按钮功能</label><br />
+        展示顺序:<input type="text" id="txtSort" name="txtSort" /><br />
         <input type="submit" id="btnSubmit" name="btnSubmit" value="提交" />
     </form>
 </body>

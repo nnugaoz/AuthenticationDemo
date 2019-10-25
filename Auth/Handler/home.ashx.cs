@@ -16,23 +16,14 @@ namespace Auth.Handler
 
         public void ProcessRequest(HttpContext context)
         {
+            MsSqlHelper lMsSqlHelper = new MsSqlHelper();
 
-            using (SqlConnection lSqlConn = new SqlConnection())
-            {
-                lSqlConn.ConnectionString = "Data Source=.;Initial Catalog=Auth;User=sa;Password=1;";
-                lSqlConn.Open();
+            string lSQL = "SELECT ID, FName, PID, Addr FROM T_Feature WHERE Type='0' ORDER BY Sort";
 
-                SqlCommand lSqlCmd = new SqlCommand("SELECT ID, FeatureName, PID, Addr FROM T_Feature", lSqlConn);
+            DataSet lDS = lMsSqlHelper.GetData(lSQL);
 
-                SqlDataAdapter lSqlAdpt = new SqlDataAdapter(lSqlCmd);
+            context.Response.Write(JsonConvert.SerializeObject(lDS));
 
-                DataSet lDS = new DataSet();
-
-                lSqlAdpt.Fill(lDS);
-
-                context.Response.Write(JsonConvert.SerializeObject(lDS));
-
-            }
         }
 
         public bool IsReusable

@@ -10,36 +10,24 @@
     <script src="../../JavaScript/zTree/js/jquery.ztree.exedit.min.js"></script>
     <script type="text/javascript">
         $(function () {
-            InitSysFeatureList();
+            InitFeatureList();
 
-            $("#lnkAdd").click(function () {
-                var lSysFeatureTreeObj = $.fn.zTree.getZTreeObj("SysFeatureTree");
-                var lSelectedNodes = lSysFeatureTreeObj.getSelectedNodes();
+            $("#lnkAdd, #lnkEdit").click(function (event) {
+                var lFTreeObj = $.fn.zTree.getZTreeObj("FTree");
+                var lSelectedNodes = lFTreeObj.getSelectedNodes();
                 var lSelectedNodeID = "";
-                var lSelectedNodeName = "";
                 if (lSelectedNodes.length > 0) {
                     lSelectedNodeID = lSelectedNodes[0].ID;
-                    lSelectedNodeName = lSelectedNodes[0].FeatureName;
                 }
-                window.location.href = "FeatureAdd.html?ParentID=" + lSelectedNodeID + "&ParentName=" + lSelectedNodeName;
+                if ($(event.target).attr("id") == "lnkAdd") {
+                    window.location.href = "FeatureAdd.html?ID=" + lSelectedNodeID;
+                } else {
+                    window.location.href = "FeatureEdit.html?ID=" + lSelectedNodeID;
+                }
             });
-
-            $("#lnkEdit").click(function () {
-                var lSysFeatureTreeObj = $.fn.zTree.getZTreeObj("SysFeatureTree");
-                var lSelectedNodes = lSysFeatureTreeObj.getSelectedNodes();
-                var lSelectedNodeID = "";
-                var lSelectedNodeName = "";
-                var lSelectedNodeAddr = "";
-                if (lSelectedNodes.length > 0) {
-                    lSelectedNodeID = lSelectedNodes[0].ID;
-                    lSelectedNodeName = lSelectedNodes[0].FeatureName;
-                    lSelectedNodeAddr = lSelectedNodes[0].Addr;
-                }
-                window.location.href = "FeatureEdit.html?ID=" + lSelectedNodeID + "&Name=" + lSelectedNodeName + "&Addr=" + lSelectedNodeAddr;
-            })
         });
 
-        function InitSysFeatureList() {
+        function InitFeatureList() {
             var ztreeSettings = {
                 data: {
                     simpleData: {
@@ -48,8 +36,8 @@
                         , pIdKey: "PID"
                     }
                      , key: {
-                         name: "FeatureName"
-                        , title: "FeatureName"
+                         name: "FName"
+                        , title: "FName"
                      }
                 }
                 , view: {
@@ -58,24 +46,31 @@
                 }
 
                 , callback: {
-                    onClick: InitSysFeatureList_OnClick
+                    onClick: InitFeatureList_OnClick
                 }
             };
 
             var ztreeNodes = [];
             $.ajax({
                 type: "get"
-                , url: "../../Handler/Feature.ashx?RequestMethod=Feature_LIST"
+                , url: "../../Handler/Feature.ashx?RequestMethod=FEATURE_LIST"
                 , success: function (pData) {
+
                     var lData = JSON.parse(pData);
                     ztreeNodes = lData.Table;
-
-                    $.fn.zTree.init($("#SysFeatureTree"), ztreeSettings, ztreeNodes);
+                    for (var i = 0; i < ztreeNodes.length; i++) {
+                        if (ztreeNodes[i].Type == "0") {
+                            ztreeNodes[i].icon = "../../JavaScript/zTree/css/zTreeStyle/img/diy/1_close.png";
+                        } else if (ztreeNodes[i].Type == "1") {
+                            ztreeNodes[i].icon = "../../JavaScript/zTree/css/zTreeStyle/img/diy/3.png";
+                        }
+                    }
+                    $.fn.zTree.init($("#FTree"), ztreeSettings, ztreeNodes);
                 }
             });
         }
 
-        function InitSysFeatureList_OnClick(event, treeId, treeNode, clickFlag) {
+        function InitFeatureList_OnClick(event, treeId, treeNode, clickFlag) {
 
         }
 
@@ -84,7 +79,7 @@
 </head>
 <body>
     系统功能列表
-    <div id="SysFeatureTree" class="ztree">
+    <div id="FTree" class="ztree">
 
     </div>
     <a href="javascript:void(0);" id="lnkAdd" name="lnkAdd">添加</a>

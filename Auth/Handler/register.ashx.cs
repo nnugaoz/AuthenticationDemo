@@ -18,17 +18,17 @@ namespace Auth
             string lUserName = context.Request.Form["txtUserName"].ToString();
             string lPassword = context.Request.Form["txtPassword"].ToString();
 
-            using (SqlConnection lSqlConn = new SqlConnection())
-            {
-                lSqlConn.ConnectionString = "Data Source=127.0.0.1;Initial Catalog=Auth;User ID=sa;Password=1";
-                lSqlConn.Open();
+            string lSQL = "";
+            MsSqlHelper lMsSqlHelper = new MsSqlHelper();
 
-                SqlCommand lSqlCmd = new SqlCommand("INSERT INTO T_User(UserName,Password)VALUES('" + lUserName + "','" + lPassword + "')");
-                lSqlCmd.Connection = lSqlConn;
+            lSQL = "INSERT INTO T_User(UserName,Pwd)VALUES(@UserName,@Pwd)";
 
-                lSqlCmd.ExecuteNonQuery();
+            SqlParameter[] lSqlParams = new SqlParameter[]{
+                new SqlParameter("@UserName",lUserName)
+                ,new SqlParameter("@Pwd",lPassword)
+            };
 
-            }
+            lMsSqlHelper.ExecuteSQL(lSQL, lSqlParams);
 
             context.Response.Redirect("/Html/login.html");
         }
