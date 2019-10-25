@@ -134,8 +134,8 @@
     </Compile>
     <Compile Include="Class\Login.cs" />
     <Compile Include="Class\MsSqlAccess.cs" />
-    <Compile Include="Handler\page.ashx.cs">
-      <DependentUpon>page.ashx</DependentUpon>
+    <Compile Include="Handler\Feature.ashx.cs">
+      <DependentUpon>Feature.ashx</DependentUpon>
     </Compile>
     <Compile Include="Handler\role.ashx.cs">
       <DependentUpon>role.ashx</DependentUpon>
@@ -156,7 +156,7 @@
     <Content Include="Handler\role.ashx" />
     <Content Include="JavaScript\zTree\css\awesomeStyle\awesome.less" />
     <Content Include="JavaScript\zTree\css\awesomeStyle\fa.less" />
-    <Content Include="Handler\page.ashx" />
+    <Content Include="Handler\Feature.ashx" />
     <Content Include="Handler\home.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

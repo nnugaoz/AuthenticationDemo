@@ -13,7 +13,7 @@
                     var lData = JSON.parse(pData);
                     var lMenuHtml = "";
                     for (var i = 0; i < lData.Table.length; i++) {
-                        lMenuHtml += "<a href=" + lData.Table[i].Addr + ">" + lData.Table[i].PageName + "</a><br/>"
+                        lMenuHtml += "<a href=" + lData.Table[i].Addr + ">" + lData.Table[i].FeatureName + "</a><br/>"
                     }
                     $("#divMenu").html(lMenuHtml);
                 }

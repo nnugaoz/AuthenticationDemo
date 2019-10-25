@@ -11,17 +11,17 @@
             var lName = getParameterByName("Name", window.location.href);
             var lAddr = getParameterByName("Addr", window.location.href);
             $("#txtID").val(lID);
-            $("#txtPageName").val(lName);
+            $("#txtFeatureName").val(lName);
             $("#txtAddr").val(lAddr);
         });
     </script>
 </head>
 <body>
-    <form action="../../Handler/page.ashx?RequestMethod=PAGE_EDIT" method="post">
+    <form action="../../Handler/Feature.ashx?RequestMethod=FEATURE_EDIT" method="post">
         <div id="divHiddenFields" style="visibility:hidden;">
             模块编号:<input type="text" id="txtID" name="txtID" /><br />
         </div>
-        模块名称:<input type="text" id="txtPageName" name="txtPageName" /><br />
+        模块名称:<input type="text" id="txtFeatureName" name="txtFeatureName" /><br />
         模块地址:<input type="text" id="txtAddr" name="txtAddr" /><br />
         <input type="submit" id="btnSubmit" name="btnSubmit" value="提交" />
     </form>

@@ -22,7 +22,7 @@ namespace Auth.Handler
                 lSqlConn.ConnectionString = "Data Source=.;Initial Catalog=Auth;User=sa;Password=1;";
                 lSqlConn.Open();
 
-                SqlCommand lSqlCmd = new SqlCommand("SELECT ID, PageName, PID, Addr FROM T_Feature", lSqlConn);
+                SqlCommand lSqlCmd = new SqlCommand("SELECT ID, FeatureName, PID, Addr FROM T_Feature", lSqlConn);
 
                 SqlDataAdapter lSqlAdpt = new SqlDataAdapter(lSqlCmd);
 

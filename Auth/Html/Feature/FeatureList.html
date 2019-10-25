@@ -10,36 +10,36 @@
     <script src="../../JavaScript/zTree/js/jquery.ztree.exedit.min.js"></script>
     <script type="text/javascript">
         $(function () {
-            InitSysPageList();
+            InitSysFeatureList();
 
             $("#lnkAdd").click(function () {
-                var lSysPageTreeObj = $.fn.zTree.getZTreeObj("SysPageTree");
-                var lSelectedNodes = lSysPageTreeObj.getSelectedNodes();
+                var lSysFeatureTreeObj = $.fn.zTree.getZTreeObj("SysFeatureTree");
+                var lSelectedNodes = lSysFeatureTreeObj.getSelectedNodes();
                 var lSelectedNodeID = "";
                 var lSelectedNodeName = "";
                 if (lSelectedNodes.length > 0) {
                     lSelectedNodeID = lSelectedNodes[0].ID;
-                    lSelectedNodeName = lSelectedNodes[0].PageName;
+                    lSelectedNodeName = lSelectedNodes[0].FeatureName;
                 }
-                window.location.href = "pageAdd.html?ParentID=" + lSelectedNodeID + "&ParentName=" + lSelectedNodeName;
+                window.location.href = "FeatureAdd.html?ParentID=" + lSelectedNodeID + "&ParentName=" + lSelectedNodeName;
             });
 
             $("#lnkEdit").click(function () {
-                var lSysPageTreeObj = $.fn.zTree.getZTreeObj("SysPageTree");
-                var lSelectedNodes = lSysPageTreeObj.getSelectedNodes();
+                var lSysFeatureTreeObj = $.fn.zTree.getZTreeObj("SysFeatureTree");
+                var lSelectedNodes = lSysFeatureTreeObj.getSelectedNodes();
                 var lSelectedNodeID = "";
                 var lSelectedNodeName = "";
                 var lSelectedNodeAddr = "";
                 if (lSelectedNodes.length > 0) {
                     lSelectedNodeID = lSelectedNodes[0].ID;
-                    lSelectedNodeName = lSelectedNodes[0].PageName;
+                    lSelectedNodeName = lSelectedNodes[0].FeatureName;
                     lSelectedNodeAddr = lSelectedNodes[0].Addr;
                 }
-                window.location.href = "pageEdit.html?ID=" + lSelectedNodeID + "&Name=" + lSelectedNodeName + "&Addr=" + lSelectedNodeAddr;
+                window.location.href = "FeatureEdit.html?ID=" + lSelectedNodeID + "&Name=" + lSelectedNodeName + "&Addr=" + lSelectedNodeAddr;
             })
         });
 
-        function InitSysPageList() {
+        function InitSysFeatureList() {
             var ztreeSettings = {
                 data: {
                     simpleData: {
@@ -48,8 +48,8 @@
                         , pIdKey: "PID"
                     }
                      , key: {
-                         name: "PageName"
-                        , title: "PageName"
+                         name: "FeatureName"
+                        , title: "FeatureName"
                      }
                 }
                 , view: {
@@ -58,24 +58,24 @@
                 }
 
                 , callback: {
-                    onClick: InitSysPageList_OnClick
+                    onClick: InitSysFeatureList_OnClick
                 }
             };
 
             var ztreeNodes = [];
             $.ajax({
                 type: "get"
-                , url: "../../Handler/page.ashx?RequestMethod=PAGE_LIST"
+                , url: "../../Handler/Feature.ashx?RequestMethod=Feature_LIST"
                 , success: function (pData) {
                     var lData = JSON.parse(pData);
                     ztreeNodes = lData.Table;
 
-                    $.fn.zTree.init($("#SysPageTree"), ztreeSettings, ztreeNodes);
+                    $.fn.zTree.init($("#SysFeatureTree"), ztreeSettings, ztreeNodes);
                 }
             });
         }
 
-        function InitSysPageList_OnClick(event, treeId, treeNode, clickFlag) {
+        function InitSysFeatureList_OnClick(event, treeId, treeNode, clickFlag) {
 
         }
 
@@ -84,7 +84,7 @@
 </head>
 <body>
     系统功能列表
-    <div id="SysPageTree" class="ztree">
+    <div id="SysFeatureTree" class="ztree">
 
     </div>
     <a href="javascript:void(0);" id="lnkAdd" name="lnkAdd">添加</a>
