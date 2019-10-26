@@ -21,12 +21,14 @@
                             lHtml += "<td>";
                             lHtml += lData.Table[i].RName
                             lHtml += "</td>";
+                            lHtml += "<td>";
+                            lHtml += "<a href='roleEdit.html?ID=" + lData.Table[i].ID + "'>编辑</a>";
+                            lHtml += "</td>";
                             lHtml += "</tr>";
                         }
                         $("#RoleListBody").html(lHtml);
                     }
-                }
-                );
+                });
         });
     </script>
 </head>
@@ -43,5 +45,6 @@
         </table>
     </div>
     <a href="roleAdd.html">添加</a>
+
 </body>
 </html>

@@ -1,4 +1,4 @@
-﻿using Auth.Class;
+﻿using Auth.Dao;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,8 +18,8 @@ namespace Auth
 
             string lUserName = context.Request.Form["txtUserName"].ToString();
             string lPassword = context.Request.Form["txtPassword"].ToString();
-            Login lLogin = new Login();
-            if (lLogin.Check(lUserName, lPassword))
+            LoginDao lLoginDao = new LoginDao();
+            if (lLoginDao.Check(lUserName, lPassword))
             {
                 context.Response.Redirect("/Html/home.html");
             }

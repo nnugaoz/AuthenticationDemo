@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Auth.Class
+namespace Auth.Dao
 {
-    public class Register
+    public class RegisterDao
     {
 
     }

@@ -79,16 +79,17 @@
     <Content Include="Html\product.html" />
     <Content Include="Html\record.html" />
     <Content Include="Html\report.html" />
+    <Content Include="Html\Role\roleEdit.html" />
     <Content Include="Html\Role\roleList.html" />
     <Content Include="Html\Role\roleAdd.html" />
-    <Content Include="Html\User\user.html" />
+    <Content Include="Html\User\UserList.html" />
     <Content Include="Html\weighting.html" />
     <Content Include="Image\404.png" />
     <Content Include="Image\500.png" />
     <Content Include="JavaScript\Common\Common.js" />
     <Content Include="JavaScript\jQuery\jquery-3.4.1.min.js" />
     <Content Include="Html\login.html" />
-    <Content Include="Html\User\register.html" />
+    <Content Include="Html\User\UserRegister.html" />
     <Content Include="JavaScript\zTree\css\awesomeStyle\awesome.css" />
     <Content Include="JavaScript\zTree\css\awesomeStyle\img\loading.gif" />
     <Content Include="JavaScript\zTree\css\demo.css" />
@@ -128,15 +129,17 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class\Register.cs" />
+    <Compile Include="Dao\FeatureDao.cs" />
+    <Compile Include="Dao\RegisterDao.cs" />
+    <Compile Include="Dao\RoleDao.cs" />
     <Compile Include="Handler\home.ashx.cs">
       <DependentUpon>home.ashx</DependentUpon>
     </Compile>
     <Compile Include="Handler\login.ashx.cs">
       <DependentUpon>login.ashx</DependentUpon>
     </Compile>
-    <Compile Include="Class\Login.cs" />
-    <Compile Include="Class\MsSqlHelper.cs" />
+    <Compile Include="Dao\LoginDao.cs" />
+    <Compile Include="DBHelper\MsSqlHelper.cs" />
     <Compile Include="Handler\Feature.ashx.cs">
       <DependentUpon>Feature.ashx</DependentUpon>
     </Compile>

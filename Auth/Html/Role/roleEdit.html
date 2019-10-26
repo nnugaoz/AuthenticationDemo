@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <meta charset="utf-8" />
+    <link href="../../JavaScript/zTree/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
+    <script src="../../JavaScript/jQuery/jquery-3.4.1.min.js"></script>
+    <script src="../../JavaScript/zTree/js/jquery.ztree.core.min.js"></script>
+    <script src="../../JavaScript/zTree/js/jquery.ztree.excheck.min.js"></script>
+    <script src="../../JavaScript/Common/Common.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            var lID = getParameterByName("ID", window.location.href);
+
+            $.ajax({
+                type: "post"
+                , url: "/Handler/role.ashx?RequestMethod=ROLE_EDIT_INIT"
+                , data: { "ID": lID }
+                , success: function (pData) {
+                    var lData = JSON.parse(pData);
+
+                    var lFIDS = new Array();
+                    if (lData.Role.length > 0) {
+                        $("#txtID").val(lData.Role[0].ID);
+                        $("#txtRName").val(lData.Role[0].RName);
+                        lFIDS = lData.Role[0].FIDS.split(';');
+                    }
+
+                    var lFTreeSettings = {
+                        data: {
+                            simpleData: {
+                                enable: true
+                                , idKey: "ID"
+                                , pIdKey: "PID"
+                            }
+                            , key: {
+                                name: "FName"
+                            }
+                        }
+                        , check: {
+                            enable: true
+                        }
+                    };
+                    var lFTreeData = lData.Feature;
+
+                    for (var i = 0; i < lFTreeData.length; i++) {
+                        if (lFTreeData[i].Type == "0") {
+                            lFTreeData[i].icon = "../../JavaScript/zTree/css/zTreeStyle/img/diy/1_close.png";
+                        } else {
+                            lFTreeData[i].icon = "../../JavaScript/zTree/css/zTreeStyle/img/diy/3.png";
+                        }
+
+                        for (var j = 0; j < lFIDS.length; j++) {
+                            if (lFIDS[j] == lFTreeData[i].ID) {
+                                lFTreeData[i].checked = true;
+                                break;
+                            }
+                        }
+                    }
+                    $.fn.zTree.init($("#FTree"), lFTreeSettings, lFTreeData);
+                }
+            });
+
+            $("#btnSubmit").click(function (event) {
+                var lRet = false;
+                var lFTree = $.fn.zTree.getZTreeObj("FTree");
+                var lSelectedNodes = lFTree.getCheckedNodes(true);
+
+                for (var i = 0; i < lSelectedNodes.length; i++) {
+                    lRet = true;
+                    $("#txtFIDS").val($("#txtFIDS").val() + lSelectedNodes[i].ID + ";");
+                }
+
+                return lRet;
+            });
+        });
+    </script>
+</head>
+<body>
+    编辑角色
+    <form action="/Handler/role.ashx?RequestMethod=ROLE_EDIT" method="post">
+        <input type="hidden" id="txtID" name="txtID" />
+        角色名称:<input type="text" id="txtRName" name="txtRName" /><br />
+        系统权限列表:<div id="FTree" class="ztree"></div>
+        <input type="hidden" id="txtFIDS" name="txtFIDS" />
+        <input type="submit" id="btnSubmit" name="btnSubmit" value="提交" />
+    </form>
+</body>
+</html>

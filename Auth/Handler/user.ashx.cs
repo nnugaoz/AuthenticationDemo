@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using Newtonsoft.Json;
+using Auth.DBHelper;
 
 namespace Auth.Handler
 {

@@ -3,26 +3,67 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title></title>
+    <link href="../../JavaScript/zTree/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
     <script src="../../JavaScript/jQuery/jquery-3.4.1.min.js"></script>
     <script src="../../JavaScript/zTree/js/jquery.ztree.core.min.js"></script>
-
+    <script src="../../JavaScript/zTree/js/jquery.ztree.excheck.min.js"></script>
     <script type="text/javascript">
         $(function () {
             var lFTreeSettings = {
-                
+                data: {
+                    simpleData: {
+                        enable: true
+                        , idKey: "ID"
+                        , pIdKey: "PID"
+                    }
+                    , key: {
+                        name: "FName"
+                    }
+                }
+                , check: {
+                    enable: true
+                }
             };
 
-            var lFTreeData = [{ name: "A", Children: [{name: "A-1" }] }];
+            $.ajax({
+                type: "get"
+                , url: "/Handler/Feature.ashx?RequestMethod=FEATURE_LIST"
+                , success: function (pData) {
+                    var lData = JSON.parse(pData);
+                    var lFTreeData = lData.Table;
+                    for (var i = 0; i < lFTreeData.length; i++) {
+                        if (lFTreeData[i].Type == "0") {
+                            lFTreeData[i].icon = "../../JavaScript/zTree/css/zTreeStyle/img/diy/1_close.png";
+                        } else {
+                            lFTreeData[i].icon = "../../JavaScript/zTree/css/zTreeStyle/img/diy/3.png";
+                        }
+                    }
+                    $.fn.zTree.init($("#FTree"), lFTreeSettings, lFTreeData);
+                }
+            });
 
-            $.fn.zTree.init($("#FTree"), lFTreeSettings, lFTreeData);
+            $("#Btn_Submit").click(function (event) {
+                var lRet = false;
+                var lFTree = $.fn.zTree.getZTreeObj("FTree");
+                var lSelectedNodes = lFTree.getCheckedNodes(true);
+                $("#txtSelectedFID").val();
+                for (var i = 0; i < lSelectedNodes.length; i++) {
+                    lRet = true;
+                    $("#txtSelectedFID").val($("#txtSelectedFID").val() + lSelectedNodes[i].ID + ";");
+                }
+                return lRet;
+            });
+
         });
     </script>
 </head>
 <body>
+    新增角色
     <form action="/Handler/role.ashx?RequestMethod=ROLE_ADD" method="post">
         角色名称:<input type="text" id="Role_Name" name="Role_Name" /><br />
-        系统功能列表:<div id="FTree"></div>
+        系统功能列表:<div id="FTree" class="ztree"></div>
         <input type="submit" id="Btn_Submit" name="Btn_Submit" value="提交" />
+        <input type="hidden" id="txtSelectedFID" name="txtSelectedFID" />
     </form>
 </body>
 </html>

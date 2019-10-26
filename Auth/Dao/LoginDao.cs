@@ -1,12 +1,13 @@
-﻿using System;
+﻿using Auth.DBHelper;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Web;
 
-namespace Auth.Class
+namespace Auth.Dao
 {
-    public class Login
+    public class LoginDao
     {
         public Boolean Check(string pUserName, string pPassword)
         {
