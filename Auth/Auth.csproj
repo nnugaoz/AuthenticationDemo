@@ -82,6 +82,7 @@
     <Content Include="Html\Role\roleEdit.html" />
     <Content Include="Html\Role\roleList.html" />
     <Content Include="Html\Role\roleAdd.html" />
+    <Content Include="Html\User\UserEdit.html" />
     <Content Include="Html\User\UserList.html" />
     <Content Include="Html\weighting.html" />
     <Content Include="Image\404.png" />
@@ -89,7 +90,7 @@
     <Content Include="JavaScript\Common\Common.js" />
     <Content Include="JavaScript\jQuery\jquery-3.4.1.min.js" />
     <Content Include="Html\login.html" />
-    <Content Include="Html\User\UserRegister.html" />
+    <Content Include="Html\User\UserAdd.html" />
     <Content Include="JavaScript\zTree\css\awesomeStyle\awesome.css" />
     <Content Include="JavaScript\zTree\css\awesomeStyle\img\loading.gif" />
     <Content Include="JavaScript\zTree\css\demo.css" />

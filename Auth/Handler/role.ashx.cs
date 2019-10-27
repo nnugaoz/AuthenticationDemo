@@ -77,48 +77,19 @@ namespace Auth.Handler
             string lRoleName = context.Request.Form["Role_Name"].ToString();
             string lFIDs = context.Request.Form["txtSelectedFID"].ToString();
 
-            string lID = Guid.NewGuid().ToString();
+            RoleDao lRoleDao = new RoleDao();
 
-            MsSqlHelper lMsSqlHelper = new MsSqlHelper();
-            string lSQL = "";
-
-            lSQL = "INSERT INTO T_Role(";
-            lSQL += "ID";
-            lSQL += ", RName";
-            lSQL += ", FIDS";
-            lSQL += ")VALUES(";
-            lSQL += "@ID";
-            lSQL += ", @RName";
-            lSQL += ", @FIDS";
-            lSQL += ")";
-
-            SqlParameter[] lSqlParams = new SqlParameter[] {
-                new SqlParameter("@RName", lRoleName)
-            ,   new SqlParameter("@ID", lID)
-             ,   new SqlParameter("@FIDS", lFIDs)
-            };
-
-            if (lMsSqlHelper.ExecuteSQL(lSQL, lSqlParams) > 0)
-            {
-                context.Response.Redirect("/Html/Role/roleList.html");
-            }
+            lRoleDao.Insert(lRoleName, lFIDs);
+            context.Response.Redirect("/Html/Role/roleList.html");
         }
 
         private void GetRoleList(HttpContext context)
         {
-            MsSqlHelper lMsSqlHelper = new MsSqlHelper();
-            string lSQL = "";
-
-            lSQL = "SELECT";
-            lSQL += " ID";
-            lSQL += ", RName";
-            lSQL += " FROM";
-            lSQL += " T_Role";
-
+            RoleDao lRoleDao = new RoleDao();
             DataSet lDS = new DataSet();
+            DataTable lDTRole = lRoleDao.GetRoleList();
 
-            lDS = lMsSqlHelper.GetData(lSQL);
-
+            lDS.Tables.Add(lDTRole.Copy());
             context.Response.Write(JsonConvert.SerializeObject(lDS));
 
         }

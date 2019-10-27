@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <meta charset="utf-8" />
+    <script src="../../JavaScript/jQuery/jquery-3.4.1.min.js"></script>
+    <script src="../../JavaScript/Common/Common.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            var lID = getParameterByName("ID", window.location.href);
+
+            $.ajax({
+                type: "post"
+                , url: "/Handler/user.ashx?RequestMethod=USER_EIDT_INIT&ID=" + lID
+                , success: function (pData) {
+
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <form>
+        用户名:<input type="text" id="txtUserName" name="txtUserName" /><br />
+        角色列表:<div id="roleList"></div>
+        <input type="submit" id="btnSubmit" name="btnSubmit" value="提交" />
+    </form>
+</body>
+</html>

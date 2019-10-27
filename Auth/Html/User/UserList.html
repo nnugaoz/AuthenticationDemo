@@ -31,6 +31,9 @@
                         lHtml += "<td>";
                         lHtml += lData.Table[i].Pwd;
                         lHtml += "</td>";
+                        lHtml += "<td>";
+                        lHtml += "<a href='UserEdit?ID=" + lData.Table[i].ID + "'>编辑";
+                        lHtml += "</td>";
                         lHtml += "</tr>";
                     }
                     lHtml += "</table>";
@@ -45,6 +48,6 @@
     <div id="userList">
 
     </div>
-    <a href="/Html/register.html">新增用户</a>
+    <a href="/Html/User/UserAdd.html">新增</a>
 </body>
 </html>

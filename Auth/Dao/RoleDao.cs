@@ -14,7 +14,7 @@ namespace Auth.Dao
         {
             MsSqlHelper lMsSqlHelper = new MsSqlHelper();
 
-            DataTable lDT = null;
+            DataTable lDTRole = null;
 
             string lSQL = "";
             lSQL += "SELECT";
@@ -34,11 +34,12 @@ namespace Auth.Dao
 
             if (lDS != null && lDS.Tables.Count > 0)
             {
-                lDT = lDS.Tables[0];
+                lDTRole = lDS.Tables[0];
+                lDTRole.TableName = "SingleRole";
             }
 
 
-            return lDT;
+            return lDTRole;
         }
 
         public void Update(string lID, string lRName, string lFIDS)
@@ -59,6 +60,55 @@ namespace Auth.Dao
 
             lMsSqlHelper.ExecuteSQL(lSQL, lParams);
 
+        }
+
+        public DataTable GetRoleList()
+        {
+            DataTable lDTRole = new DataTable();
+            MsSqlHelper lMsSqlHelper = new MsSqlHelper();
+            string lSQL = "";
+
+            lSQL = "SELECT";
+            lSQL += " ID";
+            lSQL += ", RName";
+            lSQL += " FROM";
+            lSQL += " T_Role";
+
+            DataSet lDS = new DataSet();
+
+            lDS = lMsSqlHelper.GetData(lSQL);
+
+            if (lDS != null && lDS.Tables.Count > 0)
+            {
+                lDTRole = lDS.Tables[0];
+                lDTRole.TableName = "RoleList";
+            }
+
+            return lDTRole;
+        }
+
+        public void Insert(string pRName, string pFIDS)
+        {
+            MsSqlHelper lMsSqlHelper = new MsSqlHelper();
+            string lSQL = "";
+
+            lSQL = "INSERT INTO T_Role(";
+            lSQL += "ID";
+            lSQL += ", RName";
+            lSQL += ", FIDS";
+            lSQL += ")VALUES(";
+            lSQL += "@ID";
+            lSQL += ", @RName";
+            lSQL += ", @FIDS";
+            lSQL += ")";
+
+            SqlParameter[] lSqlParams = new SqlParameter[] {
+                new SqlParameter("@RName", pRName)
+            ,   new SqlParameter("@ID", Guid.NewGuid().ToString())
+             ,   new SqlParameter("@FIDS", pFIDS)
+            };
+
+            lMsSqlHelper.ExecuteSQL(lSQL, lSqlParams);
         }
     }
 }
