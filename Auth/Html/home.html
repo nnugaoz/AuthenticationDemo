@@ -12,8 +12,10 @@
                 , success: function (pData) {
                     var lData = JSON.parse(pData);
                     var lMenuHtml = "";
-                    for (var i = 0; i < lData.Table.length; i++) {
-                        lMenuHtml += "<a href=" + lData.Table[i].Addr + ">" + lData.Table[i].FName + "</a><br/>"
+                    for (var i = 0; i < lData.FeatureList.length; i++) {
+                        if (lData.FeatureList[i].Type == "0") {
+                            lMenuHtml += "<a href=" + lData.FeatureList[i].Addr + ">" + lData.FeatureList[i].FName + "</a><br/>";
+                        }
                     }
                     $("#divMenu").html(lMenuHtml);
                 }

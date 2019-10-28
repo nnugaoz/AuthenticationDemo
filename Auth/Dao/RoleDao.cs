@@ -10,7 +10,7 @@ namespace Auth.Dao
 {
     public class RoleDao
     {
-        public DataTable GetByID(string pID)
+        public DataTable GetRoleByID(string pID)
         {
             MsSqlHelper lMsSqlHelper = new MsSqlHelper();
 
@@ -110,5 +110,6 @@ namespace Auth.Dao
 
             lMsSqlHelper.ExecuteSQL(lSQL, lSqlParams);
         }
+
     }
 }

@@ -15,7 +15,6 @@ namespace Auth.Handler
     /// </summary>
     public class user : IHttpHandler
     {
-
         public void ProcessRequest(HttpContext context)
         {
             string lRequestMethod = context.Request.Params["RequestMethod"].ToString();
@@ -64,8 +63,12 @@ namespace Auth.Handler
             string lUserName = context.Request.Form["txtUserName"].ToString();
             string lPassword = context.Request.Form["txtPwd"].ToString();
             UserDao lUserDao = new UserDao();
-            if (lUserDao.Check(lUserName, lPassword))
+            DataTable lUser = lUserDao.GetUserByUserNamePwd(lUserName, lPassword);
+
+            if (lUser.Rows.Count > 0)
             {
+                HttpCookie lCookie = new HttpCookie("UserID", lUser.Rows[0]["ID"].ToString());
+                context.Response.Cookies.Add(lCookie);
                 context.Response.Redirect("/Html/home.html");
             }
             else

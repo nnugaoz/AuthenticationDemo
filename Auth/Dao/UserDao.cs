@@ -110,11 +110,13 @@ namespace Auth.Dao
             return lDTUser;
         }
 
-        public Boolean Check(string pUserName, string pPassword)
+        public DataTable GetUserByUserNamePwd(string pUserName, string pPassword)
         {
-            Boolean lRet = false;
+            DataTable lDTUserSingle = null;
 
-            String lSQL = "SELECT 1";
+            String lSQL = "SELECT ID";
+            lSQL += ", UserName";
+            lSQL += ", RIDS";
             lSQL += " FROM T_User";
             lSQL += " WHERE UserName=@UserName AND Pwd=@Pwd";
 
@@ -127,12 +129,13 @@ namespace Auth.Dao
 
             DataSet lDS = lMsSql.GetData(lSQL, lParams);
 
-            if (lDS != null && lDS.Tables.Count > 0 && lDS.Tables[0].Rows.Count > 0)
+            if (lDS != null && lDS.Tables.Count > 0)
             {
-                lRet = true;
+                lDTUserSingle = lDS.Tables[0];
+                lDTUserSingle.TableName = "UserSingle";
             }
 
-            return lRet;
+            return lDTUserSingle;
         }
     }
 }

@@ -58,7 +58,7 @@ namespace Auth.Handler
             RoleDao lRoleDao = new RoleDao();
             FeatureDao lFeatureDao = new FeatureDao();
 
-            DataTable lDTRole = lRoleDao.GetByID(lID);
+            DataTable lDTRole = lRoleDao.GetRoleByID(lID);
             lDTRole.TableName = "Role";
             DataTable lDTFeature = lFeatureDao.GetFeatureList();
             lDTFeature.TableName = "Feature";

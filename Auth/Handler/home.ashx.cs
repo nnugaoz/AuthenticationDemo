@@ -1,4 +1,5 @@
-﻿using Auth.DBHelper;
+﻿using Auth.Dao;
+using Auth.DBHelper;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -17,14 +18,18 @@ namespace Auth.Handler
 
         public void ProcessRequest(HttpContext context)
         {
-            MsSqlHelper lMsSqlHelper = new MsSqlHelper();
 
-            string lSQL = "SELECT ID, FName, PID, Addr FROM T_Feature WHERE Type='0' ORDER BY Sort";
+            HttpCookie lCookie = context.Request.Cookies["UserID"];
+            string lUserID = lCookie.Value;
 
-            DataSet lDS = lMsSqlHelper.GetData(lSQL);
+            HomeDao lHomeDao = new HomeDao();
+
+            DataSet lDS = new DataSet();
+            DataTable lDTFeature = lHomeDao.GetFeatureListByUserID(lUserID);
+
+            lDS.Tables.Add(lDTFeature.Copy());
 
             context.Response.Write(JsonConvert.SerializeObject(lDS));
-
         }
 
         public bool IsReusable

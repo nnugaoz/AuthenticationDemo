@@ -131,6 +131,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dao\FeatureDao.cs" />
+    <Compile Include="Dao\HomeDao.cs" />
     <Compile Include="Dao\RoleDao.cs" />
     <Compile Include="Dao\UserDao.cs" />
     <Compile Include="Handler\home.ashx.cs">
