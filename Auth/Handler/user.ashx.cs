@@ -68,6 +68,8 @@ namespace Auth.Handler
             if (lUser.Rows.Count > 0)
             {
                 HttpCookie lCookie = new HttpCookie("UserID", lUser.Rows[0]["ID"].ToString());
+                lCookie.Expires = DateTime.Now.AddMinutes(10);
+
                 context.Response.Cookies.Add(lCookie);
                 context.Response.Redirect("/Html/home.html");
             }

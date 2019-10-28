@@ -8,7 +8,14 @@
     <script src="../../JavaScript/zTree/js/jquery.ztree.core.min.js"></script>
     <script src="../../JavaScript/zTree/js/jquery.ztree.excheck.min.js"></script>
     <script src="../../JavaScript/zTree/js/jquery.ztree.exedit.min.js"></script>
+    <script src="../../JavaScript/Common/Common.js"></script>
+
     <script type="text/javascript">
+
+        if (!LoginCheck()) {
+            window.location.href = "/Html/login.html";
+        }
+
         $(function () {
             InitFeatureList();
 

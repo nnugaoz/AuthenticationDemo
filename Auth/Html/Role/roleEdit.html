@@ -10,6 +10,11 @@
     <script src="../../JavaScript/zTree/js/jquery.ztree.excheck.min.js"></script>
     <script src="../../JavaScript/Common/Common.js"></script>
     <script type="text/javascript">
+
+        if (!LoginCheck()) {
+            window.location.href = "/Html/login.html";
+        }
+
         $(function () {
             var lID = getParameterByName("ID", window.location.href);
 

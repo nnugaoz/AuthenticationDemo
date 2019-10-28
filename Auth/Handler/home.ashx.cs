@@ -18,7 +18,6 @@ namespace Auth.Handler
 
         public void ProcessRequest(HttpContext context)
         {
-
             HttpCookie lCookie = context.Request.Cookies["UserID"];
             string lUserID = lCookie.Value;
 
