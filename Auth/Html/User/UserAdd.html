@@ -3,12 +3,46 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title></title>
+    <script src="../../JavaScript/jQuery/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+
+            $.ajax({
+                type: "get"
+                , url: "/Handler/user.ashx?RequestMethod=USER_ADD_INIT"
+                , success: function (pData) {
+                    var lData = JSON.parse(pData);
+
+                    var lHtml = "";
+                    for (var i = 0; i < lData.RoleList.length; i++) {
+                        lHtml += "<input type='checkbox' name='chkRole' value='" + lData.RoleList[i].ID + "' id='chkRole" + i + "' /><label for='chkRole" + i + "'>" + lData.RoleList[i].RName + "</label>";
+                    }
+                    $("#roleList").html(lHtml);
+                }
+            });
+
+            $("#btnSubmit").click(function (event) {
+                var lRet = false;
+                $("input[name=chkRole]").each(function (index, element) {
+                    if ($(element).prop("checked")) {
+                        lRet = true;
+                        $("#txtRIDS").val($("#txtRIDS").val() + $(element).val() + ";");
+                    }
+                });
+                return lRet;
+            });
+        });
+    </script>
 </head>
 <body>
     用户注册
-    <form action="/Handler/register.ashx" method="post">
+    <form action="/Handler/user.ashx?RequestMethod=USER_ADD" method="post">
         用户名：<input type="text" id="txtUserName" name="txtUserName" /><br />
-        密码：<input type="password" id="txtPassword" name="txtPassword" /><br />
+        密码：<input type="password" id="txtPwd" name="txtPwd" /><br />
+        <div id="roleList">
+
+        </div>
+        <input type="hidden" id="txtRIDS" name="txtRIDS" />
         <input type="submit" id="btnSubmit" name="btnSubmit" value="提交" />
     </form>
 </body>

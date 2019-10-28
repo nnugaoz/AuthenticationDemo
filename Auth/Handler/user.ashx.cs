@@ -21,6 +21,10 @@ namespace Auth.Handler
             string lRequestMethod = context.Request.Params["RequestMethod"].ToString();
             switch (lRequestMethod)
             {
+                case "USER_ADD_INIT":
+                    AddUserInit(context);
+                    break;
+
                 case "USER_ADD":
                     AddUser(context);
                     break;
@@ -37,6 +41,36 @@ namespace Auth.Handler
                     EditUserInit(context);
                     break;
 
+                case "LOGIN_CHECK":
+                    LoginCheck(context);
+                    break;
+            }
+        }
+
+        private void AddUserInit(HttpContext context)
+        {
+            DataSet lDS = new DataSet();
+            DataTable lDTRoleList = null;
+            RoleDao lRoleDao = new RoleDao();
+
+            lDTRoleList = lRoleDao.GetRoleList();
+            lDS.Tables.Add(lDTRoleList.Copy());
+            context.Response.Write(JsonConvert.SerializeObject(lDS));
+
+        }
+
+        private void LoginCheck(HttpContext context)
+        {
+            string lUserName = context.Request.Form["txtUserName"].ToString();
+            string lPassword = context.Request.Form["txtPwd"].ToString();
+            UserDao lUserDao = new UserDao();
+            if (lUserDao.Check(lUserName, lPassword))
+            {
+                context.Response.Redirect("/Html/home.html");
+            }
+            else
+            {
+                context.Response.Redirect("/Html/login.html");
             }
         }
 
@@ -50,7 +84,12 @@ namespace Auth.Handler
             RoleDao lRoleDao = new RoleDao();
             DataTable lDTRoleList = lRoleDao.GetRoleList();
 
+            DataSet lDS = new DataSet();
 
+            lDS.Tables.Add(lDTUserSingle.Copy());
+            lDS.Tables.Add(lDTRoleList.Copy());
+
+            context.Response.Write(JsonConvert.SerializeObject(lDS));
 
         }
 
@@ -60,6 +99,8 @@ namespace Auth.Handler
             DataTable lDTUser = lUserDao.GetUserList();
             DataSet lDS = new DataSet();
             lDS.Tables.Add(lDTUser.Copy());
+
+            context.Response.Write(JsonConvert.SerializeObject(lDS));
         }
 
         private void EditUser(HttpContext context)

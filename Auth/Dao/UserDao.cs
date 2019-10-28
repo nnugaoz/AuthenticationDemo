@@ -59,7 +59,31 @@ namespace Auth.Dao
 
         public DataTable GetUserById(string lID)
         {
-            
+            DataTable lDTUserSingle = null;
+
+            string lSQL = "";
+            MsSqlHelper lMsSqlHelper = new MsSqlHelper();
+
+            lSQL += "SELECT ";
+            lSQL += " ID";
+            lSQL += ", UserName";
+            lSQL += ", RIDS";
+            lSQL += " FROM T_User";
+            lSQL += " WHERE ID=@ID";
+
+            SqlParameter[] lParams = new SqlParameter[]{
+                new SqlParameter("@ID",lID)
+            };
+
+            DataSet lDS = lMsSqlHelper.GetData(lSQL, lParams);
+
+            if (lDS != null && lDS.Tables.Count > 0)
+            {
+                lDTUserSingle = lDS.Tables[0];
+                lDTUserSingle.TableName = "UserSingle";
+            }
+
+            return lDTUserSingle;
         }
 
         public DataTable GetUserList()
@@ -84,6 +108,31 @@ namespace Auth.Dao
             }
 
             return lDTUser;
+        }
+
+        public Boolean Check(string pUserName, string pPassword)
+        {
+            Boolean lRet = false;
+
+            String lSQL = "SELECT 1";
+            lSQL += " FROM T_User";
+            lSQL += " WHERE UserName=@UserName AND Pwd=@Pwd";
+
+            SqlParameter[] lParams = new SqlParameter[]{
+                new SqlParameter("@UserName",pUserName)
+                ,new SqlParameter("@Pwd",pPassword)
+            };
+
+            MsSqlHelper lMsSql = new MsSqlHelper();
+
+            DataSet lDS = lMsSql.GetData(lSQL, lParams);
+
+            if (lDS != null && lDS.Tables.Count > 0 && lDS.Tables[0].Rows.Count > 0)
+            {
+                lRet = true;
+            }
+
+            return lRet;
         }
     }
 }

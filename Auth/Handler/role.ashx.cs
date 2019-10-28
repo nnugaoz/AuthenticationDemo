@@ -80,7 +80,7 @@ namespace Auth.Handler
             RoleDao lRoleDao = new RoleDao();
 
             lRoleDao.Insert(lRoleName, lFIDs);
-            context.Response.Redirect("/Html/Role/roleList.html");
+            context.Response.Redirect("/Html/Role/RoleList.html");
         }
 
         private void GetRoleList(HttpContext context)

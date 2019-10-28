@@ -16,13 +16,13 @@
                         var lHtml = "";
                         $("#RoleListBody").html("");
 
-                        for (var i = 0; i < lData.Table.length; i++) {
+                        for (var i = 0; i < lData.RoleList.length; i++) {
                             lHtml += "<tr>";
                             lHtml += "<td>";
-                            lHtml += lData.Table[i].RName
+                            lHtml += lData.RoleList[i].RName
                             lHtml += "</td>";
                             lHtml += "<td>";
-                            lHtml += "<a href='roleEdit.html?ID=" + lData.Table[i].ID + "'>编辑</a>";
+                            lHtml += "<a href='RoleEdit.html?ID=" + lData.RoleList[i].ID + "'>编辑</a>";
                             lHtml += "</td>";
                             lHtml += "</tr>";
                         }
@@ -44,7 +44,7 @@
             <tbody id="RoleListBody"></tbody>
         </table>
     </div>
-    <a href="roleAdd.html">添加</a>
+    <a href="RoleAdd.html">添加</a>
 
 </body>
 </html>

@@ -79,9 +79,9 @@
     <Content Include="Html\product.html" />
     <Content Include="Html\record.html" />
     <Content Include="Html\report.html" />
-    <Content Include="Html\Role\roleEdit.html" />
-    <Content Include="Html\Role\roleList.html" />
-    <Content Include="Html\Role\roleAdd.html" />
+    <Content Include="Html\Role\RoleEdit.html" />
+    <Content Include="Html\Role\RoleList.html" />
+    <Content Include="Html\Role\RoleAdd.html" />
     <Content Include="Html\User\UserEdit.html" />
     <Content Include="Html\User\UserList.html" />
     <Content Include="Html\weighting.html" />
@@ -131,16 +131,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dao\FeatureDao.cs" />
-    <Compile Include="Dao\RegisterDao.cs" />
     <Compile Include="Dao\RoleDao.cs" />
     <Compile Include="Dao\UserDao.cs" />
     <Compile Include="Handler\home.ashx.cs">
       <DependentUpon>home.ashx</DependentUpon>
     </Compile>
-    <Compile Include="Handler\login.ashx.cs">
-      <DependentUpon>login.ashx</DependentUpon>
-    </Compile>
-    <Compile Include="Dao\LoginDao.cs" />
     <Compile Include="DBHelper\MsSqlHelper.cs" />
     <Compile Include="Handler\Feature.ashx.cs">
       <DependentUpon>Feature.ashx</DependentUpon>
@@ -154,7 +149,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Handler\login.ashx" />
     <Content Include="packages.config" />
     <Content Include="Handler\user.ashx" />
     <Content Include="Handler\role.ashx" />

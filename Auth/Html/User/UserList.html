@@ -8,7 +8,7 @@
     <script type="text/javascript">
         $(function () {
             $.ajax({
-                url: "/Handler/user.ashx"
+                url: "/Handler/user.ashx?RequestMethod=USER_LIST"
                 , type: "get"
                 , success: function (pData) {
                     var lData = JSON.parse(pData);
@@ -18,21 +18,15 @@
                     lHtml += "<th>";
                     lHtml += "用户名";
                     lHtml += "</th>";
-                    lHtml += "<th>";
-                    lHtml += "密码";
-                    lHtml += "</th>";
                     lHtml += "</tr>";
 
-                    for (var i = 0; i < lData.Table.length; i++) {
+                    for (var i = 0; i < lData.UserList.length; i++) {
                         lHtml += "<tr>";
                         lHtml += "<td>";
-                        lHtml += lData.Table[i].UserName;
+                        lHtml += lData.UserList[i].UserName;
                         lHtml += "</td>";
                         lHtml += "<td>";
-                        lHtml += lData.Table[i].Pwd;
-                        lHtml += "</td>";
-                        lHtml += "<td>";
-                        lHtml += "<a href='UserEdit?ID=" + lData.Table[i].ID + "'>编辑";
+                        lHtml += "<a href='UserEdit.html?ID=" + lData.UserList[i].ID + "'>编辑";
                         lHtml += "</td>";
                         lHtml += "</tr>";
                     }

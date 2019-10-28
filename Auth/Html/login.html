@@ -7,16 +7,16 @@
     <script>
         $(function () {
             $("#btnRegister").click(function (event) {
-                window.location.href = "/Html/register.html";
+                window.location.href = "/Html/User/UserAdd.html";
             });
         });
     </script>
 </head>
 <body>
     登录
-    <form action="/Handler/login.ashx" method="post">
+    <form action="/Handler/user.ashx?RequestMethod=LOGIN_CHECK" method="post">
         用户名:<input type="text" id="txtUserName" name="txtUserName" />
-        密码:<input type="password" id="txtPassword" name="txtPassword" />
+        密码:<input type="password" id="txtPwd" name="txtPwd" />
         <input type="submit" id="btnLogin" name="btnLogin" value="登录" />
         <input type="button" id="btnRegister" name="btnRegister" value="注册" />
     </form>
