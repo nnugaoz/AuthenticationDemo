@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <link href="Home.css" rel="stylesheet" />
+    <link href="/JavaScript/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="/JavaScript/jQuery/jquery-3.4.1.min.js"></script>
+    <script src="/JavaScript/Common/Common.js"></script>
+    <script src="/JavaScript/layer/layer.js"></script>
+
+    <script type="text/javascript">
+        if (!LoginCheck()) {
+            window.location.href = "/Html/login.html";
+        }
+
+        $(function () {
+            $("#spanCurUser").text("admin");
+
+            $.ajax({
+                type: "GET"
+                , url: "/Handler/home.ashx"
+                , success: function (pData) {
+                    var lData = JSON.parse(pData);
+                    $("#divMenu").append("<ul>");
+                    for (var i = 0; i < lData.FeatureList.length; i++) {
+
+                        if (lData.FeatureList[i].Type == "0") {
+                            var lLi = $("<li>" + lData.FeatureList[i].FName + "</li>");
+                            lLi.on("click", { Addr: lData.FeatureList[i].Addr }, function (e) { $("#divContent").load(e.data.Addr); });
+                            $("#divMenu").append(lLi);}
+                    }
+                    $("#divMenu").append("</ul>");
+                }
+            });
+        });
+
+        function Exit_Click() {
+            RemoveCookie("UserID");
+        }
+
+    </script>
+</head>
+<body>
+
+    <div id="divHead">
+        <h1 style="display:inline-block">南通港口集团-通州港务公司过磅数据管理系统</h1>
+        <div id="divCurrentAccount">
+            <img src="../../Image/userlogo.png" style="position:relative;top:-5px;" /><span id="spanCurUser" style="color:cyan"></span>&nbsp;&nbsp;<a href="/Html/login.html" onclick="Exit_Click();">退出</a>
+        </div>
+    </div>
+    <div id="divMenu">
+
+    </div>
+    <div id="divContent">
+        Content
+    </div>
+    <div id="divFooter">
+        &copy;Microsoft.com
+    </div>
+</body>
+</html>

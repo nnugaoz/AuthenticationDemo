@@ -3,8 +3,9 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title></title>
-    <script src="../../JavaScript/jQuery/jquery-3.4.1.min.js"></script>
-    <script src="../../JavaScript/Common/Common.js"></script>
+    <script src="/JavaScript/jQuery/jquery-3.4.1.min.js"></script>
+    <script src="/JavaScript/Common/Common.js"></script>
+
     <script type="text/javascript">
 
         if (!LoginCheck()) {
@@ -13,8 +14,8 @@
 
         $(function () {
             var lPID = getParameterByName("ID", window.location.href);
-            
-            if (lPID == "") {                
+
+            if (lPID == "") {
                 $("#txtPID").val("");
                 $("#txtPName").val("根模块");
             } else {
@@ -36,19 +37,41 @@
 </head>
 <body>
     <form action="../../Handler/Feature.ashx?RequestMethod=FEATURE_ADD" method="post">
-        <div id="divHiddenFields" style="visibility:hidden;">
-            父级模块编号:<input type="text" id="txtPID" name="txtPID" /><br />
+        <div class="form-group">
+            <label for="txtPName">父级模块</label>
+            <input type="text" id="txtPName" name="txtPName" class="form-control" />
         </div>
-        父级模块:<input type="text" id="txtPName" name="txtPName" /><br />
-        功能名称:<input type="text" id="txtFName" name="txtFName" /><br />
-        功能类型:
-        <input type="radio" id="radType0" name="radType" value="0" checked="checked" />
-        <label for="radType0">页面功能</label>
-        <input type="radio" id="radType1" name="radType" value="1" />
-        <label for="radType1">按钮功能</label><br />        
-        访问地址:<input type="text" id="txtAddr" name="txtAddr" /><br />
-        展示顺序:<input type="text" id="txtSort" name="txtSort" /><br />
+
+        <div class="form-group">
+            <label for="txtPName">功能名称</label>
+            <input type="text" id="txtFName" name="txtFName" class="form-control" />
+        </div>
+
+        <div class="radio">
+            <label>
+                <input type="radio" name="radType" id="radType0" value="0" checked>
+                页面功能
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="radType" id="radType1" value="1">
+                按钮功能
+            </label>
+        </div>
+
+        <div class="form-group">
+            <label for="txtAddr">访问地址</label>
+            <input type="text" id="txtAddr" name="txtAddr" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label for="txtSort">展示顺序</label>
+            <input type="text" id="txtSort" name="txtSort" class="form-control" />
+        </div>
+
         <input type="submit" id="btnSubmit" name="btnSubmit" value="提交" />
+        <input type="hidden" id="txtPID" name="txtPID" /><br />
     </form>
 </body>
 </html>

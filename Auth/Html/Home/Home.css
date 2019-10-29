@@ -1,0 +1,50 @@
+﻿#divHead {
+    height: 100px;
+    line-height: 100px;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    right: 2px;
+}
+
+#divMenu {
+    width: 8%;
+    position: absolute;
+    bottom: 35px;
+    top: 110px;
+    left: 2px;
+}
+
+#divContent {
+    width: 90%;
+    position: absolute;
+    bottom: 35px;
+    top: 110px;
+    right: 2px;
+}
+
+#divFooter {
+    clear: both;
+    text-align: center;
+    position: absolute;
+    bottom: 2px;
+    left: 2px;
+    right: 2px;
+    height: 30px;
+}
+
+#divCurrentAccount {
+    float: right;
+    margin-right: 10px;
+}
+
+li {
+    list-style-image: url("/JavaScript/zTree/css/zTreeStyle/img/diy/1_open.png");
+    padding: 10px 2px;
+    background-color: aliceblue;
+    margin-top: 2px;
+}
+
+    li:hover {
+        cursor: pointer;
+    }

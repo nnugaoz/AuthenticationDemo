@@ -69,9 +69,15 @@ namespace Auth.Handler
             {
                 HttpCookie lCookie = new HttpCookie("UserID", lUser.Rows[0]["ID"].ToString());
                 lCookie.Expires = DateTime.Now.AddMinutes(10);
-
+                lCookie.Path = "/";
                 context.Response.Cookies.Add(lCookie);
-                context.Response.Redirect("/Html/home.html");
+
+                lCookie = new HttpCookie("UserName", lUser.Rows[0]["UserName"].ToString());
+                lCookie.Expires = DateTime.Now.AddMinutes(10);
+                lCookie.Path = "/";
+                context.Response.Cookies.Add(lCookie);
+
+                context.Response.Redirect("/Html/Home/Home.html");
             }
             else
             {

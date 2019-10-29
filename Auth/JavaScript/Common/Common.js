@@ -17,3 +17,20 @@ function LoginCheck() {
         return true;
     }
 }
+
+function GetCookieValue(key) {
+    debugger;
+    var lValue = "";
+    var lKeyValPaireArr = document.cookie.split(";");
+    for (var i = 0; i < lKeyValPaireArr.length; i++) {
+        if (lKeyValPaireArr[i].split("=")[0] == key) {
+            lValue = lKeyValPaireArr[i].split("=")[1];
+        }
+    }
+    return lValue;
+}
+
+function RemoveCookie(name) {
+    document.cookie = name + "=0;expires=" + new Date(0).toUTCString() + ";path=/;";
+}
+
