@@ -160,6 +160,7 @@
     <Compile Include="Handler\Feature.ashx.cs">
       <DependentUpon>Feature.ashx</DependentUpon>
     </Compile>
+    <Compile Include="Handler\RequestResult.cs" />
     <Compile Include="Handler\role.ashx.cs">
       <DependentUpon>role.ashx</DependentUpon>
     </Compile>

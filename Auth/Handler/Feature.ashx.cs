@@ -126,7 +126,10 @@ namespace Auth.Handler
 
             lMsSqlHelper.ExecuteSQL(lSQL, lSqlParams);
 
-            context.Response.Redirect("../Html/Feature/FeatureList.html");
+            RequestResult lRR = new RequestResult();
+
+            context.Response.Write(JsonConvert.SerializeObject(lRR));
+
         }
 
         private void FeatureEdit(HttpContext context)

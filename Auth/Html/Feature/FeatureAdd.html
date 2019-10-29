@@ -3,7 +3,9 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title></title>
+    <link href="/JavaScript/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
     <script src="/JavaScript/jQuery/jquery-3.4.1.min.js"></script>
+    <script src="/JavaScript/layer/layer.js"></script>
     <script src="/JavaScript/Common/Common.js"></script>
 
     <script type="text/javascript">
@@ -13,7 +15,8 @@
         }
 
         $(function () {
-            var lPID = getParameterByName("ID", window.location.href);
+            debugger;
+            var lPID = GetParameterByName("ID");
 
             if (lPID == "") {
                 $("#txtPID").val("");
@@ -21,7 +24,7 @@
             } else {
                 $.ajax({
                     type: "get"
-                    , url: "/Handler/Feature.ashx?RequestMethod=FEATURE_QUERY_BY_ID&ID=" + lID
+                    , url: "/Handler/Feature.ashx?RequestMethod=FEATURE_QUERY_BY_ID&ID=" + lPID
                     , success: function (pData) {
                         var lData = JSON.parse(pData);
                         if (lData.Table.length > 0) {
@@ -32,18 +35,38 @@
                 });
             }
 
+            $("#btnSubmit").on("click", function (event) {
+                event.preventDefault();
+
+                var lUrl = $("form").attr("action");
+
+                $.ajax({
+                    type: "post"
+                    , url: lUrl
+                    , data: $("form").serialize()
+                    , success: function (pData) {
+                        var lData = JSON.parse(pData);
+                        if (lData.Status == "1") {
+
+                            //当你在iframe页面关闭自身时
+                            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                            parent.layer.close(index); //再执行关闭
+                        }
+                    }
+                });
+            });
         });
     </script>
 </head>
 <body>
-    <form action="../../Handler/Feature.ashx?RequestMethod=FEATURE_ADD" method="post">
+    <form action="../../Handler/Feature.ashx?RequestMethod=FEATURE_ADD" method="post" style="padding:10px">
         <div class="form-group">
             <label for="txtPName">父级模块</label>
-            <input type="text" id="txtPName" name="txtPName" class="form-control" />
+            <input type="text" id="txtPName" name="txtPName" class="form-control" readonly="readonly" />
         </div>
 
         <div class="form-group">
-            <label for="txtPName">功能名称</label>
+            <label for="txtFName">功能名称</label>
             <input type="text" id="txtFName" name="txtFName" class="form-control" />
         </div>
 
@@ -70,7 +93,8 @@
             <input type="text" id="txtSort" name="txtSort" class="form-control" />
         </div>
 
-        <input type="submit" id="btnSubmit" name="btnSubmit" value="提交" />
+        <input type="submit" id="btnSubmit" name="btnSubmit" class="btn btn-primary" value="提交" />
+
         <input type="hidden" id="txtPID" name="txtPID" /><br />
     </form>
 </body>
