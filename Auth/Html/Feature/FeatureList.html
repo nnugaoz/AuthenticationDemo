@@ -30,6 +30,9 @@
                         , content: "/Html/Feature/FeatureAdd.html?ID=" + lSelectedNodeID
                         , title: "新增系统功能"
                         , area: ["800px", "600px"]
+                        , end: function () {
+                            InitFeatureList();
+                        }
                     });
                 } else {
                     layer.open({

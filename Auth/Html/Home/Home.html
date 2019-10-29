@@ -15,7 +15,7 @@
         }
 
         $(function () {
-            $("#spanCurUser").text("admin");
+            $("#spanCurUser").text(GetCookieValue("UserName"));
 
             $.ajax({
                 type: "GET"
@@ -28,7 +28,8 @@
                         if (lData.FeatureList[i].Type == "0") {
                             var lLi = $("<li>" + lData.FeatureList[i].FName + "</li>");
                             lLi.on("click", { Addr: lData.FeatureList[i].Addr }, function (e) { $("#divContent").load(e.data.Addr); });
-                            $("#divMenu").append(lLi);}
+                            $("#divMenu").append(lLi);
+                        }
                     }
                     $("#divMenu").append("</ul>");
                 }

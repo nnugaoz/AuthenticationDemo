@@ -23,7 +23,7 @@ function GetCookieValue(key) {
     var lValue = "";
     var lKeyValPaireArr = document.cookie.split(";");
     for (var i = 0; i < lKeyValPaireArr.length; i++) {
-        if (lKeyValPaireArr[i].split("=")[0] == key) {
+        if (lKeyValPaireArr[i].split("=")[0].trim() == key) {
             lValue = lKeyValPaireArr[i].split("=")[1];
         }
     }
