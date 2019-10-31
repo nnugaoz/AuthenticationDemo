@@ -40,6 +40,9 @@
                         , content: "/Html/Feature/FeatureEdit.html?ID=" + lSelectedNodeID
                         , title: "编辑系统功能"
                         , area: ["800px", "600px"]
+                        , end: function () {
+                            InitFeatureList();
+                        }
                     });
                 }
             });
@@ -75,7 +78,7 @@
                 , success: function (pData) {
 
                     var lData = JSON.parse(pData);
-                    ztreeNodes = lData.Table;
+                    ztreeNodes = lData.FeatureList;
                     for (var i = 0; i < ztreeNodes.length; i++) {
                         if (ztreeNodes[i].Type == "0") {
                             ztreeNodes[i].icon = "../../JavaScript/zTree/css/zTreeStyle/img/diy/1_close.png";

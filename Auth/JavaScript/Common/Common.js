@@ -19,7 +19,6 @@ function LoginCheck() {
 }
 
 function GetCookieValue(key) {
-    debugger;
     var lValue = "";
     var lKeyValPaireArr = document.cookie.split(";");
     for (var i = 0; i < lKeyValPaireArr.length; i++) {

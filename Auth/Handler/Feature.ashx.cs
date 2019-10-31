@@ -1,4 +1,5 @@
-﻿using Auth.DBHelper;
+﻿using Auth.Dao;
+using Auth.DBHelper;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -42,50 +43,26 @@ namespace Auth.Handler
         private void FeatureQueryById(HttpContext context)
         {
             string lID = context.Request.Params["ID"].ToString();
-            string lSQL = "";
-            MsSqlHelper lMsSqlHelper = new MsSqlHelper();
-            SqlParameter[] lParams = null;
+            FeatureDao lFeatureDao = new FeatureDao();
+            DataTable lDTFeature = null;
 
-            lSQL = "SELECT ID";
-            lSQL += ", FName";
-            lSQL += ", PID";
-            lSQL += ", Addr";
-            lSQL += ", Type";
-            lSQL += ", Sort";
-            lSQL += " FROM T_Feature";
-            lSQL += " WHERE ID=@ID";
+            lDTFeature = lFeatureDao.GetFeatureById(lID);
 
-            lParams = new SqlParameter[]{
-                new SqlParameter("@ID",lID)
-            };
-
-            DataSet lDS = null;
-
-            lDS = lMsSqlHelper.GetData(lSQL, lParams);
-
+            DataSet lDS = new DataSet();
+            lDS.Tables.Add(lDTFeature.Copy());
             context.Response.Write(JsonConvert.SerializeObject(lDS));
-
         }
 
         private void FeatureList(HttpContext context)
         {
-            string lSQL = "";
             string lRetJson = "";
-            MsSqlHelper lMsSqlHelper = new MsSqlHelper();
+            FeatureDao lFeatureDao = new FeatureDao();
 
-            lSQL = "SELECT ";
-            lSQL += "ID";
-            lSQL += ", FName";
-            lSQL += ", PID";
-            lSQL += ", Addr";
-            lSQL += ", Type";
-            lSQL += " FROM T_Feature";
-            lSQL += " ORDER BY Sort";
-            DataSet lDS = null;
-            lDS = lMsSqlHelper.GetData(lSQL);
+            DataSet lDS = new DataSet();
+            DataTable lDTFeatureList = lFeatureDao.GetFeatureList();
 
+            lDS.Tables.Add(lDTFeatureList.Copy());
             lRetJson = JsonConvert.SerializeObject(lDS);
-
             context.Response.Write(lRetJson);
         }
 
@@ -97,37 +74,10 @@ namespace Auth.Handler
             string lType = context.Request.Form["radType"].ToString();
             string lSort = context.Request.Form["txtSort"].ToString();
 
-            MsSqlHelper lMsSqlHelper = new MsSqlHelper();
-            string lSQL = "";
-
-            lSQL = "INSERT INTO T_Feature(";
-            lSQL += "ID";
-            lSQL += ", FName";
-            lSQL += ", PID";
-            lSQL += ", Addr";
-            lSQL += ", Type";
-            lSQL += ", Sort";
-            lSQL += ")VALUES(";
-            lSQL += "NEWID()";
-            lSQL += ", @FName";
-            lSQL += ", @PID";
-            lSQL += ", @Addr";
-            lSQL += ", @Type";
-            lSQL += ", @Sort";
-            lSQL += ")";
-
-            SqlParameter[] lSqlParams = new SqlParameter[] {
-                new SqlParameter("@FName",lFName)
-                ,new SqlParameter("@PID",lPID)
-                ,new SqlParameter("@Addr",lAddr)
-                ,new SqlParameter("@Type",lType)
-                ,new SqlParameter("@Sort",lSort)
-            };
-
-            lMsSqlHelper.ExecuteSQL(lSQL, lSqlParams);
+            FeatureDao lFeatureDao = new FeatureDao();
+            lFeatureDao.Add(lPID, lFName, lAddr, lType, lSort);
 
             RequestResult lRR = new RequestResult();
-
             context.Response.Write(JsonConvert.SerializeObject(lRR));
 
         }
@@ -140,26 +90,12 @@ namespace Auth.Handler
             string lType = context.Request.Form["radType"].ToString();
             string lSort = context.Request.Form["txtSort"].ToString();
 
-            string lSQL = "";
-            MsSqlHelper lMsSqlHelper = new MsSqlHelper();
+            FeatureDao lFeatureDao = new FeatureDao();
 
-            lSQL = "UPDATE T_Feature SET";
-            lSQL += " FName=@FName";
-            lSQL += ", Addr=@Addr";
-            lSQL += ", Type=@Type";
-            lSQL += ", Sort=@Sort";
-            lSQL += " WHERE ID=@ID";
+            lFeatureDao.Update(lID, lName, lAddr, lType, lSort);
+            RequestResult lRR = new Handler.RequestResult();
 
-            SqlParameter[] lSqlParams = new SqlParameter[] {
-                    new SqlParameter("@FName",lName)
-                    ,new SqlParameter("@Addr",lAddr)
-                    ,new SqlParameter("@ID",lID)
-                     ,new SqlParameter("@Type",lType)
-                      ,new SqlParameter("@Sort",lSort)
-                };
-
-            lMsSqlHelper.ExecuteSQL(lSQL, lSqlParams);
-            context.Response.Redirect("../Html/Feature/FeatureList.html");
+            context.Response.Write(JsonConvert.SerializeObject(lRR));
         }
 
         public bool IsReusable
