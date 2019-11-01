@@ -86,7 +86,8 @@
                             ztreeNodes[i].icon = "../../JavaScript/zTree/css/zTreeStyle/img/diy/3.png";
                         }
                     }
-                    $.fn.zTree.init($("#FTree"), ztreeSettings, ztreeNodes);
+                    var lFTree = $.fn.zTree.init($("#FTree"), ztreeSettings, ztreeNodes);
+                    lFTree.expandAll(true);
                 }
             });
         }
