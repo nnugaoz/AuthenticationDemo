@@ -4,9 +4,15 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title></title>
     <meta charset="utf-8" />
-    <link href="../../JavaScript/zTree/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
-    <script src="../../JavaScript/zTree/js/jquery.ztree.core.min.js"></script>
-    <script src="../../JavaScript/zTree/js/jquery.ztree.excheck.min.js"></script>
+    <link href="/JavaScript/zTree/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
+    <link href="/JavaScript/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <script src="/JavaScript/jQuery/jquery-3.4.1.min.js"></script>
+    <script src="/JavaScript/zTree/js/jquery.ztree.core.min.js"></script>
+    <script src="/JavaScript/zTree/js/jquery.ztree.excheck.min.js"></script>
+    <script src="/JavaScript/layer/layer.js"></script>
+    <script src="/JavaScript/Common/Common.js"></script>
+
     <script type="text/javascript">
 
         if (!LoginCheck()) {
@@ -49,9 +55,9 @@
 
                     for (var i = 0; i < lFTreeData.length; i++) {
                         if (lFTreeData[i].Type == "0") {
-                            lFTreeData[i].icon = "../../JavaScript/zTree/css/zTreeStyle/img/diy/1_close.png";
+                            lFTreeData[i].icon = "/JavaScript/zTree/css/zTreeStyle/img/diy/1_close.png";
                         } else {
-                            lFTreeData[i].icon = "../../JavaScript/zTree/css/zTreeStyle/img/diy/3.png";
+                            lFTreeData[i].icon = "/JavaScript/zTree/css/zTreeStyle/img/diy/3.png";
                         }
 
                         for (var j = 0; j < lFIDS.length; j++) {
@@ -66,7 +72,9 @@
             });
 
             $("#btnSubmit").click(function (event) {
-                var lRet = false;
+
+                event.preventDefault();
+
                 var lFTree = $.fn.zTree.getZTreeObj("FTree");
                 var lSelectedNodes = lFTree.getCheckedNodes(true);
 
@@ -75,19 +83,37 @@
                     $("#txtFIDS").val($("#txtFIDS").val() + lSelectedNodes[i].ID + ";");
                 }
 
-                return lRet;
+                $.ajax({
+                    type: "post"
+                    , url: $("form").prop("action")
+                    , data: $("form").serialize()
+                    , success: function (pData) {
+                        var lData = JSON.parse(pData);
+                        if (lData.Status == "1") {
+                            layer.alert("保存成功！", function (index) {
+                                var index = parent.layer.getFrameIndex(window.name);
+                                parent.layer.close(index);
+                            });
+                        }
+                    }
+                });
             });
         });
     </script>
 </head>
 <body>
-    编辑角色
-    <form action="/Handler/role.ashx?RequestMethod=ROLE_EDIT" method="post">
+    <form action="/Handler/role.ashx?RequestMethod=ROLE_EDIT" method="post" class="container">
+        <div class="form-group">
+            <label for="txtRName">角色名称</label>
+            <input type="text" id="txtRName" name="txtRName" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label for="FTree">系统权限列表</label>
+            <div id="FTree" class="ztree"></div>
+        </div>
+        <input type="submit" id="btnSubmit" name="btnSubmit" value="提交" class="btn btn-success" />
         <input type="hidden" id="txtID" name="txtID" />
-        角色名称:<input type="text" id="txtRName" name="txtRName" /><br />
-        系统权限列表:<div id="FTree" class="ztree"></div>
         <input type="hidden" id="txtFIDS" name="txtFIDS" />
-        <input type="submit" id="btnSubmit" name="btnSubmit" value="提交" />
     </form>
 </body>
 </html>

@@ -66,6 +66,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Style\Main.css" />
     <Content Include="DBScript\Auth_script.sql" />
     <Content Include="Html\car.html" />
     <Content Include="Html\carteam.html" />
@@ -98,6 +99,7 @@
     <Content Include="JavaScript\bootstrap-3.3.7-dist\js\bootstrap.min.js" />
     <Content Include="JavaScript\bootstrap-3.3.7-dist\js\npm.js" />
     <Content Include="JavaScript\Common\Common.js" />
+    <Content Include="JavaScript\Common\Pagination.js" />
     <Content Include="JavaScript\jQuery\jquery-3.4.1.min.js" />
     <Content Include="Html\login.html" />
     <Content Include="Html\User\UserAdd.html" />

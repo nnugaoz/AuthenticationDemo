@@ -4,51 +4,98 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title></title>
     <meta charset="utf-8" />
+    <script src="/JavaScript/Common/Pagination.js"></script>
     <script type="text/javascript">
-
         if (!LoginCheck()) {
             window.location.href = "/Html/login.html";
         }
 
         $(function () {
-            $.ajax(
-                {
-                    type: "get",
-                    url: "/Handler/role.ashx?RequestMethod=ROLE_LIST",
-                    success: function (pData) {
-                        var lData = JSON.parse(pData);
-                        var lHtml = "";
-                        $("#RoleListBody").html("");
-
-                        for (var i = 0; i < lData.RoleList.length; i++) {
-                            lHtml += "<tr>";
-                            lHtml += "<td>";
-                            lHtml += lData.RoleList[i].RName
-                            lHtml += "</td>";
-                            lHtml += "<td>";
-                            lHtml += "<a href='RoleEdit.html?ID=" + lData.RoleList[i].ID + "'>编辑</a>";
-                            lHtml += "</td>";
-                            lHtml += "</tr>";
-                        }
-                        $("#RoleListBody").html(lHtml);
-                    }
-                });
+            Init();
+            $("#btnAdd").on("click", btnAdd_OnClick);
         });
+
+        function Init() {
+            $("#RoleList").empty();
+            var lListConfig = {
+                RequestUrl: "/Handler/role.ashx?RequestMethod=ROLE_LIST"
+                    , Columns: [
+                        {
+                            HeaderText: "ID"
+                            , DataSource: [
+                                { Name: "ID", Style: "TXT", CssClass: "" }]
+                        }
+                        , {
+                            HeaderText: "角色名称"
+                            , DataSource: [
+                                { Name: "RName", Style: "TXT", CssClass: "" }]
+                        }
+                        , {
+                            HeaderText: "操作"
+                            , DataSource: [
+                                { Name: "编辑", Style: "BTN", CssClass: "btn btn-primary", OnClickCallBack: btnEdit_OnClick }
+                                , { Name: "删除", Style: "BTN", CssClass: "btn btn-warning", OnClickCallBack: btnDel_OnClick }]
+                        }
+                    ]
+                    , PageContainerID: "RoleList"
+            };
+            var lPagination = new Pagination(lListConfig);
+            lPagination.RequestData(1);
+        }
+
+        function btnAdd_OnClick() {
+            layer.open({
+                type: 2
+                 , content: "/Html/Role/RoleAdd.html"
+                , area: ["800px", "600px"]
+                , title: "新增角色"
+                , end: function () {
+                    Init();
+                }
+            });
+        }
+
+        function btnEdit_OnClick(event) {
+            layer.open({
+                type: 2
+                , content: "/Html/Role/RoleEdit.html?ID=" + event.data.RowData.ID
+                , area: ["800px", "600px"]
+                , title: "编辑角色"
+                , end: function () {
+                    Init();
+                }
+            });
+        }
+
+        function btnDel_OnClick(event) {
+            layer.confirm("您确认要删除该角色吗？"
+                , { icon: 3 }
+                , function (index) {
+                    $.ajax({
+                        type: "post"
+                        , url: "/Handler/role.ashx?RequestMethod=ROLE_DEL"
+                        , data: { ID: event.data.RowData.ID }
+                        , success: function (pData) {
+                            var lData = JSON.parse(pData);
+                            if (lData.Status == "1") {
+                                layer.alert("删除成功！", function (index) {
+                                    layer.close(index);
+                                    Init();
+                                });
+                            }
+                        }
+                    });
+                    layer.close(index);
+                });
+        }
     </script>
 </head>
 <body>
     角色管理
-    <div id="RoleList">
-        <table>
-            <thead>
-                <tr>
-                    <th>角色名称</th>
-                </tr>
-            </thead>
-            <tbody id="RoleListBody"></tbody>
-        </table>
+    <div id="ToolStripe">
+        <a href="javascript:void(0);" class="btn btn-success" id="btnAdd">添加</a>
     </div>
-    <a href="RoleAdd.html">添加</a>
-
+    <div id="RoleList">
+    </div>
 </body>
 </html>

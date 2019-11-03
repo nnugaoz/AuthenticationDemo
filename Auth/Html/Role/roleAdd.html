@@ -3,10 +3,13 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title></title>
-    <link href="../../JavaScript/zTree/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
-    <script src="../../JavaScript/zTree/js/jquery.ztree.core.min.js"></script>
-    <script src="../../JavaScript/zTree/js/jquery.ztree.excheck.min.js"></script>
-
+    <link href="/JavaScript/zTree/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
+    <link href="/JavaScript/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="/JavaScript/jQuery/jquery-3.4.1.min.js"></script>
+    <script src="/JavaScript/zTree/js/jquery.ztree.core.min.js"></script>
+    <script src="/JavaScript/zTree/js/jquery.ztree.excheck.min.js"></script>
+    <script src="/JavaScript/layer/layer.js"></script>
+    <script src="../../JavaScript/Common/Common.js"></script>
     <script type="text/javascript">
 
         if (!LoginCheck()) {
@@ -35,7 +38,7 @@
                 , url: "/Handler/Feature.ashx?RequestMethod=FEATURE_LIST"
                 , success: function (pData) {
                     var lData = JSON.parse(pData);
-                    var lFTreeData = lData.Table;
+                    var lFTreeData = lData.FeatureList;
                     for (var i = 0; i < lFTreeData.length; i++) {
                         if (lFTreeData[i].Type == "0") {
                             lFTreeData[i].icon = "../../JavaScript/zTree/css/zTreeStyle/img/diy/1_close.png";
@@ -48,7 +51,8 @@
             });
 
             $("#Btn_Submit").click(function (event) {
-                var lRet = false;
+                event.preventDefault();
+
                 var lFTree = $.fn.zTree.getZTreeObj("FTree");
                 var lSelectedNodes = lFTree.getCheckedNodes(true);
                 $("#txtSelectedFID").val();
@@ -56,18 +60,36 @@
                     lRet = true;
                     $("#txtSelectedFID").val($("#txtSelectedFID").val() + lSelectedNodes[i].ID + ";");
                 }
-                return lRet;
+                $.ajax({
+                    type: "post"
+                    , url: $("form").prop("action")
+                    , data: $("form").serialize()
+                    , success: function (pData) {
+                        var lData = JSON.parse(pData);
+                        if (lData.Status == "1") {
+                            layer.alert("保存成功！", function (index) {
+                                //当你在iframe页面关闭自身时
+                                var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                                parent.layer.close(index); //再执行关闭
+                            });
+                        }
+                    }
+                });
             });
-
         });
     </script>
 </head>
 <body>
-    新增角色
-    <form action="/Handler/role.ashx?RequestMethod=ROLE_ADD" method="post">
-        角色名称:<input type="text" id="Role_Name" name="Role_Name" /><br />
-        系统功能列表:<div id="FTree" class="ztree"></div>
-        <input type="submit" id="Btn_Submit" name="Btn_Submit" value="提交" />
+    <form action="/Handler/role.ashx?RequestMethod=ROLE_ADD" method="post" class="container">
+        <div class="form-group">
+            <label for="Role_Name">角色名称</label>
+            <input type="text" id="Role_Name" name="Role_Name" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label for="FTree">系统功能列表</label>
+            <div id="FTree" class="ztree"></div>
+        </div>
+        <input type="submit" id="Btn_Submit" name="Btn_Submit" class="btn btn-success" value="提交" />
         <input type="hidden" id="txtSelectedFID" name="txtSelectedFID" />
     </form>
 </body>

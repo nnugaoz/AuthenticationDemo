@@ -37,7 +37,22 @@ namespace Auth.Handler
                 case "ROLE_EDIT":
                     EditRole(context);
                     break;
+
+                case "ROLE_DEL":
+                    DelRole(context);
+                    break;
             }
+        }
+
+        private void DelRole(HttpContext context)
+        {
+            string lID = context.Request.Params["ID"].ToString();
+
+            RoleDao lRoleDao = new RoleDao();
+            lRoleDao.Delete(lID);
+
+            RequestResult lRR = new RequestResult();
+            context.Response.Write(JsonConvert.SerializeObject(lRR));
         }
 
         private void EditRole(HttpContext context)
@@ -45,11 +60,14 @@ namespace Auth.Handler
             string lID = context.Request.Params["txtID"].ToString();
             string lRName = context.Request.Params["txtRName"].ToString();
             string lFIDS = context.Request.Params["txtFIDS"].ToString();
+            string lUserID = context.Request.Cookies["UserID"].Value;
 
             RoleDao lRoleDao = new RoleDao();
-            lRoleDao.Update(lID, lRName, lFIDS);
+            lRoleDao.Update(lID, lRName, lFIDS, lUserID);
+            RequestResult lRR = new RequestResult();
 
-            context.Response.Redirect("/Html/Role/RoleList.html");
+            context.Response.Write(JsonConvert.SerializeObject(lRR));
+
         }
 
         private void EditRoleInit(HttpContext context)
@@ -72,22 +90,29 @@ namespace Auth.Handler
 
         }
 
+
         private void AddRole(HttpContext context)
         {
             string lRoleName = context.Request.Form["Role_Name"].ToString();
             string lFIDs = context.Request.Form["txtSelectedFID"].ToString();
+            string lUserID = context.Request.Cookies["UserID"].Value;
 
             RoleDao lRoleDao = new RoleDao();
+            lRoleDao.Insert(lRoleName, lFIDs, lUserID);
+            RequestResult lRR = new Handler.RequestResult();
 
-            lRoleDao.Insert(lRoleName, lFIDs);
-            context.Response.Redirect("/Html/Role/RoleList.html");
+            context.Response.Write(JsonConvert.SerializeObject(lRR));
+
         }
 
         private void GetRoleList(HttpContext context)
         {
+            int lBeginIndex = Convert.ToInt32(context.Request.Params["BeginIndex"].ToString());
+            int lEndIndex = Convert.ToInt32(context.Request.Params["EndIndex"].ToString());
+
             RoleDao lRoleDao = new RoleDao();
             DataSet lDS = new DataSet();
-            DataTable lDTRole = lRoleDao.GetRoleList();
+            DataTable lDTRole = lRoleDao.GetRoleList(lBeginIndex, lEndIndex);
 
             lDS.Tables.Add(lDTRole.Copy());
             context.Response.Write(JsonConvert.SerializeObject(lDS));
