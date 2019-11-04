@@ -141,16 +141,34 @@ namespace Auth.Dao
 
         internal DataTable GetRoleList(int lBeginIndex, int lEndIndex)
         {
+            DataSet lDS = null;
             DataTable lDT = null;
+            MsSqlHelper lMsSqlHelper = new MsSqlHelper();
 
             string lSQL = "";
-            lSQL += "SELECT";
+            int lRowCount = 0;
+
+            lSQL += "SELECT COUNT(*) FROM T_Role";
+            lDS = lMsSqlHelper.GetData(lSQL);
+
+            if (lDS != null && lDS.Tables.Count > 0)
+            {
+                lRowCount = Convert.ToInt32(lDS.Tables[0].Rows[0][0].ToString());
+            }
+
+            if (lRowCount == 0)
+            {
+                return null;
+            }
+
+            lSQL = "SELECT";
             lSQL += " ID";
             lSQL += ", RName";
             lSQL += ", FIDS";
             lSQL += ", EditMan";
             lSQL += ", EditDate";
             lSQL += ", Idx";
+            lSQL += ", " + lRowCount + " AS RowCnt";
             lSQL += " FROM(";
             lSQL += "SELECT";
             lSQL += " ID";
@@ -168,9 +186,7 @@ namespace Auth.Dao
                 ,new SqlParameter("@EndIndex",lEndIndex)
             };
 
-            MsSqlHelper lMsSqlHelper = new MsSqlHelper();
-
-            DataSet lDS = lMsSqlHelper.GetData(lSQL, lParams);
+            lDS = lMsSqlHelper.GetData(lSQL, lParams);
 
             if (lDS != null && lDS.Tables.Count > 0)
             {
