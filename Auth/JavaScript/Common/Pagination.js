@@ -4,6 +4,7 @@
     this.Columns = pListConfig.Columns;
     this.CurrentPageIndex = 0;
     this.RowCnt = 0;
+    this.PageCnt = 0;
     this.TableObj = null;
     this.THeadObj = null;
     this.TBodyObj = null;
@@ -85,7 +86,7 @@ Pagination.prototype.CreatePageNav = function () {
     this.PageNavContainer.empty();
 
     var lPageNav = null;
-    var lPageCnt = Math.ceil(this.RowCnt / this.PageSize);
+    this.PageCnt = Math.ceil(this.RowCnt / this.PageSize);
 
     //首页
     lPageNav = this.GenPageNav();
@@ -143,7 +144,7 @@ Pagination.prototype.CreatePageNav = function () {
     this.PageNavContainer.append(lPageNav);
 
     //当前页后1页
-    if (this.CurrentPageIndex + 1 <= lPageCnt) {
+    if (this.CurrentPageIndex + 1 <= this.PageCnt) {
         lPageNav = this.GenPageNav();
         lPageNav.text(this.CurrentPageIndex + 1);
         lPageNav.on("click", { PaginationObj: this, PageIndex: this.CurrentPageIndex + 1 }, function (event) { event.data.PaginationObj.RequestData(event.data.PageIndex); });
@@ -151,7 +152,7 @@ Pagination.prototype.CreatePageNav = function () {
     }
 
     //当前页后2页
-    if (this.CurrentPageIndex + 2 <= lPageCnt) {
+    if (this.CurrentPageIndex + 2 <= this.PageCnt) {
         lPageNav = this.GenPageNav();
         lPageNav.text(this.CurrentPageIndex + 2);
         lPageNav.on("click", { PaginationObj: this, PageIndex: this.CurrentPageIndex + 2 }, function (event) { event.data.PaginationObj.RequestData(event.data.PageIndex); });
@@ -159,7 +160,7 @@ Pagination.prototype.CreatePageNav = function () {
     }
 
     //当前页后3页
-    if (this.CurrentPageIndex + 3 <= lPageCnt) {
+    if (this.CurrentPageIndex + 3 <= this.PageCnt) {
         lPageNav = this.GenPageNav();
         lPageNav.text(this.CurrentPageIndex + 3);
         lPageNav.on("click", { PaginationObj: this, PageIndex: this.CurrentPageIndex + 3 }, function (event) { event.data.PaginationObj.RequestData(event.data.PageIndex); });
@@ -167,7 +168,7 @@ Pagination.prototype.CreatePageNav = function () {
     }
 
     //后省略号
-    if (this.CurrentPageIndex + 3 < lPageCnt) {
+    if (this.CurrentPageIndex + 3 < this.PageCnt) {
         lPageNav = this.GenPageNav();
         lPageNav.text('...');
         this.PageNavContainer.append(lPageNav);
@@ -176,7 +177,7 @@ Pagination.prototype.CreatePageNav = function () {
     //下一页
     lPageNav = this.GenPageNav();
     lPageNav.append('<span class="glyphicon glyphicon-step-forward" aria-hidden="true"></span>');
-    if (this.CurrentPageIndex == lPageCnt) {
+    if (this.CurrentPageIndex == this.PageCnt) {
         lPageNav.prop("disabled", true);
     }
     lPageNav.on("click", { PaginationObj: this, PageIndex: this.CurrentPageIndex + 1 }, function (event) { event.data.PaginationObj.RequestData(event.data.PageIndex); });
@@ -185,12 +186,34 @@ Pagination.prototype.CreatePageNav = function () {
     //末页
     lPageNav = this.GenPageNav();
     lPageNav.append('<span class="glyphicon glyphicon-fast-forward" aria-hidden="true"></span>');
-    if (this.CurrentPageIndex == lPageCnt) {
+    if (this.CurrentPageIndex == this.PageCnt) {
         lPageNav.prop("disabled", true);
     }
-    lPageNav.on("click", { PaginationObj: this, PageIndex: lPageCnt }, function (event) { event.data.PaginationObj.RequestData(event.data.PageIndex); });
+    lPageNav.on("click", { PaginationObj: this, PageIndex: this.PageCnt }, function (event) { event.data.PaginationObj.RequestData(event.data.PageIndex); });
     this.PageNavContainer.append(lPageNav);
 
+    //展示记录总条数及总页数
+    var lSummary = $("<span>");
+    lSummary.text("共 " + this.RowCnt + " 条记录 / " + this.PageCnt + " 页");
+    this.PageNavContainer.append(lSummary);
+
+    //跳页
+    var lJumpPageLabel = $("<label for='txtJumpTo' style='margin-left:10px;'>");
+    lJumpPageLabel.text("跳至");
+    this.PageNavContainer.append(lJumpPageLabel);
+    var lJumpPageTxt = $("<input type='text' id='txtJumpTo' style='width:60px;'>")
+    lJumpPageTxt.on('keydown'
+        , { PaginationObj: this }
+        , function (event) {
+            if (event.keyCode == "13") {
+                var lJumpTo = $(this).val();
+                if (!isNaN(lJumpTo) && lJumpTo <= event.data.PaginationObj.PageCnt) {
+                    event.data.PaginationObj.RequestData(lJumpTo);
+                }
+            }
+        });
+    this.PageNavContainer.append(lJumpPageTxt);
+    this.PageNavContainer.append("<label for='txtJumpTo'>页</label> ");
 }
 
 Pagination.prototype.GenPageNav = function () {
