@@ -79,7 +79,7 @@
     <Content Include="Html\Feature\FeatureList.html" />
     <Content Include="Html\Plan\PlanList.html" />
     <Content Include="Html\product.html" />
-    <Content Include="Html\record.html" />
+    <Content Include="Html\Record\record.html" />
     <Content Include="Html\report.html" />
     <Content Include="Html\Role\RoleEdit.html" />
     <Content Include="Html\Role\RoleList.html" />

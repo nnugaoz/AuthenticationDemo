@@ -21,26 +21,37 @@
                 RequestUrl: "/Handler/role.ashx?RequestMethod=ROLE_LIST"
                     , Columns: [
                         {
-                            HeaderText: "ID"
-                            , DataSource: [
-                                { Name: "ID", Style: "TXT", CssClass: "" }]
+                            Style: "TXT"
+                            ,HeaderText: "ID"
+                            , DataFiled: "ID"
+                            , CssClass: ""
                         }
                         , {
-                            HeaderText: "角色名称"
-                            , DataSource: [
-                                { Name: "RName", Style: "TXT", CssClass: "" }]
-                        }
+                            Style: "TXT"
+                            ,HeaderText: "角色名称"
+                            , DataField: "RName"
+                            , CssClass: ""
+                    }
                         , {
-                            HeaderText: "操作"
-                            , DataSource: [
-                                { Name: "编辑", Style: "BTN", CssClass: "btn btn-primary btn-sm", OnClickCallBack: btnEdit_OnClick }
-                                , { Name: "删除", Style: "BTN", CssClass: "btn btn-warning btn-sm", OnClickCallBack: btnDel_OnClick }]
-                        }
-                    ]
+                HeaderText: "操作"
+                            , DataField: "编辑"
+                            , Style: "BTN"
+                            , CssClass: "btn btn-primary btn-sm"
+                            , OnClickCallBack: btnEdit_OnClick
+        }
+                        , {
+        HeaderText: "操作"
+        , DataField: "删除"
+        , Style: "BTN"
+        , CssClass: "btn btn-warning btn-sm"
+        , OnClickCallBack: btnDel_OnClick
+        }
+
+        ]
                     , PageContainerID: "RoleList"
-            };
-            var lPagination = new Pagination(lListConfig);
-            lPagination.RequestData(1);
+        };
+        var lPagination = new Pagination(lListConfig);
+        lPagination.RequestData(1);
         }
 
         function btnAdd_OnClick() {

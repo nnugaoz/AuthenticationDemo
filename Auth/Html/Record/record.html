@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <meta charset="utf-8" />
+    <script src="/JavaScript/Common/Pagination.js"></script>
+    <script type="text/javascript">
+        $(function () {
+
+            var lPConfig = new PaginationConfiguration();
+            lPConfig.RequestUrl="";
+            lPConfig.PageContainerID="WeightRecordList";
+
+            lPConfig.Columns=[];
+            {
+                RequestUrl: ""
+                , PageContainerID: ""
+                , Columns: []
+            };
+
+            var lPagination = new Pagination(lPSettings);
+        })
+    </script>
+</head>
+<body>
+    称重记录
+    <div id="WeightRecordList">
+
+    </div>
+</body>
+</html>
