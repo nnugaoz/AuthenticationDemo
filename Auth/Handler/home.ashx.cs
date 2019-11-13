@@ -13,7 +13,7 @@ namespace Auth.Handler
     /// <summary>
     /// home 的摘要说明
     /// </summary>
-    public class home : IHttpHandler
+    public class Home : IHttpHandler
     {
 
         public void ProcessRequest(HttpContext context)

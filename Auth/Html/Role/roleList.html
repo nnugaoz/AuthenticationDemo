@@ -11,16 +11,43 @@
         }
 
         $(function () {
+            PageFeatureInit();
             Init();
             $("#btnAdd").on("click", btnAdd_OnClick);
         });
 
+        function PageFeatureInit(pPageID) {
+            $.ajax({
+                type: "post"
+                , url: "/Handler/Role.ashx?RequestMethod=PageFeatureInit"
+                , data: { PageName: "RoleList" }
+                , success: function (pData) {
+                    if (pData != "") {
+                        var lData = JSON.parse(pData);
+                        for (var i = 0; i < lData.length; i++) {
+                            var lBtn = $("<input type='button'>");
+                            lBtn.prop("value", lData[i].FName);
+                            lBtn.addClass("btn btn-success");
+                            lBtn.prop("style", "margin-left:10px");
+                            lBtn.on("click", window[lData[i].Addr]);
+                            $("#ToolStripe").append(lBtn);
+                        }
+                    }
+                }
+            });
+        }
+
         function Init() {
             $("#RoleList").empty();
             var lListConfig = {
-                RequestUrl: "/Handler/role.ashx?RequestMethod=ROLE_LIST"
+                RequestUrl: "/Handler/Role.ashx?RequestMethod=ROLE_LIST"
                     , Columns: [
                         {
+                            HeaderText: "选择"
+                            , DataSource: [
+                                { Name: "", Style: "", CssClass: "", OnClickCallBack: btnEdit_OnClick }]
+                        }
+                       , {
                             HeaderText: "ID"
                             , DataSource: [
                                 { Name: "ID", Style: "TXT", CssClass: "" }]
@@ -30,12 +57,12 @@
                             , DataSource: [
                                 { Name: "RName", Style: "TXT", CssClass: "" }]
                         }
-                        , {
-                            HeaderText: "操作"
-                            , DataSource: [
-                                { Name: "编辑", Style: "BTN", CssClass: "btn btn-primary btn-sm", OnClickCallBack: btnEdit_OnClick }
-                                , { Name: "删除", Style: "BTN", CssClass: "btn btn-warning btn-sm", OnClickCallBack: btnDel_OnClick }]
-                        }
+                        //, {
+                        //    HeaderText: "操作"
+                        //    , DataSource: [
+                        //        { Name: "编辑", Style: "BTN", CssClass: "btn btn-primary btn-sm", OnClickCallBack: btnEdit_OnClick }
+                        //        , { Name: "删除", Style: "BTN", CssClass: "btn btn-warning btn-sm", OnClickCallBack: btnDel_OnClick }]
+                        //}
                     ]
                     , PageContainerID: "RoleList"
             };
@@ -73,7 +100,7 @@
                 , function (index) {
                     $.ajax({
                         type: "post"
-                        , url: "/Handler/role.ashx?RequestMethod=ROLE_DEL"
+                        , url: "/Handler/Role.ashx?RequestMethod=ROLE_DEL"
                         , data: { ID: event.data.RowData.ID }
                         , success: function (pData) {
                             var lData = JSON.parse(pData);
@@ -93,7 +120,6 @@
 <body>
     角色管理
     <div id="ToolStripe">
-        <a href="javascript:void(0);" class="btn btn-success" id="btnAdd">添加</a>
     </div>
     <div id="RoleList">
     </div>

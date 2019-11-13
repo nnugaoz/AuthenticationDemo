@@ -13,7 +13,7 @@ namespace Auth.Handler
     /// <summary>
     /// role 的摘要说明
     /// </summary>
-    public class role : IHttpHandler
+    public class Role : IHttpHandler
     {
 
         public void ProcessRequest(HttpContext context)
@@ -41,7 +41,32 @@ namespace Auth.Handler
                 case "ROLE_DEL":
                     DelRole(context);
                     break;
+
+                case "PageFeatureInit":
+                    PageFeatureInit(context);
+                    break;
             }
+        }
+
+        private void PageFeatureInit(HttpContext context)
+        {
+            FeatureDao lFeatureDao = new FeatureDao();
+            string lPageName = context.Request.Params["PageName"].ToString();
+            string lFeatureID = lFeatureDao.GetFeatureIDByFID(lPageName);
+            DataTable lDT = null;
+            string lRetJson = "";
+
+            if (lFeatureID != "")
+            {
+                lDT = lFeatureDao.GetChildFeatureList(lFeatureID);
+
+                if (lDT != null)
+                {
+                    lRetJson = JsonConvert.SerializeObject(lDT);
+                }
+            }
+
+            context.Response.Write(lRetJson);
         }
 
         private void DelRole(HttpContext context)

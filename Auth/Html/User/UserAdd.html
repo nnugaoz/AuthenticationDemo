@@ -12,7 +12,7 @@
         $(function () {
             $.ajax({
                 type: "get"
-                , url: "/Handler/user.ashx?RequestMethod=USER_ADD_INIT"
+                , url: "/Handler/User.ashx?RequestMethod=USER_ADD_INIT"
                 , success: function (pData) {
                     var lData = JSON.parse(pData);
 
@@ -39,7 +39,7 @@
 </head>
 <body>
     用户注册
-    <form action="/Handler/user.ashx?RequestMethod=USER_ADD" method="post">
+    <form action="/Handler/User.ashx?RequestMethod=USER_ADD" method="post">
         用户名：<input type="text" id="txtUserName" name="txtUserName" /><br />
         密码：<input type="password" id="txtPwd" name="txtPwd" /><br />
         <div id="roleList">

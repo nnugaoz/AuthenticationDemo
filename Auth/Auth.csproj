@@ -155,30 +155,30 @@
     <Compile Include="Dao\HomeDao.cs" />
     <Compile Include="Dao\RoleDao.cs" />
     <Compile Include="Dao\UserDao.cs" />
-    <Compile Include="Handler\home.ashx.cs">
-      <DependentUpon>home.ashx</DependentUpon>
+    <Compile Include="Handler\Home.ashx.cs">
+      <DependentUpon>Home.ashx</DependentUpon>
     </Compile>
     <Compile Include="DBHelper\MsSqlHelper.cs" />
     <Compile Include="Handler\Feature.ashx.cs">
       <DependentUpon>Feature.ashx</DependentUpon>
     </Compile>
     <Compile Include="Handler\RequestResult.cs" />
-    <Compile Include="Handler\role.ashx.cs">
-      <DependentUpon>role.ashx</DependentUpon>
+    <Compile Include="Handler\Role.ashx.cs">
+      <DependentUpon>Role.ashx</DependentUpon>
     </Compile>
-    <Compile Include="Handler\user.ashx.cs">
-      <DependentUpon>user.ashx</DependentUpon>
+    <Compile Include="Handler\User.ashx.cs">
+      <DependentUpon>User.ashx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-    <Content Include="Handler\user.ashx" />
-    <Content Include="Handler\role.ashx" />
+    <Content Include="Handler\User.ashx" />
+    <Content Include="Handler\Role.ashx" />
     <Content Include="JavaScript\zTree\css\awesomeStyle\awesome.less" />
     <Content Include="JavaScript\zTree\css\awesomeStyle\fa.less" />
     <Content Include="Handler\Feature.ashx" />
-    <Content Include="Handler\home.ashx" />
+    <Content Include="Handler\Home.ashx" />
     <Content Include="JavaScript\bootstrap-3.3.7-dist\css\bootstrap-theme.css.map" />
     <Content Include="JavaScript\bootstrap-3.3.7-dist\css\bootstrap-theme.min.css.map" />
     <Content Include="JavaScript\bootstrap-3.3.7-dist\css\bootstrap.css.map" />

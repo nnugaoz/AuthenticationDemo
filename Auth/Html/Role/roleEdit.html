@@ -24,7 +24,7 @@
 
             $.ajax({
                 type: "post"
-                , url: "/Handler/role.ashx?RequestMethod=ROLE_EDIT_INIT"
+                , url: "/Handler/Role.ashx?RequestMethod=ROLE_EDIT_INIT"
                 , data: { "ID": lID }
                 , success: function (pData) {
                     var lData = JSON.parse(pData);
@@ -102,7 +102,7 @@
     </script>
 </head>
 <body>
-    <form action="/Handler/role.ashx?RequestMethod=ROLE_EDIT" method="post" class="container">
+    <form action="/Handler/Role.ashx?RequestMethod=ROLE_EDIT" method="post" class="container">
         <div class="form-group">
             <label for="txtRName">角色名称</label>
             <input type="text" id="txtRName" name="txtRName" class="form-control" />

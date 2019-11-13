@@ -15,7 +15,7 @@
 
             $.ajax({
                 type: "post"
-                , url: "/Handler/user.ashx?RequestMethod=USER_EDIT_INIT&ID=" + lID
+                , url: "/Handler/User.ashx?RequestMethod=USER_EDIT_INIT&ID=" + lID
                 , success: function (pData) {
                     var lData = JSON.parse(pData);
 

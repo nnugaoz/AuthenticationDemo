@@ -13,7 +13,7 @@ namespace Auth.Handler
     /// <summary>
     /// user 的摘要说明
     /// </summary>
-    public class user : IHttpHandler
+    public class User : IHttpHandler
     {
         public void ProcessRequest(HttpContext context)
         {

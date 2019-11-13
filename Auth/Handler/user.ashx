@@ -1,1 +1,1 @@
-﻿<%@ WebHandler Language="C#" CodeBehind="user.ashx.cs" Class="Auth.Handler.user" %>
+﻿<%@ WebHandler Language="C#" CodeBehind="User.ashx.cs" Class="Auth.Handler.User" %>

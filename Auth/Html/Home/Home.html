@@ -20,7 +20,7 @@
 
             $.ajax({
                 type: "GET"
-                , url: "/Handler/home.ashx"
+                , url: "/Handler/Home.ashx"
                 , success: function (pData) {
                     var lData = JSON.parse(pData);
                     $("#divMenu").append("<ul>");
@@ -28,7 +28,11 @@
 
                         if (lData.FeatureList[i].Type == "0") {
                             var lLi = $("<li>" + lData.FeatureList[i].FName + "</li>");
-                            lLi.on("click", { Addr: lData.FeatureList[i].Addr }, function (e) { $("#divContent").load(e.data.Addr); });
+                            lLi.on("click"
+                                , { Addr: lData.FeatureList[i].Addr}
+                                , function (e) {
+                                    $("#divContent").load(e.data.Addr);
+                                });
                             $("#divMenu").append(lLi);
                         }
                     }

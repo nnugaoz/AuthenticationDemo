@@ -111,6 +111,62 @@ namespace Auth.Dao
             return lDT;
         }
 
+        public DataTable GetChildFeatureList(string pPID)
+        {
+            DataTable lDT = null;
+            string lSQL = "";
+            DataSet lDS = null;
+            MsSqlHelper lMsSqlHelper = new MsSqlHelper();
+
+            lSQL = "SELECT";
+            lSQL += " ID";
+            lSQL += ", FName";
+            lSQL += ", PID";
+            lSQL += ", Addr";
+            lSQL += ", Type";
+            lSQL += ", Sort";
+            lSQL += ", EditMan";
+            lSQL += ", EditDate";
+            lSQL += " FROM T_Feature";
+            lSQL += " WHERE PID=@PID";
+            lSQL += " ORDER BY Sort";
+
+            SqlParameter[] lParams = new SqlParameter[]
+            {
+                new SqlParameter("@PID",pPID)
+            };
+
+            lDS = lMsSqlHelper.GetData(lSQL, lParams);
+
+            if (lDS != null && lDS.Tables.Count > 0)
+            {
+                lDT = lDS.Tables[0];
+                lDT.TableName = "FeatureList";
+            }
+
+            return lDT;
+        }
+
+        public string GetFeatureIDByFID(string pFID)
+        {
+            string lID = "";
+            string lSQL = "";
+            MsSqlHelper lMsSqlHelper = new MsSqlHelper();
+            DataSet lDS = null;
+            lSQL = "SELECT ID FROM T_Feature WHERE FID=@FID";
+            SqlParameter[] lParams = new SqlParameter[]
+            {
+                new SqlParameter("@FID",pFID)
+            };
+            lDS = lMsSqlHelper.GetData(lSQL, lParams);
+
+            if (lDS != null && lDS.Tables.Count > 0 && lDS.Tables[0].Rows.Count > 0)
+            {
+                lID = lDS.Tables[0].Rows[0][0].ToString();
+            }
+            return lID;
+        }
+
         internal void Update(string pID, string pName, string pAddr, string pType, string pSort)
         {
 
@@ -133,7 +189,6 @@ namespace Auth.Dao
                 };
 
             lMsSqlHelper.ExecuteSQL(lSQL, lSqlParams);
-
         }
 
         internal void Add(string pPID, string pFName, string pAddr, string pType, string pSort)

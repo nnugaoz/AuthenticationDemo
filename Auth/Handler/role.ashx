@@ -1,1 +1,1 @@
-﻿<%@ WebHandler Language="C#" CodeBehind="role.ashx.cs" Class="Auth.Handler.role" %>
+﻿<%@ WebHandler Language="C#" CodeBehind="Role.ashx.cs" Class="Auth.Handler.Role" %>
