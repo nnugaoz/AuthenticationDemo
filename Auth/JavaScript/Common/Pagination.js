@@ -1,4 +1,15 @@
-﻿function Pagination(pListConfig) {
+﻿function PaginationConfiguration() {
+    this.RequestUrl = "Url for Request Data";
+    this.PageContainerID = "Div ID for Display Record List";
+    this.Columns = [{
+        HeaderText: "Header Text"
+        , DataSource: [{
+            Name: "DataSource Name"
+        }]
+    }];
+}
+
+function Pagination(pListConfig) {
     this.RequestUrl = pListConfig.RequestUrl;
     this.PageContainerID = pListConfig.PageContainerID;
     this.Columns = pListConfig.Columns;
