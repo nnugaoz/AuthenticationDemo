@@ -43,61 +43,37 @@
                 RequestUrl: "/Handler/Role.ashx?RequestMethod=ROLE_LIST"
                     , Columns: [
                         {
-<<<<<<< HEAD
-                            HeaderText: "选择"
-                            , DataSource: [
-                                { Name: "", Style: "", CssClass: "", OnClickCallBack: btnEdit_OnClick }]
-                        }
-                       , {
-                            HeaderText: "ID"
-                            , DataSource: [
-                                { Name: "ID", Style: "TXT", CssClass: "" }]
-                        }
-                        , {
-                            HeaderText: "角色名称"
-                            , DataSource: [
-                                { Name: "RName", Style: "TXT", CssClass: "" }]
-                        }
-                        //, {
-                        //    HeaderText: "操作"
-                        //    , DataSource: [
-                        //        { Name: "编辑", Style: "BTN", CssClass: "btn btn-primary btn-sm", OnClickCallBack: btnEdit_OnClick }
-                        //        , { Name: "删除", Style: "BTN", CssClass: "btn btn-warning btn-sm", OnClickCallBack: btnDel_OnClick }]
-                        //}
-                    ]
-=======
+
                             Style: "TXT"
-                            ,HeaderText: "ID"
+                            , HeaderText: "ID"
                             , DataFiled: "ID"
                             , CssClass: ""
                         }
                         , {
                             Style: "TXT"
-                            ,HeaderText: "角色名称"
+                            , HeaderText: "角色名称"
                             , DataField: "RName"
                             , CssClass: ""
-                    }
+                        }
                         , {
-                HeaderText: "操作"
+                            HeaderText: "操作"
                             , DataField: "编辑"
                             , Style: "BTN"
                             , CssClass: "btn btn-primary btn-sm"
                             , OnClickCallBack: btnEdit_OnClick
-        }
+                        }
                         , {
-        HeaderText: "操作"
-        , DataField: "删除"
-        , Style: "BTN"
-        , CssClass: "btn btn-warning btn-sm"
-        , OnClickCallBack: btnDel_OnClick
-        }
-
-        ]
->>>>>>> 1f11c2a080335e1fd7017f4c7a933cc7e239b820
+                            HeaderText: "操作"
+                            , DataField: "删除"
+                            , Style: "BTN"
+                            , CssClass: "btn btn-warning btn-sm"
+                            , OnClickCallBack: btnDel_OnClick
+                        }
+                    ]
                     , PageContainerID: "RoleList"
-        };
-        var lPagination = new Pagination(lListConfig);
-        lPagination.RequestData(1);
+            };
+            var lPagination = new Pagination(lListConfig);
+            lPagination.RequestData(1);
         }
 
         function btnAdd_OnClick() {
