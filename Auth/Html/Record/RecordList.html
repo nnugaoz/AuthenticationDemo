@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <meta charset="utf-8" />
+    <script src="/JavaScript/Common/Pagination.js"></script>
+    <script type="text/javascript">
+        $(function () {
+
+            var lPConfig = new PaginationConfiguration();
+            lPConfig.RequestUrl = "/Handler/Record.ashx?RequestMethod=GetListPagination";
+            lPConfig.PageContainerID = "WeightRecordList";
+
+            var lIDCol = new PaginationColumnConfiguration();
+            lIDCol.HeaderText = "ID";
+            lIDCol.DataField = "ID";
+            lIDCol.Type = "TXT";
+            lPConfig.Columns.push(lIDCol);
+
+            var lCarNOCol = new PaginationColumnConfiguration();
+            lCarNOCol.HeaderText = "车号";
+            lCarNOCol.DataField = "CarNO";
+            lCarNOCol.Type = "TXT";
+            lPConfig.Columns.push(lCarNOCol);
+
+            var lGrossCol = new PaginationColumnConfiguration();
+            lGrossCol.HeaderText = "毛重";
+            lGrossCol.DataField = "Gross";
+            lGrossCol.Type = "TXT";
+            lPConfig.Columns.push(lGrossCol);
+
+            var lTareCol = new PaginationColumnConfiguration();
+            lTareCol.HeaderText = "皮重";
+            lTareCol.DataField = "Tare";
+            lTareCol.Type = "TXT";
+            lPConfig.Columns.push(lTareCol);
+
+            var lNetCol = new PaginationColumnConfiguration();
+            lNetCol.HeaderText = "净重";
+            lNetCol.DataField = "Net";
+            lNetCol.Type = "TXT";
+            lPConfig.Columns.push(lNetCol);
+
+            var lGrossTimeCol = new PaginationColumnConfiguration();
+            lGrossTimeCol.HeaderText = "毛重时间";
+            lGrossTimeCol.DataField = "GrossTime";
+            lGrossTimeCol.Type = "TXT";
+            lPConfig.Columns.push(lGrossTimeCol);
+
+            var lTareTimeCol = new PaginationColumnConfiguration();
+            lTareTimeCol.HeaderText = "皮重时间";
+            lTareTimeCol.DataField = "TareTime";
+            lTareTimeCol.Type = "TXT";
+            lPConfig.Columns.push(lTareTimeCol);
+
+            var lPagination = new Pagination(lPConfig);
+
+            lPagination.RequestData(1);
+        })
+    </script>
+</head>
+<body>
+    称重记录
+    <div id="WeightRecordList">
+
+    </div>
+</body>
+</html>

@@ -43,7 +43,24 @@ namespace Auth.Handler
                 case "LOGIN_CHECK":
                     LoginCheck(context);
                     break;
+
+                case "GET_LIST_PAGINATION":
+                    GetListPagination(context);
+                    break;
             }
+        }
+
+        private void GetListPagination(HttpContext context)
+        {
+            DataTable lDT = null;
+            UserDao lUserDao = new UserDao();
+
+            int lBeginIndex = Convert.ToInt32(context.Request.Params["BeginIndex"].ToString());
+            int lEndIndex = Convert.ToInt32(context.Request.Params["EndIndex"].ToString());
+
+            lDT = lUserDao.GetListPagination(lBeginIndex, lEndIndex);
+
+            context.Response.Write(JsonConvert.SerializeObject(lDT));
         }
 
         private void AddUserInit(HttpContext context)

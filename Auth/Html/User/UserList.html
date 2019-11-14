@@ -4,49 +4,63 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title></title>
     <meta charset="utf-8" />
-
+    <script src="/JavaScript/Common/Pagination.js"></script>
     <script type="text/javascript">
-
         if (!LoginCheck()) {
             window.location.href = "/Html/login.html";
         }
 
         $(function () {
-            $.ajax({
-                url: "/Handler/User.ashx?RequestMethod=USER_LIST"
-                , type: "get"
-                , success: function (pData) {
-                    var lData = JSON.parse(pData);
-                    var lHtml = "";
-                    lHtml += "<table>";
-                    lHtml += "<tr>";
-                    lHtml += "<th>";
-                    lHtml += "用户名";
-                    lHtml += "</th>";
-                    lHtml += "</tr>";
+            Init();
+        });
 
-                    for (var i = 0; i < lData.UserList.length; i++) {
-                        lHtml += "<tr>";
-                        lHtml += "<td>";
-                        lHtml += lData.UserList[i].UserName;
-                        lHtml += "</td>";
-                        lHtml += "<td>";
-                        lHtml += "<a href='UserEdit.html?ID=" + lData.UserList[i].ID + "'>编辑";
-                        lHtml += "</td>";
-                        lHtml += "</tr>";
-                    }
-                    lHtml += "</table>";
-                    $("#userList").html(lHtml);
+        function Init() {
+            $("#UserList").empty();
+            var lPConfig = new PaginationConfiguration();
+            lPConfig.RequestUrl = "/Handler/User.ashx?RequestMethod=GET_LIST_PAGINATION";
+            lPConfig.PageContainerID = "UserList";
+
+            var lIDCol = new PaginationColumnConfiguration();
+            lIDCol.HeaderText = "ID";
+            lIDCol.Type = "TXT";
+            lIDCol.DataField = "ID";
+            lPConfig.Columns.push(lIDCol);
+
+            var lUserNameCol = new PaginationColumnConfiguration();
+            lUserNameCol.HeaderText = "用户名";
+            lUserNameCol.Type = "TXT";
+            lUserNameCol.DataField = "UserName";
+            lPConfig.Columns.push(lUserNameCol);
+
+            var lEditCol = new PaginationColumnConfiguration();
+            lEditCol.HeaderText = "操作";
+            lEditCol.Type = "BTN";
+            lEditCol.DataField = "编辑";
+            lEditCol.CssClass = "btn btn-success";
+            lEditCol.OnClickEventHandler = btnEdit_OnClick;
+            lPConfig.Columns.push(lEditCol);
+
+            var lUserListPagination = new Pagination(lPConfig);
+            lUserListPagination.RequestData(1);
+        }
+
+        function btnEdit_OnClick(event) {
+            layer.open({
+                type: 2
+                , content: "/Html/User/UserEdit.html?ID=" + event.data.RowData.ID
+                , area: ["800px", "600px"]
+                , title: "编辑用户"
+                , end: function () {
+                    Init();
                 }
             });
-        });
+        }
     </script>
 </head>
 <body>
-    用户管理
-    <div id="userList">
+    <a href="/Html/User/UserAdd.html" class="btn btn-success">新增</a>
+    <div id="UserList">
 
     </div>
-    <a href="/Html/User/UserAdd.html">新增</a>
 </body>
 </html>

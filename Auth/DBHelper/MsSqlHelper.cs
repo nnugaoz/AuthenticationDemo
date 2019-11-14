@@ -15,7 +15,7 @@ namespace Auth.DBHelper
 
         private string mConnectionString = ConfigurationManager.AppSettings["MsSqlConnectionString"].ToString();
 
-        public DataSet GetData(string pSQL)
+        public DataSet GetDataSet(string pSQL)
         {
             DataSet lDS = new DataSet();
             try
@@ -36,7 +36,7 @@ namespace Auth.DBHelper
             return lDS;
         }
 
-        public DataSet GetData(string pSQL, SqlParameter[] pParams)
+        public DataSet GetDataSet(string pSQL, SqlParameter[] pParams)
         {
             DataSet lDS = new DataSet();
             try
@@ -59,6 +59,67 @@ namespace Auth.DBHelper
                 mLogger.Error(ex);
             }
             return lDS;
+        }
+        public DataTable GetDataTable(string pSQL)
+        {
+            DataTable lDT = null;
+            try
+            {
+                using (SqlConnection lSqlConnection = new SqlConnection(mConnectionString))
+                {
+                    SqlCommand lSqlCommand = new SqlCommand(pSQL, lSqlConnection);
+
+                    SqlDataAdapter lSqlAdpt = new SqlDataAdapter(lSqlCommand);
+
+                    DataSet lDS = new DataSet();
+
+                    lSqlAdpt.Fill(lDS);
+
+                    if (lDS != null && lDS.Tables.Count > 0)
+                    {
+                        lDT = lDS.Tables[0];
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                mLogger.Error(ex);
+            }
+            return lDT;
+        }
+
+        public DataTable GetDataTable(string pSQL, SqlParameter[] pParams)
+        {
+            DataTable lDT = null;
+
+            try
+            {
+                using (SqlConnection lSqlConnection = new SqlConnection(mConnectionString))
+                {
+                    SqlCommand lSqlCommand = new SqlCommand(pSQL, lSqlConnection);
+
+                    if (pParams != null)
+                    {
+                        lSqlCommand.Parameters.AddRange(pParams);
+                    }
+                    SqlDataAdapter lSqlAdpt = new SqlDataAdapter(lSqlCommand);
+
+                    DataSet lDS = new DataSet();
+
+                    lSqlAdpt.Fill(lDS);
+
+
+                    if (lDS != null && lDS.Tables.Count > 0)
+                    {
+                        lDT = lDS.Tables[0];
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                mLogger.Error(ex);
+            }
+            return lDT;
         }
 
         public Int32 ExecuteSQL(string pSQL)

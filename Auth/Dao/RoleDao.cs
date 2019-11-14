@@ -31,7 +31,7 @@ namespace Auth.Dao
 
             DataSet lDS = null;
 
-            lDS = lMsSqlHelper.GetData(lSQL, lParams);
+            lDS = lMsSqlHelper.GetDataSet(lSQL, lParams);
 
             if (lDS != null && lDS.Tables.Count > 0)
             {
@@ -98,7 +98,7 @@ namespace Auth.Dao
 
             DataSet lDS = new DataSet();
 
-            lDS = lMsSqlHelper.GetData(lSQL);
+            lDS = lMsSqlHelper.GetDataSet(lSQL);
 
             if (lDS != null && lDS.Tables.Count > 0)
             {
@@ -139,61 +139,10 @@ namespace Auth.Dao
             lMsSqlHelper.ExecuteSQL(lSQL, lSqlParams);
         }
 
-        internal DataTable GetRoleList(int lBeginIndex, int lEndIndex)
+        internal DataTable GetRoleList(int pBeginIndex, int pEndIndex)
         {
-            DataSet lDS = null;
             DataTable lDT = null;
-            MsSqlHelper lMsSqlHelper = new MsSqlHelper();
-
-            string lSQL = "";
-            int lRowCount = 0;
-
-            lSQL += "SELECT COUNT(*) FROM T_Role";
-            lDS = lMsSqlHelper.GetData(lSQL);
-
-            if (lDS != null && lDS.Tables.Count > 0)
-            {
-                lRowCount = Convert.ToInt32(lDS.Tables[0].Rows[0][0].ToString());
-            }
-
-            if (lRowCount == 0)
-            {
-                return null;
-            }
-
-            lSQL = "SELECT";
-            lSQL += " ID";
-            lSQL += ", RName";
-            lSQL += ", FIDS";
-            lSQL += ", EditMan";
-            lSQL += ", EditDate";
-            lSQL += ", Idx";
-            lSQL += ", " + lRowCount + " AS RowCnt";
-            lSQL += " FROM(";
-            lSQL += "SELECT";
-            lSQL += " ID";
-            lSQL += ", RName";
-            lSQL += ", FIDS";
-            lSQL += ", EditMan";
-            lSQL += ", EditDate";
-            lSQL += ", ROW_NUMBER()OVER(ORDER BY EditDate DESC) Idx";
-            lSQL += " FROM T_Role";
-            lSQL += ")T";
-            lSQL += " WHERE T.Idx>=@BeginIndex AND T.Idx <=@EndIndex";
-
-            SqlParameter[] lParams = new SqlParameter[]{
-                new SqlParameter("@BeginIndex",lBeginIndex)
-                ,new SqlParameter("@EndIndex",lEndIndex)
-            };
-
-            lDS = lMsSqlHelper.GetData(lSQL, lParams);
-
-            if (lDS != null && lDS.Tables.Count > 0)
-            {
-                lDS.Tables[0].TableName = "DataList";
-                lDT = lDS.Tables[0];
-            }
-
+            lDT = CommonDao.MsSqlQueryDataPagination("T_Role", "ID", pBeginIndex, pEndIndex);
             return lDT;
         }
     }

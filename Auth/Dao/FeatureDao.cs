@@ -27,7 +27,7 @@ namespace Auth.Dao
             lSQL += " FROM T_Feature";
             lSQL += " ORDER BY Sort";
 
-            lDS = lMsSqlHelper.GetData(lSQL);
+            lDS = lMsSqlHelper.GetDataSet(lSQL);
 
             if (lDS != null && lDS.Tables.Count > 0)
             {
@@ -69,7 +69,7 @@ namespace Auth.Dao
             }
             lSQL += " ORDER BY Sort";
 
-            lDS = lMsSqlHelper.GetData(lSQL, lParams.ToArray());
+            lDS = lMsSqlHelper.GetDataSet(lSQL, lParams.ToArray());
 
             if (lDS != null && lDS.Tables.Count > 0)
             {
@@ -101,7 +101,7 @@ namespace Auth.Dao
 
             lParams.Add(new SqlParameter("@ID", pID));
 
-            lDS = lMsSqlHelper.GetData(lSQL, lParams.ToArray());
+            lDS = lMsSqlHelper.GetDataSet(lSQL, lParams.ToArray());
 
             if (lDS != null && lDS.Tables.Count > 0)
             {
@@ -136,7 +136,7 @@ namespace Auth.Dao
                 new SqlParameter("@PID",pPID)
             };
 
-            lDS = lMsSqlHelper.GetData(lSQL, lParams);
+            lDS = lMsSqlHelper.GetDataSet(lSQL, lParams);
 
             if (lDS != null && lDS.Tables.Count > 0)
             {
@@ -158,7 +158,7 @@ namespace Auth.Dao
             {
                 new SqlParameter("@FID",pFID)
             };
-            lDS = lMsSqlHelper.GetData(lSQL, lParams);
+            lDS = lMsSqlHelper.GetDataSet(lSQL, lParams);
 
             if (lDS != null && lDS.Tables.Count > 0 && lDS.Tables[0].Rows.Count > 0)
             {

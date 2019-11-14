@@ -79,7 +79,7 @@
     <Content Include="Html\Feature\FeatureList.html" />
     <Content Include="Html\Plan\PlanList.html" />
     <Content Include="Html\product.html" />
-    <Content Include="Html\Record\record.html" />
+    <Content Include="Html\Record\RecordList.html" />
     <Content Include="Html\report.html" />
     <Content Include="Html\Role\RoleEdit.html" />
     <Content Include="Html\Role\RoleList.html" />
@@ -155,6 +155,7 @@
     <Compile Include="Dao\HomeDao.cs" />
     <Compile Include="Dao\RoleDao.cs" />
     <Compile Include="Dao\UserDao.cs" />
+    <Compile Include="Dao\CommonDao.cs" />
     <Compile Include="Handler\Home.ashx.cs">
       <DependentUpon>Home.ashx</DependentUpon>
     </Compile>
@@ -162,6 +163,10 @@
     <Compile Include="Handler\Feature.ashx.cs">
       <DependentUpon>Feature.ashx</DependentUpon>
     </Compile>
+    <Compile Include="Handler\Record.ashx.cs">
+      <DependentUpon>Record.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Dao\RecordDao.cs" />
     <Compile Include="Handler\RequestResult.cs" />
     <Compile Include="Handler\Role.ashx.cs">
       <DependentUpon>Role.ashx</DependentUpon>
@@ -187,6 +192,7 @@
     <Content Include="JavaScript\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="JavaScript\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="JavaScript\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Handler\Record.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

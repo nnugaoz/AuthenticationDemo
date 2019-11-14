@@ -75,7 +75,7 @@ namespace Auth.Dao
                 new SqlParameter("@ID",lID)
             };
 
-            DataSet lDS = lMsSqlHelper.GetData(lSQL, lParams);
+            DataSet lDS = lMsSqlHelper.GetDataSet(lSQL, lParams);
 
             if (lDS != null && lDS.Tables.Count > 0)
             {
@@ -99,7 +99,7 @@ namespace Auth.Dao
 
             DataSet lDS = new DataSet();
 
-            lDS = lMsSqlHelper.GetData(lSQL);
+            lDS = lMsSqlHelper.GetDataSet(lSQL);
 
             if (lDS != null && lDS.Tables.Count > 0)
             {
@@ -127,7 +127,7 @@ namespace Auth.Dao
 
             MsSqlHelper lMsSql = new MsSqlHelper();
 
-            DataSet lDS = lMsSql.GetData(lSQL, lParams);
+            DataSet lDS = lMsSql.GetDataSet(lSQL, lParams);
 
             if (lDS != null && lDS.Tables.Count > 0)
             {
@@ -136,6 +136,13 @@ namespace Auth.Dao
             }
 
             return lDTUserSingle;
+        }
+
+        internal DataTable GetListPagination(int pBeginIndex, int pEndIndex)
+        {
+            DataTable lDT = null;
+            lDT = CommonDao.MsSqlQueryDataPagination("T_User", "ID", pBeginIndex, pEndIndex);
+            return lDT;
         }
     }
 }

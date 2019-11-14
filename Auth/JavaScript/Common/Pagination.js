@@ -49,7 +49,7 @@ Pagination.prototype.PageSize = 10;
 Pagination.prototype.RequestData = function (RequestPageIndex) {
     var lBeginIndex = (RequestPageIndex - 1) * this.PageSize + 1;
     var lEndIndex = RequestPageIndex * this.PageSize;
-    this.CurrentPageIndex = RequestPageIndex;
+    this.CurrentPageIndex = parseInt(RequestPageIndex);
     var that = this;
 
     $.ajax({
@@ -63,12 +63,12 @@ Pagination.prototype.RequestData = function (RequestPageIndex) {
                 var lTr = $("<tr>");
                 for (var j = 0; j < that.Columns.length; j++) {
                     var lTd = $("<td>");
-                    if (i < lData.DataList.length) {
-                        that.RowCnt = lData.DataList[i].RowCnt;
+                    if (i < lData.length) {
+                        that.RowCnt = lData[i].RowCnt;
                         switch (that.Columns[j].Type) {
                             case "TXT":
                                 var lLbl = $("<label>");
-                                lLbl.text(lData.DataList[i][that.Columns[j].DataField]);
+                                lLbl.text(lData[i][that.Columns[j].DataField]);
                                 lTd.append(lLbl);
                                 break;
 
@@ -77,7 +77,7 @@ Pagination.prototype.RequestData = function (RequestPageIndex) {
                                 lBtn.prop("class", that.Columns[j].CssClass);
                                 lBtn.prop("style", "margin-left:5px;");
                                 lBtn.prop("value", that.Columns[j].DataField);
-                                lBtn.on("click", { RowData: lData.DataList[i] }, that.Columns[j].OnClickEventHandler);
+                                lBtn.on("click", { RowData: lData[i] }, that.Columns[j].OnClickEventHandler);
                                 lTd.append(lBtn);
                                 break;
                         }
