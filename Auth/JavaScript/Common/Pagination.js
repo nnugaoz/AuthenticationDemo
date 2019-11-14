@@ -1,18 +1,22 @@
-﻿function PaginationConfiguration() {
-    this.RequestUrl = "Url for Request Data";
-    this.PageContainerID = "Div ID for Display Record List";
-    this.Columns = [{
-        HeaderText: "Header Text"
-        , DataSource: [{
-            Name: "DataSource Name"
-        }]
-    }];
+﻿function PaginationColumnConfiguration() {
+    this.HeaderText = "";
+    this.DataField = "";
+    this.CssClass = "";
+    this.Type = "";
+}
+PaginationColumnConfiguration.prototype.OnClickEventHandler = function () { }
+
+function PaginationConfiguration() {
+    this.RequestUrl = "";
+    this.PageContainerID = "";
+    this.Columns = new Array();
 }
 
 function Pagination(pListConfig) {
     this.RequestUrl = pListConfig.RequestUrl;
     this.PageContainerID = pListConfig.PageContainerID;
     this.Columns = pListConfig.Columns;
+
     this.CurrentPageIndex = 0;
     this.RowCnt = 0;
     this.PageCnt = 0;
@@ -59,29 +63,26 @@ Pagination.prototype.RequestData = function (RequestPageIndex) {
                 var lTr = $("<tr>");
                 for (var j = 0; j < that.Columns.length; j++) {
                     var lTd = $("<td>");
-                    for (var k = 0; k < that.Columns[j].DataSource.length; k++) {
-                        if (i < lData.DataList.length) {
-                            that.RowCnt = lData.DataList[i].RowCnt;
-                            switch (that.Columns[j].DataSource[k].Style) {
-                                case "TXT":
-                                    var lLbl = $("<label>");
-                                    lLbl.text(lData.DataList[i][that.Columns[j].DataSource[k].Name]);
-                                    lTd.append(lLbl);
-                                    break;
+                    if (i < lData.DataList.length) {
+                        that.RowCnt = lData.DataList[i].RowCnt;
+                        switch (that.Columns[j].Type) {
+                            case "TXT":
+                                var lLbl = $("<label>");
+                                lLbl.text(lData.DataList[i][that.Columns[j].DataField]);
+                                lTd.append(lLbl);
+                                break;
 
-                                case "BTN":
-                                    var lBtn = $("<input type='button'>");
-                                    lBtn.prop("class", that.Columns[j].DataSource[k].CssClass);
-                                    lBtn.prop("style", "margin-left:5px;");
-                                    lBtn.prop("value", that.Columns[j].DataSource[k].Name);
-                                    lBtn.on("click", { RowData: lData.DataList[i] }, that.Columns[j].DataSource[k].OnClickCallBack);
-                                    lTd.append(lBtn);
-                                    break;
-
-                            }
-                        } else {
-                            lTd.append("<label>&nbsp;</label>");
+                            case "BTN":
+                                var lBtn = $("<input type='button'>");
+                                lBtn.prop("class", that.Columns[j].CssClass);
+                                lBtn.prop("style", "margin-left:5px;");
+                                lBtn.prop("value", that.Columns[j].DataField);
+                                lBtn.on("click", { RowData: lData.DataList[i] }, that.Columns[j].OnClickEventHandler);
+                                lTd.append(lBtn);
+                                break;
                         }
+                    } else {
+                        lTd.append("<label>&nbsp;</label>");
                     }
                     lTr.append(lTd)
                 }

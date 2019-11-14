@@ -39,39 +39,39 @@
 
         function Init() {
             $("#RoleList").empty();
-            var lListConfig = {
-                RequestUrl: "/Handler/Role.ashx?RequestMethod=ROLE_LIST"
-                    , Columns: [
-                        {
+            var lListConfig = new PaginationConfiguration();
+            lListConfig.RequestUrl = "/Handler/Role.ashx?RequestMethod=ROLE_LIST";
+            lListConfig.PageContainerID = "RoleList";
 
-                            Style: "TXT"
-                            , HeaderText: "ID"
-                            , DataFiled: "ID"
-                            , CssClass: ""
-                        }
-                        , {
-                            Style: "TXT"
-                            , HeaderText: "角色名称"
-                            , DataField: "RName"
-                            , CssClass: ""
-                        }
-                        , {
-                            HeaderText: "操作"
-                            , DataField: "编辑"
-                            , Style: "BTN"
-                            , CssClass: "btn btn-primary btn-sm"
-                            , OnClickCallBack: btnEdit_OnClick
-                        }
-                        , {
-                            HeaderText: "操作"
-                            , DataField: "删除"
-                            , Style: "BTN"
-                            , CssClass: "btn btn-warning btn-sm"
-                            , OnClickCallBack: btnDel_OnClick
-                        }
-                    ]
-                    , PageContainerID: "RoleList"
-            };
+            var lIDCol = new PaginationColumnConfiguration();
+            lIDCol.Type = "TXT";
+            lIDCol.HeaderText = "ID";
+            lIDCol.DataField = "ID";
+
+            var lRNameCol = new PaginationColumnConfiguration();
+            lRNameCol.Type = "TXT";
+            lRNameCol.HeaderText = "角色名称";
+            lRNameCol.DataField = "RName";
+
+            var lOPEditCol = new PaginationColumnConfiguration();
+            lOPEditCol.Type = "BTN";
+            lOPEditCol.HeaderText = "操作";
+            lOPEditCol.DataField = "编辑";
+            lOPEditCol.CssClass = "btn btn-primary btn-sm";
+            lOPEditCol.OnClickEventHandler = btnEdit_OnClick;
+
+            var lOPDelCol = new PaginationColumnConfiguration();
+            lOPDelCol.Type = "BTN";
+            lOPDelCol.HeaderText = "操作";
+            lOPDelCol.DataField = "删除";
+            lOPDelCol.CssClass = "btn btn-warning btn-sm";
+            lOPDelCol.OnClickEventHandler = btnDel_OnClick;
+
+            lListConfig.Columns.push(lIDCol);
+            lListConfig.Columns.push(lRNameCol);
+            lListConfig.Columns.push(lOPEditCol);
+            lListConfig.Columns.push(lOPDelCol);
+
             var lPagination = new Pagination(lListConfig);
             lPagination.RequestData(1);
         }
