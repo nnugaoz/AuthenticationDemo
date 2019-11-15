@@ -3,6 +3,7 @@
     this.DataField = "";
     this.CssClass = "";
     this.Type = "";
+    this.PWidth = "";
 }
 PaginationColumnConfiguration.prototype.OnClickEventHandler = function () { }
 
@@ -31,6 +32,7 @@ function Pagination(pListConfig) {
     var lTr = $("<tr>");
     for (var i = 0; i < this.Columns.length; i++) {
         var lTh = $("<th>");
+        lTh.css("width", this.Columns[i].PWidth);
         lTh.text(this.Columns[i].HeaderText);
         lTr.append(lTh);
     }
@@ -51,7 +53,6 @@ Pagination.prototype.RequestData = function (RequestPageIndex) {
     var lEndIndex = RequestPageIndex * this.PageSize;
     this.CurrentPageIndex = parseInt(RequestPageIndex);
     var that = this;
-
     $.ajax({
         type: "post"
         , url: this.RequestUrl
@@ -80,6 +81,12 @@ Pagination.prototype.RequestData = function (RequestPageIndex) {
                                 lBtn.on("click", { RowData: lData[i] }, that.Columns[j].OnClickEventHandler);
                                 lTd.append(lBtn);
                                 break;
+
+                            case "CHK":
+                                var lChk = $("<input type='checkbox' class='checkbox'>");
+                                lChk.on("change", { RowData: lData[i] }, that.Columns[j].OnClickEventHandler);
+                                lTd.append(lChk);
+                                break;
                         }
                     } else {
                         lTd.append("<label>&nbsp;</label>");
@@ -106,7 +113,7 @@ Pagination.prototype.CreatePageNav = function () {
     if (this.CurrentPageIndex == 1) {
         lPageNav.prop("disabled", true);
     }
-    lPageNav.on("click", { PaginationObj: this, PageIndex: 1 }, function (event) { event.data.PaginationObj.RequestData(event.data.PageIndex); });
+    lPageNav.on("click", { PaginationObj: this, PageIndex: 1 }, Goto);
     this.PageNavContainer.append(lPageNav);
 
     //上一页
@@ -115,29 +122,29 @@ Pagination.prototype.CreatePageNav = function () {
     if (this.CurrentPageIndex == 1) {
         lPageNav.prop("disabled", true);
     }
-    lPageNav.on("click", { PaginationObj: this, PageIndex: this.CurrentPageIndex - 1 }, function (event) { event.data.PaginationObj.RequestData(event.data.PageIndex); });
+    lPageNav.on("click", { PaginationObj: this, PageIndex: this.CurrentPageIndex - 1 }, Goto);
     this.PageNavContainer.append(lPageNav);
 
     //前省略号
-    if (this.CurrentPageIndex - 3 > 1) {
+    if (this.CurrentPageIndex - 2 > 1) {
         lPageNav = this.GenPageNav();
         lPageNav.text('...');
         this.PageNavContainer.append(lPageNav);
     }
 
-    //当前页前3页
-    if (this.CurrentPageIndex - 3 >= 1) {
-        lPageNav = this.GenPageNav();
-        lPageNav.text(this.CurrentPageIndex - 3);
-        lPageNav.on("click", { PaginationObj: this, PageIndex: this.CurrentPageIndex - 3 }, function (event) { event.data.PaginationObj.RequestData(event.data.PageIndex); });
-        this.PageNavContainer.append(lPageNav);
-    }
+    ////当前页前3页
+    //if (this.CurrentPageIndex - 3 >= 1) {
+    //    lPageNav = this.GenPageNav();
+    //    lPageNav.text(this.CurrentPageIndex - 3);
+    //    lPageNav.on("click", { PaginationObj: this, PageIndex: this.CurrentPageIndex - 3 }, Goto);
+    //    this.PageNavContainer.append(lPageNav);
+    //}
 
     //当前页前2页
     if (this.CurrentPageIndex - 2 >= 1) {
         lPageNav = this.GenPageNav();
         lPageNav.text(this.CurrentPageIndex - 2);
-        lPageNav.on("click", { PaginationObj: this, PageIndex: this.CurrentPageIndex - 2 }, function (event) { event.data.PaginationObj.RequestData(event.data.PageIndex); });
+        lPageNav.on("click", { PaginationObj: this, PageIndex: this.CurrentPageIndex - 2 }, Goto);
         this.PageNavContainer.append(lPageNav);
     }
 
@@ -145,7 +152,7 @@ Pagination.prototype.CreatePageNav = function () {
     if (this.CurrentPageIndex - 1 >= 1) {
         lPageNav = this.GenPageNav();
         lPageNav.text(this.CurrentPageIndex - 1);
-        lPageNav.on("click", { PaginationObj: this, PageIndex: this.CurrentPageIndex - 1 }, function (event) { event.data.PaginationObj.RequestData(event.data.PageIndex); });
+        lPageNav.on("click", { PaginationObj: this, PageIndex: this.CurrentPageIndex - 1 }, Goto);
         this.PageNavContainer.append(lPageNav);
     }
 
@@ -159,7 +166,7 @@ Pagination.prototype.CreatePageNav = function () {
     if (this.CurrentPageIndex + 1 <= this.PageCnt) {
         lPageNav = this.GenPageNav();
         lPageNav.text(this.CurrentPageIndex + 1);
-        lPageNav.on("click", { PaginationObj: this, PageIndex: this.CurrentPageIndex + 1 }, function (event) { event.data.PaginationObj.RequestData(event.data.PageIndex); });
+        lPageNav.on("click", { PaginationObj: this, PageIndex: this.CurrentPageIndex + 1 }, Goto);
         this.PageNavContainer.append(lPageNav);
     }
 
@@ -167,20 +174,20 @@ Pagination.prototype.CreatePageNav = function () {
     if (this.CurrentPageIndex + 2 <= this.PageCnt) {
         lPageNav = this.GenPageNav();
         lPageNav.text(this.CurrentPageIndex + 2);
-        lPageNav.on("click", { PaginationObj: this, PageIndex: this.CurrentPageIndex + 2 }, function (event) { event.data.PaginationObj.RequestData(event.data.PageIndex); });
+        lPageNav.on("click", { PaginationObj: this, PageIndex: this.CurrentPageIndex + 2 }, Goto);
         this.PageNavContainer.append(lPageNav);
     }
 
-    //当前页后3页
-    if (this.CurrentPageIndex + 3 <= this.PageCnt) {
-        lPageNav = this.GenPageNav();
-        lPageNav.text(this.CurrentPageIndex + 3);
-        lPageNav.on("click", { PaginationObj: this, PageIndex: this.CurrentPageIndex + 3 }, function (event) { event.data.PaginationObj.RequestData(event.data.PageIndex); });
-        this.PageNavContainer.append(lPageNav);
-    }
+    ////当前页后3页
+    //if (this.CurrentPageIndex + 3 <= this.PageCnt) {
+    //    lPageNav = this.GenPageNav();
+    //    lPageNav.text(this.CurrentPageIndex + 3);
+    //    lPageNav.on("click", { PaginationObj: this, PageIndex: this.CurrentPageIndex + 3 }, Goto);
+    //    this.PageNavContainer.append(lPageNav);
+    //}
 
     //后省略号
-    if (this.CurrentPageIndex + 3 < this.PageCnt) {
+    if (this.CurrentPageIndex + 2 < this.PageCnt) {
         lPageNav = this.GenPageNav();
         lPageNav.text('...');
         this.PageNavContainer.append(lPageNav);
@@ -192,7 +199,7 @@ Pagination.prototype.CreatePageNav = function () {
     if (this.CurrentPageIndex == this.PageCnt) {
         lPageNav.prop("disabled", true);
     }
-    lPageNav.on("click", { PaginationObj: this, PageIndex: this.CurrentPageIndex + 1 }, function (event) { event.data.PaginationObj.RequestData(event.data.PageIndex); });
+    lPageNav.on("click", { PaginationObj: this, PageIndex: this.CurrentPageIndex + 1 }, Goto);
     this.PageNavContainer.append(lPageNav);
 
     //末页
@@ -201,7 +208,7 @@ Pagination.prototype.CreatePageNav = function () {
     if (this.CurrentPageIndex == this.PageCnt) {
         lPageNav.prop("disabled", true);
     }
-    lPageNav.on("click", { PaginationObj: this, PageIndex: this.PageCnt }, function (event) { event.data.PaginationObj.RequestData(event.data.PageIndex); });
+    lPageNav.on("click", { PaginationObj: this, PageIndex: this.PageCnt }, Goto);
     this.PageNavContainer.append(lPageNav);
 
     //展示记录总条数及总页数
@@ -213,7 +220,7 @@ Pagination.prototype.CreatePageNav = function () {
     var lJumpPageLabel = $("<label for='txtJumpTo' style='margin-left:10px;'>");
     lJumpPageLabel.text("跳至");
     this.PageNavContainer.append(lJumpPageLabel);
-    var lJumpPageTxt = $("<input type='text' id='txtJumpTo' style='width:60px;'>")
+    var lJumpPageTxt = $("<input type='text' id='txtJumpTo' style='width:40px;'>")
     lJumpPageTxt.on('keydown'
         , { PaginationObj: this }
         , function (event) {
@@ -228,10 +235,16 @@ Pagination.prototype.CreatePageNav = function () {
     this.PageNavContainer.append("<label for='txtJumpTo'>页</label> ");
 }
 
+
 Pagination.prototype.GenPageNav = function () {
     var lPageNav = null;
     lPageNav = $("<button>");
     lPageNav.addClass("btn btn-sm");
     lPageNav.prop("style", "margin-right:5px;border:1px solid grey;");
     return lPageNav;
+}
+
+function Goto(event) {
+    event.data.PaginationObj.RequestData(event.data.PageIndex);
+    return false;
 }

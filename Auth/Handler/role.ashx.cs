@@ -22,8 +22,8 @@ namespace Auth.Handler
 
             switch (lRequestMethod)
             {
-                case "ROLE_LIST":
-                    GetRoleList(context);
+                case "ROLE_LIST_PAGE":
+                    GetRoleListPage(context);
                     break;
 
                 case "ROLE_ADD":
@@ -130,7 +130,7 @@ namespace Auth.Handler
 
         }
 
-        private void GetRoleList(HttpContext context)
+        private void GetRoleListPage(HttpContext context)
         {
             int lBeginIndex = Convert.ToInt32(context.Request.Params["BeginIndex"].ToString());
             int lEndIndex = Convert.ToInt32(context.Request.Params["EndIndex"].ToString());

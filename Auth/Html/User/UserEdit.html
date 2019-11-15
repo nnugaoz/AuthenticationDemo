@@ -10,24 +10,44 @@
     <script src="/JavaScript/Common/Common.js"></script>
     <script src="/JavaScript/Common/Pagination.js"></script>
     <script type="text/javascript">
-
         if (!LoginCheck()) {
             window.location.href = "/Html/login.html";
         }
 
         $(function () {
+            console.log("Initialized");
+            PageInit();
+        });
+
+        function PageInit() {
+            $("#roleList").empty();
+            var lPageConfig = new PaginationConfiguration();
+            lPageConfig.RequestUrl = "/Handler/Role.ashx?RequestMethod=ROLE_LIST_PAGE";
+            lPageConfig.PageContainerID = "roleList";
+
+            var lChkCol = new PaginationColumnConfiguration();
+            lChkCol.Type = "CHK";
+            lChkCol.HeaderText = "选择";
+            lChkCol.PWidth = "10%";
+            lChkCol.OnClickEventHandler = RoleList_ChkCol_OnClick;
+            lPageConfig.Columns.push(lChkCol);
+
+            var lRoleNameCol = new PaginationColumnConfiguration();
+            lRoleNameCol.Type = "TXT";
+            lRoleNameCol.HeaderText = "角色名称";
+            lRoleNameCol.DataField = "RName";
+            lPageConfig.Columns.push(lRoleNameCol);
+
+            var lPageObj = new Pagination(lPageConfig);
+            lPageObj.RequestData(1);
+
             var lID = GetParameterByName("ID");
+
             $.ajax({
-                type: "post"
+                type: "POST"
                 , url: "/Handler/User.ashx?RequestMethod=USER_EDIT_INIT&ID=" + lID
                 , success: function (pData) {
                     var lData = JSON.parse(pData);
-
-                    var lHtml = "";
-                    for (var i = 0; i < lData.RoleList.length; i++) {
-                        lHtml += "<input type='checkbox' name='chkRole' value='" + lData.RoleList[i].ID + "' id='chkRole" + i + "' /><label for='chkRole" + i + "'>" + lData.RoleList[i].RName + "</label>";
-                    }
-                    $("#roleList").html(lHtml);
 
                     var lRoleList = new Array();
                     if (lData.UserSingle.length > 0) {
@@ -44,18 +64,22 @@
                 }
             });
 
-            $("#btnSubmit").click(function (event) {
-                var lRet = false;
-                $("input[name=chkRole]").each(function (index, element) {
-                    if ($(element).prop("checked")) {
-                        lRet = true;
-                        $("#txtRIDS").val($("#txtRIDS").val() + $(element).val() + ";");
-                    }
-                });
+            //$("#btnSubmit").click(function (event) {
+            //    var lRet = false;
+            //    $("input[name=chkRole]").each(function (index, element) {
+            //        if ($(element).prop("checked")) {
+            //            lRet = true;
+            //            $("#txtRIDS").val($("#txtRIDS").val() + $(element).val() + ";");
+            //        }
+            //    });
+            //    return lRet;
+            //});
 
-                return lRet;
-            })
-        });
+        }
+
+        function RoleList_ChkCol_OnClick(event) {
+            console.log("check clicked!");
+        }
     </script>
 </head>
 <body>
@@ -68,7 +92,8 @@
         <div id="roleList">
 
         </div>
-        <input type="submit" id="btnSubmit" name="btnSubmit" value="提交" class="btn btn-primary" />
+        <div style="margin-top:20px;"></div>
+        <input type="button" id="btnSubmit" name="btnSubmit" value="提交" class="btn btn-primary" />
         <input type="hidden" id="txtID" name="txtName" />
         <input type="hidden" id="txtRIDS" name="txtRIDS" />
     </form>

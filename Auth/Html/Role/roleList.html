@@ -40,7 +40,7 @@
         function Init() {
             $("#RoleList").empty();
             var lListConfig = new PaginationConfiguration();
-            lListConfig.RequestUrl = "/Handler/Role.ashx?RequestMethod=ROLE_LIST";
+            lListConfig.RequestUrl = "/Handler/Role.ashx?RequestMethod=ROLE_LIST_PAGE";
             lListConfig.PageContainerID = "RoleList";
 
             var lIDCol = new PaginationColumnConfiguration();
