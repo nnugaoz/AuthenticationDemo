@@ -5,8 +5,10 @@
     <title></title>
     <meta charset="utf-8" />
 
+    <link href="/JavaScript/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
     <script src="/JavaScript/jQuery/jquery-3.4.1.min.js"></script>
     <script src="/JavaScript/Common/Common.js"></script>
+    <script src="/JavaScript/Common/Pagination.js"></script>
     <script type="text/javascript">
 
         if (!LoginCheck()) {
@@ -57,12 +59,18 @@
     </script>
 </head>
 <body>
-    <form>
+    <form class="container">
+        <div class="form-group">
+            <label for="txtUserName">用户名</label>
+            <input type="text" id="txtUserName" name="txtUserName" class="form-control" /><br />
+        </div>
+        <label for="RoleList">角色列表</label>
+        <div id="roleList">
+
+        </div>
+        <input type="submit" id="btnSubmit" name="btnSubmit" value="提交" class="btn btn-primary" />
         <input type="hidden" id="txtID" name="txtName" />
-        用户名:<input type="text" id="txtUserName" name="txtUserName" /><br />
-        角色列表:<div id="roleList"></div>
         <input type="hidden" id="txtRIDS" name="txtRIDS" />
-        <input type="submit" id="btnSubmit" name="btnSubmit" value="提交" />
     </form>
 </body>
 </html>
