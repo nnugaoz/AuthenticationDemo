@@ -7,9 +7,13 @@
 
     <link href="/JavaScript/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
     <script src="/JavaScript/jQuery/jquery-3.4.1.min.js"></script>
+    <script src="/JavaScript/layer/layer.js"></script>
     <script src="/JavaScript/Common/Common.js"></script>
     <script src="/JavaScript/Common/Pagination.js"></script>
     <script type="text/javascript">
+
+        var mUserID = "";
+
         if (!LoginCheck()) {
             window.location.href = "/Html/login.html";
         }
@@ -20,82 +24,151 @@
         });
 
         function PageInit() {
-            $("#roleList").empty();
-            var lPageConfig = new PaginationConfiguration();
-            lPageConfig.RequestUrl = "/Handler/Role.ashx?RequestMethod=ROLE_LIST_PAGE";
-            lPageConfig.PageContainerID = "roleList";
 
-            var lChkCol = new PaginationColumnConfiguration();
-            lChkCol.Type = "CHK";
-            lChkCol.HeaderText = "选择";
-            lChkCol.PWidth = "10%";
-            lChkCol.OnClickEventHandler = RoleList_ChkCol_OnClick;
-            lPageConfig.Columns.push(lChkCol);
-
-            var lRoleNameCol = new PaginationColumnConfiguration();
-            lRoleNameCol.Type = "TXT";
-            lRoleNameCol.HeaderText = "角色名称";
-            lRoleNameCol.DataField = "RName";
-            lPageConfig.Columns.push(lRoleNameCol);
-
-            var lPageObj = new Pagination(lPageConfig);
-            lPageObj.RequestData(1);
-
-            var lID = GetParameterByName("ID");
+            mUserID = GetParameterByName("ID");
 
             $.ajax({
                 type: "POST"
-                , url: "/Handler/User.ashx?RequestMethod=USER_EDIT_INIT&ID=" + lID
+                , url: "/Handler/User.ashx?RequestMethod=USER_EDIT_INIT&ID=" + mUserID
                 , success: function (pData) {
                     var lData = JSON.parse(pData);
 
-                    var lRoleList = new Array();
                     if (lData.UserSingle.length > 0) {
-                        $("#txtID").val(lData.UserSingle[0].ID);
                         $("#txtUserName").val(lData.UserSingle[0].UserName);
-                        lRoleList = lData.UserSingle[0].RIDS.split(';');
                     }
 
-                    for (var i = 0; i < lRoleList.length; i++) {
-                        if (lRoleList[i] != "") {
-                            $("input[name=chkRole][value=" + lRoleList[i] + "]").prop("checked", true);
-                        }
+                    for (var i = 0; i < lData.RoleList.length; i++) {
+                        var lDivRole = $('<div>');
+                        var lLblRole = $('<label>')
+                        var lChkRole = $('<input type="checkbox" checked="checked">');
+                        lChkRole.on("click", RileListGiven_ChkRole_OnClick);
+                        lChkRole.val(lData.RoleList[i].ID);
+                        lLblRole.append(lChkRole);
+                        lLblRole.append(lData.RoleList[i].RName)
+                        lDivRole.append(lLblRole);
+                        $("#divRoleListGiven").append(lDivRole);
                     }
+
+                    $("#roleList").empty();
+                    var lPageConfig = new PaginationConfiguration();
+                    lPageConfig.RequestUrl = "/Handler/Role.ashx?RequestMethod=ROLE_LIST_PAGE";
+                    lPageConfig.PageContainerID = "roleList";
+
+                    var lChkCol = new PaginationColumnConfiguration();
+                    lChkCol.Type = "CHK";
+                    lChkCol.HeaderText = "选择";
+                    lChkCol.PWidth = "20%";
+                    lChkCol.DataField = "ID";
+                    lChkCol.OnClickEventHandler = RoleList_ChkCol_OnClick;
+                    lChkCol.OnColumnDataBinding = RoleList_ChkCol_OnDataBinding;
+                    lPageConfig.Columns.push(lChkCol);
+
+                    var lRoleNameCol = new PaginationColumnConfiguration();
+                    lRoleNameCol.Type = "TXT";
+                    lRoleNameCol.HeaderText = "角色名称";
+                    lRoleNameCol.DataField = "RName";
+                    lPageConfig.Columns.push(lRoleNameCol);
+
+                    var lPageObj = new Pagination(lPageConfig);
+                    lPageObj.RequestData(1);
+
                 }
             });
 
-            //$("#btnSubmit").click(function (event) {
-            //    var lRet = false;
-            //    $("input[name=chkRole]").each(function (index, element) {
-            //        if ($(element).prop("checked")) {
-            //            lRet = true;
-            //            $("#txtRIDS").val($("#txtRIDS").val() + $(element).val() + ";");
-            //        }
-            //    });
-            //    return lRet;
-            //});
+            $("#btnSubmit").click(function (event) {
+                event.preventDefault();
+                var lRIDS = "";
+                $("#divRoleListGiven input[type='checkbox']").each(function (index, element) {
+                    if ($(element).prop("checked")) {
+                        lRIDS += $(element).val() + ";";
+                    }
+                });
+
+                if (lRIDS != "") {
+                    $.ajax({
+                        type: "POST"
+                    , url: $("form").prop("action")
+                        , data: { ID: mUserID, RIDS: lRIDS, UserName: $('#txtUserName').val() }
+                        , success: function (pData) {
+                            var lData = JSON.parse(pData);
+                            if (lData.Status == "1") {
+                                layer.alert("保存成功", { icon: 1 }, function (index) {
+                                    var index = parent.layer.getFrameIndex(window.name);
+                                    parent.layer.close(index);
+                                });
+                            }
+                        }
+                    });
+                }
+            });
 
         }
 
+        function RoleList_ChkCol_OnDataBinding(event) {
+            var lColCtrl = event.data.ColControl;
+            var lRowData = event.data.RowData;
+
+            $("#divRoleListGiven input[type='checkbox']").each(function (index, elem) {
+                if ($(elem).val() == lRowData["ID"])
+                    lColCtrl.prop("checked", $(elem).prop("checked"));
+            })
+        }
+
         function RoleList_ChkCol_OnClick(event) {
-            console.log("check clicked!");
+            var lExists = false;
+            $("#divRoleListGiven input[type='checkbox']").each(function (index, elem) {
+                if ($(elem).val() == $(event.currentTarget).val()) {
+                    $(elem).prop("checked", $(event.currentTarget).prop("checked"));
+                    lExists = true;
+                }
+            })
+
+            if (!lExists) {
+                var lDivRole = $('<div>');
+                var lLblRole = $('<label>')
+                var lChkRole = $('<input type="checkbox" checked="checked">');
+                lChkRole.on("click", RileListGiven_ChkRole_OnClick);
+                lChkRole.val($(event.currentTarget).val());
+                lLblRole.append(lChkRole);
+                lLblRole.append(event.data.RowData.RName)
+                lDivRole.append(lLblRole);
+                $("#divRoleListGiven").append(lDivRole);
+            }
+        }
+
+        function RileListGiven_ChkRole_OnClick(event) {
+            $("#roleList input[type='checkbox']").each(function (index, elem) {
+                if ($(elem).val() == $(event.currentTarget).val()) {
+                    $(elem).prop("checked", $(event.currentTarget).prop("checked"));
+                }
+            })
         }
     </script>
 </head>
 <body>
-    <form class="container">
-        <div class="form-group">
-            <label for="txtUserName">用户名</label>
-            <input type="text" id="txtUserName" name="txtUserName" class="form-control" /><br />
+    <form method="post" action="/Handler/user.ashx?RequestMethod=USER_EDIT" class="container">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="txtUserName">用户名</label>
+                    <input type="text" id="txtUserName" name="txtUserName" class="form-control" />
+                </div>
+                <label for="RoleListGiven">已赋予角色</label>
+                <div id="divRoleListGiven" class="checkbox" style="height:380px;">
+
+                </div>
+                <input type="submit" id="btnSubmit" name="btnSubmit" value="提交" class="btn btn-primary" />
+            </div>
+            <div class="col-sm-8">
+                <label for="RoleList">角色列表</label>
+                <div id="roleList">
+
+                </div>
+            </div>
         </div>
-        <label for="RoleList">角色列表</label>
-        <div id="roleList">
+        <div class="row">
 
         </div>
-        <div style="margin-top:20px;"></div>
-        <input type="button" id="btnSubmit" name="btnSubmit" value="提交" class="btn btn-primary" />
-        <input type="hidden" id="txtID" name="txtName" />
-        <input type="hidden" id="txtRIDS" name="txtRIDS" />
     </form>
 </body>
 </html>

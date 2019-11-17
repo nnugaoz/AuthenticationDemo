@@ -7,6 +7,7 @@ using System.Web;
 using Newtonsoft.Json;
 using Auth.DBHelper;
 using Auth.Dao;
+using System.IO;
 
 namespace Auth.Handler
 {
@@ -47,7 +48,44 @@ namespace Auth.Handler
                 case "GET_LIST_PAGINATION":
                     GetListPagination(context);
                     break;
+
+                case "IMPORT":
+                    Import(context);
+                    break;
             }
+        }
+
+        private void Import(HttpContext context)
+        {
+            RequestResult lRR = new RequestResult();
+
+            if (context.Request.Files.Count > 0)
+            {
+                if (context.Request.Files[0].ContentType == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+                {
+                    string lFileName = @"E:\00_Temp\" + context.Request.Files[0].FileName;
+                    context.Request.Files[0].SaveAs(lFileName);
+
+                    UserDao lUserDao = new UserDao();
+                    if (lUserDao.Import(lFileName) == 1)
+                    {
+                        lRR.Status = "1";
+                    }
+                    else
+                    {
+                        lRR.Status = "0";
+                        lRR.Msg = "保存失败！";
+                    }
+                }
+                else
+                {
+                    lRR.Status = "0";
+                    lRR.Msg = "文件格式错误！";
+                }
+            }
+
+
+            context.Response.Write(JsonConvert.SerializeObject(lRR));
         }
 
         private void GetListPagination(HttpContext context)
@@ -110,7 +148,7 @@ namespace Auth.Handler
             DataTable lDTUserSingle = lUserDao.GetUserById(lID);
 
             RoleDao lRoleDao = new RoleDao();
-            DataTable lDTRoleList = lRoleDao.GetRoleList();
+            DataTable lDTRoleList = lRoleDao.GetRoleListByUserID(lID);
 
             DataSet lDS = new DataSet();
 
@@ -133,15 +171,15 @@ namespace Auth.Handler
 
         private void EditUser(HttpContext context)
         {
-            string lID = context.Request.Params["ID"].ToString();
-            string lUserName = context.Request.Params["txtUserName"].ToString();
-            string lRIDS = context.Request.Params["txtRIDS"].ToString();
+            string lID = context.Request.Form["ID"].ToString();
+            string lUserName = context.Request.Form["UserName"].ToString();
+            string lRIDS = context.Request.Form["RIDS"].ToString();
 
             UserDao lUserDao = new UserDao();
 
             lUserDao.EditUser(lID, lUserName, lRIDS);
-
-            context.Response.Redirect("/Html/User/UserList.html");
+            RequestResult lRR = new RequestResult();
+            context.Response.Write(JsonConvert.SerializeObject(lRR));
         }
 
         private void AddUser(HttpContext context)

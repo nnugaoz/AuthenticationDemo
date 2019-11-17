@@ -168,5 +168,49 @@ namespace Auth.DBHelper
             }
             return lRet;
         }
+
+        public Int32 ExecuteSQLWithTransaction(Dictionary<string, SqlParameter[]> pSQLDic)
+        {
+            Int32 lRet = -1;
+            try
+            {
+                using (SqlConnection lSqlConnection = new SqlConnection(mConnectionString))
+                {
+                    lSqlConnection.Open();
+                    SqlTransaction lSqlTransaction = lSqlConnection.BeginTransaction();
+
+                    SqlCommand lSqlCommand = new SqlCommand();
+                    lSqlCommand.Connection = lSqlConnection;
+                    lSqlCommand.Transaction = lSqlTransaction;
+
+                    try
+                    {
+                        foreach (KeyValuePair<string, SqlParameter[]> lPair in pSQLDic)
+                        {
+                            lSqlCommand.CommandText = lPair.Key;
+                            if (lPair.Value != null)
+                            {
+                                lSqlCommand.Parameters.AddRange(lPair.Value);
+                            }
+                            lSqlCommand.ExecuteNonQuery();
+                            lSqlCommand.Parameters.Clear();
+                        }
+
+                        lSqlTransaction.Commit();
+                        lRet = 1;
+                    }
+                    catch (Exception ex)
+                    {
+                        mLogger.Error(ex);
+                        lSqlTransaction.Rollback();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                mLogger.Error(ex);
+            }
+            return lRet;
+        }
     }
 }

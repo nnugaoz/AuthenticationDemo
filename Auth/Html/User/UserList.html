@@ -12,6 +12,10 @@
 
         $(function () {
             Init();
+
+            $("#btnImport").on("click", btnImport_OnClick);
+            $("#btnExport").on("click", btnExport_OnClick);
+            $("#inputFile").on("change", inputFile_OnChange);
         });
 
         function Init() {
@@ -48,10 +52,44 @@
             layer.open({
                 type: 2
                 , content: "/Html/User/UserEdit.html?ID=" + event.data.RowData.ID
-                , area: ["800px", "800px"]
+                , area: ["800px", "600px"]
                 , title: "编辑用户"
+                , resize: false
                 , end: function () {
                     Init();
+                }
+            });
+        }
+
+        function btnImport_OnClick(event) {
+            $("#inputFile").click();
+        }
+
+        function btnExport_OnClick(event) {
+
+        }
+
+        function inputFile_OnChange(event) {
+            var lPostData = new FormData($("#formFile")[0]);
+            $.ajax({
+                type: "post"
+                , url: $("#formFile").prop("action")
+                , contentType: false
+                , processData: false
+                , cache: false
+                , enctype: "multipart/form-data"
+                , data: lPostData
+                , success: function (pData) {
+                    var lData = JSON.parse(pData);
+                    if (lData.Status == "1") {
+                        layer.alert("上传完毕！", { icon: 1 }, function (index) {
+                            layer.close(index);
+                        });
+                    } else {
+                        layer.alert(lData.Msg, { icon: 2 }, function (index) {
+                            layer.close(index);
+                        });
+                    }
                 }
             });
         }
@@ -59,8 +97,13 @@
 </head>
 <body>
     <a href="/Html/User/UserAdd.html" class="btn btn-success">新增</a>
+    <a href="#" class="btn btn-success" id="btnImport">导入...</a>
+    <a href="#" class="btn btn-success" id="btnExport">导出...</a>
     <div id="UserList">
 
     </div>
+    <form method="post" enctype="multipart/form-data" id="formFile" action="/Handler/user.ashx?RequestMethod=IMPORT">
+        <input type="file" style="display:none;" id="inputFile" name="inputFile" />
+    </form>
 </body>
 </html>

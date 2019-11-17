@@ -139,6 +139,24 @@ namespace Auth.Dao
             lMsSqlHelper.ExecuteSQL(lSQL, lSqlParams);
         }
 
+        internal DataTable GetRoleListByUserID(string lID)
+        {
+            DataTable lDT = null;
+            MsSqlHelper lMsSqlHelper = new MsSqlHelper();
+            string lSQL = "";
+
+            lSQL += "SELECT ID,RName FROM GetRoleListByUserID(@UserID)";
+
+            SqlParameter[] lParams = new SqlParameter[]
+            {
+                new SqlParameter("@UserID",lID)
+            };
+
+            lDT = lMsSqlHelper.GetDataTable(lSQL, lParams);
+            lDT.TableName = "RoleList";
+            return lDT;
+        }
+
         internal DataTable GetRoleList(int pBeginIndex, int pEndIndex)
         {
             DataTable lDT = null;

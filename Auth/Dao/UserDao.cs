@@ -1,4 +1,5 @@
 ﻿using Auth.DBHelper;
+using Lib;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -84,6 +85,47 @@ namespace Auth.Dao
             }
 
             return lDTUserSingle;
+        }
+
+        internal int Import(string lFileName)
+        {
+            int lRet = -1;
+            DataSet lDS = null;
+            DataTable lDT = null;
+            NPOIExcelHelper lExcelHelper = new NPOIExcelHelper();
+            Dictionary<string, SqlParameter[]> lSqlDic = new Dictionary<string, SqlParameter[]>();
+            string lSQL = "";
+            MsSqlHelper lMsSqlHelper = new MsSqlHelper();
+            lDS = lExcelHelper.LoadToDataSet(lFileName);
+
+            if (lDS != null && lDS.Tables.Count > 0)
+            {
+                lDT = lDS.Tables[0];
+                for (var i = 0; i < lDT.Rows.Count; i++)
+                {
+                    lSQL = "INSERT INTO T_User(";
+                    lSQL += "ID";
+                    lSQL += ", UserName";
+                    lSQL += ", RIDS";
+                    lSQL += ")VALUES(";
+                    lSQL += "@ID";
+                    lSQL += ", @UserName";
+                    lSQL += ", @RIDS";
+                    lSQL += ")";
+
+                    SqlParameter[] lParams = new SqlParameter[]
+                    {
+                        new SqlParameter("@ID",Guid.NewGuid().ToString())
+                        ,new SqlParameter("@UserName",lDT.Rows[i]["UserName"].ToString())
+                        ,new SqlParameter("@RIDS","cdfe4d65-5244-478f-afd6-ce8ab2740894")
+                    };
+                    lSqlDic.Add(lSQL + new string(' ', i), lParams);
+                }
+
+                lRet = lMsSqlHelper.ExecuteSQLWithTransaction(lSqlDic);
+            }
+
+            return lRet;
         }
 
         public DataTable GetUserList()

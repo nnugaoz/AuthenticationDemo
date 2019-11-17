@@ -1,4 +1,5 @@
-﻿function PaginationColumnConfiguration() {
+﻿/// <reference path="Pagination.js" />
+function PaginationColumnConfiguration() {
     this.HeaderText = "";
     this.DataField = "";
     this.CssClass = "";
@@ -6,6 +7,7 @@
     this.PWidth = "";
 }
 PaginationColumnConfiguration.prototype.OnClickEventHandler = function () { }
+PaginationColumnConfiguration.prototype.OnColumnDataBinding = function () { }
 
 function PaginationConfiguration() {
     this.RequestUrl = "";
@@ -84,7 +86,11 @@ Pagination.prototype.RequestData = function (RequestPageIndex) {
 
                             case "CHK":
                                 var lChk = $("<input type='checkbox' class='checkbox'>");
+                                lChk.val(lData[i][that.Columns[j].DataField]);
                                 lChk.on("change", { RowData: lData[i] }, that.Columns[j].OnClickEventHandler);
+                                if (that.Columns[j].OnColumnDataBinding) {
+                                    that.Columns[j].OnColumnDataBinding({ data: { ColControl: lChk, RowData: lData[i] } });
+                                }
                                 lTd.append(lChk);
                                 break;
                         }
