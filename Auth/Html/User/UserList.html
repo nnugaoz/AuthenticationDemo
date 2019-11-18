@@ -66,12 +66,25 @@
         }
 
         function btnExport_OnClick(event) {
-
+            $.ajax({
+                async: false
+                , type: "GET"
+                , url: "/Handler/User.ashx?RequestMethod=EXPORT"
+                , success: function (pData) {
+                    var lData = JSON.parse(pData);
+                    if (lData.Status == "1") {
+                        window.location.href = lData.Msg
+                    } else {
+                        layer.alert("导入失败", { icon: 2 });
+                    }
+                }
+            });
         }
 
         function inputFile_OnChange(event) {
             var lPostData = new FormData($("#formFile")[0]);
             $.ajax({
+                async: false,
                 type: "post"
                 , url: $("#formFile").prop("action")
                 , contentType: false

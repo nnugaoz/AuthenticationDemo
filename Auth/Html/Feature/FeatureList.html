@@ -73,6 +73,7 @@
 
             var ztreeNodes = [];
             $.ajax({
+                async: false,
                 type: "get"
                 , url: "../../Handler/Feature.ashx?RequestMethod=FEATURE_LIST"
                 , success: function (pData) {

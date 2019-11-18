@@ -56,6 +56,7 @@ Pagination.prototype.RequestData = function (RequestPageIndex) {
     this.CurrentPageIndex = parseInt(RequestPageIndex);
     var that = this;
     $.ajax({
+        async: false,
         type: "post"
         , url: this.RequestUrl
         , data: { BeginIndex: lBeginIndex, EndIndex: lEndIndex }

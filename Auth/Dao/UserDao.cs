@@ -96,7 +96,7 @@ namespace Auth.Dao
             Dictionary<string, SqlParameter[]> lSqlDic = new Dictionary<string, SqlParameter[]>();
             string lSQL = "";
             MsSqlHelper lMsSqlHelper = new MsSqlHelper();
-            lDS = lExcelHelper.LoadToDataSet(lFileName);
+            lDS = lExcelHelper.ImportToDataSet(lFileName);
 
             if (lDS != null && lDS.Tables.Count > 0)
             {

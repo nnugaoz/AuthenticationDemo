@@ -28,6 +28,7 @@
             mUserID = GetParameterByName("ID");
 
             $.ajax({
+                async: false,
                 type: "POST"
                 , url: "/Handler/User.ashx?RequestMethod=USER_EDIT_INIT&ID=" + mUserID
                 , success: function (pData) {
@@ -86,6 +87,7 @@
 
                 if (lRIDS != "") {
                     $.ajax({
+                        async: false,
                         type: "POST"
                     , url: $("form").prop("action")
                         , data: { ID: mUserID, RIDS: lRIDS, UserName: $('#txtUserName').val() }

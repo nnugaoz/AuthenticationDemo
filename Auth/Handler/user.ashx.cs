@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using Auth.DBHelper;
 using Auth.Dao;
 using System.IO;
+using Lib;
 
 namespace Auth.Handler
 {
@@ -52,7 +53,30 @@ namespace Auth.Handler
                 case "IMPORT":
                     Import(context);
                     break;
+
+                case "EXPORT":
+                    Export(context);
+                    break;
             }
+        }
+
+        private void Export(HttpContext context)
+        {
+            RequestResult lRR = new RequestResult();
+            NPOIExcelHelper lExcelHelper = new NPOIExcelHelper();
+            String lExcelFilePath = "";
+            DataSet lDS = new DataSet();
+            DataTable lDT = new DataTable();
+
+            UserDao lUserDao = new UserDao();
+            lDT = lUserDao.GetUserList();
+            lDS.Tables.Add(lDT.Copy());
+
+            lExcelHelper.DataSetExport(lDS, ref lExcelFilePath);
+            lRR.Msg = @"\TempFile\" + lExcelFilePath;
+
+            context.Response.Write(JsonConvert.SerializeObject(lRR));
+
         }
 
         private void Import(HttpContext context)

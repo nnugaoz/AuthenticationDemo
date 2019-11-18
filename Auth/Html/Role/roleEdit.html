@@ -23,6 +23,7 @@
             var lID = GetParameterByName("ID");
 
             $.ajax({
+                async: false,
                 type: "post"
                 , url: "/Handler/Role.ashx?RequestMethod=ROLE_EDIT_INIT"
                 , data: { "ID": lID }
@@ -84,6 +85,7 @@
                 }
 
                 $.ajax({
+                    async: false,
                     type: "post"
                     , url: $("form").prop("action")
                     , data: $("form").serialize()

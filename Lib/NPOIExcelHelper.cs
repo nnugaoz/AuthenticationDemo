@@ -1,5 +1,6 @@
 ﻿using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
+using System;
 using System.Data;
 using System.IO;
 
@@ -7,7 +8,7 @@ namespace Lib
 {
     public class NPOIExcelHelper
     {
-        public DataTable LoadToDataTable(ISheet pSheet)
+        private DataTable ImportToDataTable(ISheet pSheet)
         {
             DataTable lDT = new DataTable();
             for (int i = pSheet.FirstRowNum; i < pSheet.LastRowNum; i++)
@@ -37,7 +38,7 @@ namespace Lib
             return lDT;
         }
 
-        public DataSet LoadToDataSet(string pXLSXFile)
+        public DataSet ImportToDataSet(string pXLSXFile)
         {
             DataSet lDS = null;
             DataTable lDT = null;
@@ -50,11 +51,62 @@ namespace Lib
                 lDS = new DataSet();
                 for (int i = 0; i < lWK.NumberOfSheets; i++)
                 {
-                    lDT = LoadToDataTable(lWK.GetSheetAt(i));
+                    lDT = ImportToDataTable(lWK.GetSheetAt(i));
                     lDS.Tables.Add(lDT);
                 }
             }
             return lDS;
         }
+
+        private bool DataTableExport(DataTable pDT, ISheet pSheet)
+        {
+            bool lRet = false;
+            int lStartRowIdx = 0;
+            int lStartColIdx = 0;
+
+            for (int i = 0; i < pDT.Columns.Count; i++)
+            {
+                if (i == 0)
+                {
+                    pSheet.CreateRow(lStartRowIdx);
+                }
+                pSheet.GetRow(lStartRowIdx).CreateCell(lStartColIdx + i).SetCellValue(pDT.Columns[i].ColumnName);
+                //pSheet.GetRow(lStartRowIdx).RowStyle.Alignment = HorizontalAlignment.Center;
+                //pSheet.GetRow(lStartRowIdx).RowStyle.BorderDiagonalLineStyle = BorderStyle.Dashed;
+            }
+            lStartRowIdx++;
+
+            for (int i = 0; i < pDT.Rows.Count; i++)
+            {
+                pSheet.CreateRow(lStartRowIdx + i);
+
+                for (int j = 0; j < pDT.Columns.Count; j++)
+                {
+                    pSheet.GetRow(lStartRowIdx + i).CreateCell(lStartColIdx + j).SetCellValue(pDT.Rows[i][j].ToString());
+                }
+            }
+
+            return lRet;
+        }
+
+        public bool DataSetExport(DataSet pDS, ref string pFileName)
+        {
+            bool lRet = false;
+            if (pDS != null && pDS.Tables.Count > 0)
+            {
+                XSSFWorkbook lWB = new XSSFWorkbook();
+                for (int i = 0; i < pDS.Tables.Count; i++)
+                {
+                    ISheet lSheet = lWB.CreateSheet(pDS.Tables[i].TableName);
+                    DataTableExport(pDS.Tables[i], lSheet);
+                }
+
+                pFileName = Guid.NewGuid().ToString() + ".xlsx";
+                FileStream lFS = File.Create(@"E:\02_Git\01_Auth\Auth\TempFile\" + pFileName);
+                lWB.Write(lFS);
+            }
+            return lRet;
+        }
+
     }
 }

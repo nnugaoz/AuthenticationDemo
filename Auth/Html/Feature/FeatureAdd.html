@@ -22,6 +22,7 @@
                 $("#txtPName").val("根模块");
             } else {
                 $.ajax({
+                    async:false,
                     type: "get"
                     , url: "/Handler/Feature.ashx?RequestMethod=FEATURE_QUERY_BY_ID&ID=" + lPID
                     , success: function (pData) {
@@ -40,6 +41,7 @@
                 var lUrl = $("form").attr("action");
 
                 $.ajax({
+                    async: false,
                     type: "post"
                     , url: lUrl
                     , data: $("form").serialize()

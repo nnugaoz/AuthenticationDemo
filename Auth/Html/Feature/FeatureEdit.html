@@ -17,6 +17,7 @@
             var lID = GetParameterByName("ID");
 
             $.ajax({
+                async: false,
                 type: "get"
                 , url: "/Handler/Feature.ashx?RequestMethod=FEATURE_QUERY_BY_ID&ID=" + lID
                 , success: function (pData) {
@@ -42,6 +43,7 @@
                 var lUrl = $("form").attr("action");
 
                 $.ajax({
+                    async: false,
                     type: "post"
                     , url: lUrl
                     , data: $("form").serialize()

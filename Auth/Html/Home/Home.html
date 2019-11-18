@@ -19,6 +19,7 @@
             $("#spanCurUser").text(GetCookieValue("UserName"));
 
             $.ajax({
+                async: false,
                 type: "GET"
                 , url: "/Handler/Home.ashx"
                 , success: function (pData) {

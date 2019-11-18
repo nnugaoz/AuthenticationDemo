@@ -34,6 +34,7 @@
             };
 
             $.ajax({
+                async: false,
                 type: "get"
                 , url: "/Handler/Feature.ashx?RequestMethod=FEATURE_LIST"
                 , success: function (pData) {
@@ -61,6 +62,7 @@
                     $("#txtSelectedFID").val($("#txtSelectedFID").val() + lSelectedNodes[i].ID + ";");
                 }
                 $.ajax({
+                    async: false,
                     type: "post"
                     , url: $("form").prop("action")
                     , data: $("form").serialize()
