@@ -11,44 +11,44 @@
     <script src="../../JavaScript/activeReport/Scripts/GrapeCity.ActiveReports.Viewer.Html.js"></script>
     <script type="text/javascript">
         $(function () {
+
+            var lReport = {
+                id: "RCountWeightByMonth.rdlx"
+                , parameters: [{ name: "NYear" }]
+            };
+
             var viewer = GrapeCity.ActiveReports.Viewer({
-                element: '#viewerContainer',
-                report: {
-                    id: "RCountWeightByMonth.rdlx"
-                },
+                element: '#divViewer',
                 reportService: {
                     url: '/ARReport/ActiveReports.ReportService.asmx'
                 },
-                uiType: 'desktop'
+                uiType: 'custom'
             });
-            //debugger;
-            var lElements = $(viewer.toolbar);
 
-            $(lElements.children()[0]).css("display", "none");
-            $(lElements.children()[1]).css("display", "none");
-            $(lElements.children()[2]).css("display", "none");
-            //$(lElements.children()[3]).css("display", "none");
-            $(lElements.children()[4]).css("display", "none");
-            $(lElements.children()[5]).css("display", "none");
-            //$(lElements.children()[6]).css("display", "none");
-            //$(lElements.children()[7]).css("display", "none");
-            //$(lElements.children()[8]).css("display", "none");
-            $(lElements).css("border", "none");
-            //$(viewer.toolbarTop).hide();
-            //$(viewer.toolbar).hide();
-            //$(viewer.toolbarBottom).hide();
-        })
+            lReport.parameters[0].value = 2015;
+            viewer.option("report", lReport);
+
+            $("#btnSearch").on("click", function (event) {
+                lReport.parameters[0].value = $("#txtNYear").val();
+                viewer.option("report", lReport);
+            })
+        });
 
     </script>
 </head>
 <body>
-    <div id="container">
-        <div id="row">
-            <div id="col-md-12">
-                <div id="viewerContainer">
-
-                </div>
+    <div style="position:absolute;top:0px;left:0px;right:0px;height:40px;">
+        <div class="form-inline">
+            <div class="form-group">
+                <label for="txtNYear">统计年份</label>
+                <input type="text" id="txtNYear" class="form-control" />
+                <input type="button" id="btnSearch" value="查询" class="btn btn-success" />
             </div>
+        </div>
+    </div>
+    <div style="position:absolute;top:50px;bottom:0px;left:0px;right:0px;">
+        <div id="divViewer" style="height:100%;">
+
         </div>
     </div>
 </body>

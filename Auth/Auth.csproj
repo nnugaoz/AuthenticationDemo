@@ -258,6 +258,9 @@
     <Content Include="JavaScript\activeReport\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="JavaScript\activeReport\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="JavaScript\activeReport\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="ARReport\CCountWeightByMonth.rdlx">
+      <SubType>Component</SubType>
+    </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
