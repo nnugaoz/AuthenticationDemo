@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2005/01/reportdefinition">
-	<dd:Name xmlns:dd="http://schemas.datadynamics.com/reporting/2005/02/reportdefinition">H:\35_Git\AuthenticationDemo\Auth\ARReport\PageReport1.rdlx</dd:Name>
+	<dd:Name xmlns:dd="http://schemas.datadynamics.com/reporting/2005/02/reportdefinition">E:\02_Git\01_Auth\Auth\ARReport\CCountWeightByMonth.rdlx</dd:Name>
 	<Body>
 		<Height>29.7cm</Height>
 		<ReportItems>
@@ -9,7 +9,8 @@
 					<Page>
 						<ReportItems>
 							<dd:DVChart Name="Chart1" xmlns:dd="http://schemas.datadynamics.com/reporting/2005/02/reportdefinition">
-								<Height>24.6cm</Height>
+								<DataSetName>DataSet1</DataSetName>
+								<Height>24.6989cm</Height>
 								<DisplayTypeSelector>false</DisplayTypeSelector>
 								<Style>
 									<FontSize>8pt</FontSize>
@@ -257,9 +258,20 @@
 											<Tooltip />
 										</Config>
 										<Encodings>
+											<Values>
+												<Value>
+													<Field fieldType="Simple">
+														<Value>
+															<FieldItem>=Fields!TNet.Value</FieldItem>
+														</Value>
+													</Field>
+												</Value>
+											</Values>
 											<Category>
 												<Field>
-													<Value />
+													<Value>
+														<FieldItem>=Fields!NMonth.Value</FieldItem>
+													</Value>
 												</Field>
 												<SortingField>=""</SortingField>
 											</Category>
@@ -287,6 +299,7 @@
 						</ReportItems>
 					</Page>
 				</Pages>
+				<DataSetName>DataSet1</DataSetName>
 			</FixedPage>
 		</ReportItems>
 	</Body>
@@ -297,4 +310,46 @@
 	<RightMargin>2.5cm</RightMargin>
 	<TopMargin>2.5cm</TopMargin>
 	<Width>21cm</Width>
+	<ReportParameters>
+		<ReportParameter Name="NYear">
+			<DataType>Integer</DataType>
+			<Prompt>请输入统计年份</Prompt>
+		</ReportParameter>
+	</ReportParameters>
+	<DataSources>
+		<DataSource Name="DataSource1">
+			<ConnectionProperties>
+				<ConnectString>password=1;data source=.;initial catalog=Auth;user id=sa;</ConnectString>
+				<DataProvider>SQL</DataProvider>
+			</ConnectionProperties>
+		</DataSource>
+	</DataSources>
+	<DataSets>
+		<DataSet Name="DataSet1">
+			<Fields>
+				<Field Name="TNet">
+					<DataField>TNet</DataField>
+				</Field>
+				<Field Name="NYear">
+					<DataField>NYear</DataField>
+				</Field>
+				<Field Name="NMonth">
+					<DataField>NMonth</DataField>
+				</Field>
+			</Fields>
+			<Query>
+				<CommandText>SELECT SUM(NET) TNet,NYear,NMonth FROM(
+select NET, YEAR(CAST(NetTime AS DATETIME)) NYear,MONTH(CAST(NetTime AS DATETIME)) AS NMonth from T_Weight
+)T WHERE NYear IS NOT NULL AND NMonth IS NOT NULL
+  AND NYear=@NYear GROUP BY NYear,NMonth
+ORDER BY NYear,NMonth</CommandText>
+				<DataSourceName>DataSource1</DataSourceName>
+				<QueryParameters>
+					<QueryParameter Name="NYear">
+						<Value>=Parameters!NYear.Value</Value>
+					</QueryParameter>
+				</QueryParameters>
+			</Query>
+		</DataSet>
+	</DataSets>
 </Report>
