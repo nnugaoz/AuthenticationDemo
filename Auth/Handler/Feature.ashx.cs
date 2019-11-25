@@ -37,7 +37,25 @@ namespace Auth.Handler
                 case "FEATURE_QUERY_BY_ID":
                     FeatureQueryById(context);
                     break;
+
+                case "FEATURE_DEL":
+                    FeatureDel(context);
+                    break;
             }
+        }
+
+        private void FeatureDel(HttpContext context)
+        {
+            string lID = context.Request.QueryString["ID"].ToString();
+            RequestResult lRR = new RequestResult();
+            FeatureDao lFeatureDao = new FeatureDao();
+
+            if (!lFeatureDao.DelByID(lID))
+            {
+                lRR.Status = "0";
+            }
+
+            context.Response.Write(JsonConvert.SerializeObject(lRR));
         }
 
         private void FeatureQueryById(HttpContext context)

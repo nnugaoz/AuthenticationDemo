@@ -79,6 +79,27 @@ namespace Auth.Dao
             return lDT;
         }
 
+        internal bool DelByID(string lID)
+        {
+            string lSQL = "";
+            bool lRet = false;
+            MsSqlHelper lMsSqlHelper = new MsSqlHelper();
+
+            lSQL += "DELETE FROM T_Feature";
+            lSQL += " WHERE ID=@ID";
+
+            SqlParameter[] lParams = new SqlParameter[]
+            {
+                new SqlParameter("@ID",lID)
+            };
+
+            if (lMsSqlHelper.ExecuteSQL(lSQL, lParams) > 0)
+            {
+                lRet = true;
+            }
+            return lRet;
+        }
+
         public DataTable GetFeatureById(string pID)
         {
             MsSqlHelper lMsSqlHelper = new MsSqlHelper();

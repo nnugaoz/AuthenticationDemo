@@ -55,7 +55,20 @@
                 }
 
                 layer.confirm("您确认要删除该功能节点吗？", function (index) {
-                    console.log("YES");
+                    $.ajax({
+                        type: "POST"
+                        , url: "/Handler/Feature.ashx?RequestMethod=FEATURE_DEL&ID=" + lSelectedNodeID
+                        , success: function (pData) {
+                            var lData = JSON.parse(pData);
+                            if (lData.Status == "1") {
+                                layer.alert("删除成功！", { icon: 1 });
+                                InitFeatureList();
+                            } else {
+                                layer.alert("删除失败！", { icon: 2 });
+                            }
+                        }
+                    });
+                    layer.close(index);
                 })
             })
         });
