@@ -23,17 +23,17 @@
                 , success: function (pData) {
                     var lData = JSON.parse(pData);
 
-                    if (lData.FeatureSingle.length > 0) {
+                    if (lData.Data.length > 0) {
 
-                        $("#txtID").val(lData.FeatureSingle[0].ID);
-                        $("#txtFName").val(lData.FeatureSingle[0].FName);
-                        $("#txtAddr").val(lData.FeatureSingle[0].Addr);
-                        if (lData.FeatureSingle[0].Type == "0") {
+                        $("#txtID").val(lData.Data[0].ID);
+                        $("#txtFName").val(lData.Data[0].FName);
+                        $("#txtAddr").val(lData.Data[0].Addr);
+                        if (lData.Data[0].Type == "0") {
                             $("#radType0").prop("checked", "checked");
-                        } else if (lData.FeatureSingle[0].Type == "1") {
+                        } else if (lData.Data[0].Type == "1") {
                             $("#radType1").prop("checked", "checked");
                         }
-                        $("#txtSort").val(lData.FeatureSingle[0].Sort);
+                        $("#txtSort").val(lData.Data[0].Sort);
                     }
                 }
             });
@@ -51,6 +51,7 @@
                         var lData = JSON.parse(pData);
                         if (lData.Status == "1") {
                             layer.alert("保存成功！", function (index) {
+                                window.parent.InitFeatureList();
                                 //当你在iframe页面关闭自身时
                                 var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
                                 parent.layer.close(index); //再执行关闭

@@ -106,7 +106,7 @@ namespace Auth.Dao
             if (lDS != null && lDS.Tables.Count > 0)
             {
                 lDT = lDS.Tables[0];
-                lDT.TableName = "FeatureSingle";
+                lDT.TableName = "Data";
             }
             return lDT;
         }

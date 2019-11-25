@@ -30,9 +30,6 @@
                         , content: "/Html/Feature/FeatureAdd.html?ID=" + lSelectedNodeID
                         , title: "新增系统功能"
                         , area: ["800px", "600px"]
-                        , end: function () {
-                            InitFeatureList();
-                        }
                     });
                 } else {
                     layer.open({
@@ -40,12 +37,27 @@
                         , content: "/Html/Feature/FeatureEdit.html?ID=" + lSelectedNodeID
                         , title: "编辑系统功能"
                         , area: ["800px", "600px"]
-                        , end: function () {
-                            InitFeatureList();
-                        }
                     });
                 }
             });
+
+            $("#lnkDel").on("click", function (event) {
+                var lFTreeObj = $.fn.zTree.getZTreeObj("FTree");
+                var lSelectedNodes = lFTreeObj.getSelectedNodes();
+                var lSelectedNodeID = "";
+                if (lSelectedNodes.length > 0) {
+                    lSelectedNodeID = lSelectedNodes[0].ID;
+                }
+
+                if (lSelectedNodeID == "") {
+                    layer.alert("请选中需要删除的功能节点！", { icon: 2 });
+                    return;
+                }
+
+                layer.confirm("您确认要删除该功能节点吗？", function (index) {
+                    console.log("YES");
+                })
+            })
         });
 
         function InitFeatureList() {
@@ -98,14 +110,14 @@
         }
 
 
+
     </script>
 </head>
 <body>
-    系统功能列表
+    <a href="javascript:void(0);" id="lnkAdd" name="lnkAdd" class="btn btn-success">添加</a>
+    <a href="javascript:void(0);" id="lnkEdit" name="lnkEdit" class="btn btn-primary">编辑</a>
+    <a href="javascript:void(0);" id="lnkDel" name="lnkDel" class="btn btn-warning">删除</a>
     <div id="FTree" class="ztree">
-
     </div>
-    <a href="javascript:void(0);" id="lnkAdd" name="lnkAdd">添加</a>
-    <a href="javascript:void(0);" id="lnkEdit" name="lnkEdit">编辑</a>
 </body>
 </html>
