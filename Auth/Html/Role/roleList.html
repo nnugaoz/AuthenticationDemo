@@ -11,38 +11,25 @@
         }
 
         $(function () {
-            PageFeatureInit();
-            Init();
             $("#btnAdd").on("click", btnAdd_OnClick);
+            $("#btnSearch").on("click", btnSearch_Click);
+            btnSearch_Click();
         });
 
-        function PageFeatureInit(pPageID) {
-            $.ajax({
-                async: false,
-                type: "post"
-                , url: "/Handler/Role.ashx?RequestMethod=PageFeatureInit"
-                , data: { PageName: "RoleList" }
-                , success: function (pData) {
-                    if (pData != "") {
-                        var lData = JSON.parse(pData);
-                        for (var i = 0; i < lData.length; i++) {
-                            var lBtn = $("<input type='button'>");
-                            lBtn.prop("value", lData[i].FName);
-                            lBtn.addClass("btn btn-success");
-                            lBtn.prop("style", "margin-left:10px");
-                            lBtn.on("click", window[lData[i].Addr]);
-                            $("#ToolStripe").append(lBtn);
-                        }
-                    }
-                }
-            });
+        function btnSearch_Click(event) {
+            Init();
+            
         }
 
         function Init() {
             $("#RoleList").empty();
             var lListConfig = new PaginationConfiguration();
-            lListConfig.RequestUrl = "/Handler/Role.ashx?RequestMethod=ROLE_LIST_PAGE";
+
+            var lRName = $.trim($("#txtRName").val());
+
+            lListConfig = new PaginationConfiguration();
             lListConfig.PageContainerID = "RoleList";
+            lListConfig.RequestUrl = "/Handler/Role.ashx?RequestMethod=ROLE_LIST_PAGE&RName=" + lRName
 
             var lIDCol = new PaginationColumnConfiguration();
             lIDCol.Type = "TXT";
@@ -126,10 +113,15 @@
     </script>
 </head>
 <body>
-    角色管理
-    <div id="ToolStripe">
+    <div id="SearchBar" class="form-inline table-bordered" style="padding:10px;">
+        <div class="form-group">
+            <label for="txtRName">角色名</label>
+            <input type="text" id="txtRName" name="txtRName" class="form-control" />
+        </div>
+        <input type="button" id="btnSearch" name="btnSearch" value="检索" class="btn btn-primary" />
+        <input type="button" id="btnAdd" name="btnAdd" value="新增" class="btn btn-success" />
     </div>
-    <div id="RoleList">
+    <div id="RoleList" style="margin-top:10px;">
     </div>
 </body>
 </html>

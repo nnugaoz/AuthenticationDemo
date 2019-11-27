@@ -134,9 +134,10 @@ namespace Auth.Handler
         {
             int lBeginIndex = Convert.ToInt32(context.Request.Params["BeginIndex"].ToString());
             int lEndIndex = Convert.ToInt32(context.Request.Params["EndIndex"].ToString());
+            string lRName = context.Request.Params["RName"].ToString();
 
             RoleDao lRoleDao = new RoleDao();
-            DataTable lDTRole = lRoleDao.GetRoleList(lBeginIndex, lEndIndex);
+            DataTable lDTRole = lRoleDao.GetRoleList(lRName, lBeginIndex, lEndIndex);
 
             context.Response.Write(JsonConvert.SerializeObject(lDTRole));
 

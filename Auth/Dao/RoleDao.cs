@@ -157,10 +157,52 @@ namespace Auth.Dao
             return lDT;
         }
 
-        internal DataTable GetRoleList(int pBeginIndex, int pEndIndex)
+        internal DataTable GetRoleList(string pRName, int pBeginIndex, int pEndIndex)
         {
+            MsSqlHelper lMsSqlHelper = new MsSqlHelper();
+
             DataTable lDT = null;
-            lDT = CommonDao.MsSqlQueryDataPagination("T_Role", "ID", pBeginIndex, pEndIndex);
+            string lSQL = "";
+            int lRowCnt = 0;
+
+            lSQL += "SELECT COUNT(1) FROM T_Role";
+            lSQL += " WHERE RName LIKE @RName";
+            SqlParameter[] lParams = new SqlParameter[]
+            {
+                new SqlParameter("@RName","%"+pRName+"%")
+            };
+
+            lDT = lMsSqlHelper.GetDataTable(lSQL, lParams);
+
+            if (lDT != null && lDT.Rows.Count > 0)
+            {
+                lRowCnt = Convert.ToInt32(lDT.Rows[0][0].ToString());
+            }
+
+            if (lRowCnt == 0)
+            {
+                return null;
+            }
+
+            lSQL = "SELECT * FROM (";
+            lSQL += "SELECT ";
+            lSQL += "ID";
+            lSQL += ", RName";
+            lSQL += "," + lRowCnt + " AS RowCnt";
+            lSQL += ", ROW_NUMBER()OVER(ORDER BY ID) AS RowIdx";
+            lSQL += " FROM";
+            lSQL += " T_Role";
+            lSQL += " WHERE RName LIKE @RName";
+            lSQL += ")T WHERE RowIdx>=@BeginIndex AND RowIdx<=@EndIndex";
+
+            lParams = new SqlParameter[]
+            {
+                new SqlParameter("@RName","%"+pRName+"%")
+                , new SqlParameter("@BeginIndex",pBeginIndex)
+                ,new SqlParameter("@EndIndex",pEndIndex)
+            };
+
+            lDT = lMsSqlHelper.GetDataTable(lSQL, lParams);
             return lDT;
         }
     }
