@@ -117,10 +117,11 @@ namespace Auth.Handler
             DataTable lDT = null;
             UserDao lUserDao = new UserDao();
 
+            string lUserName = context.Request.QueryString["UserName"].ToString();
             int lBeginIndex = Convert.ToInt32(context.Request.Params["BeginIndex"].ToString());
             int lEndIndex = Convert.ToInt32(context.Request.Params["EndIndex"].ToString());
 
-            lDT = lUserDao.GetListPagination(lBeginIndex, lEndIndex);
+            lDT = lUserDao.GetListPagination(lUserName, lBeginIndex, lEndIndex);
 
             context.Response.Write(JsonConvert.SerializeObject(lDT));
         }

@@ -11,17 +11,24 @@
         }
 
         $(function () {
-            Init();
-
             $("#btnImport").on("click", btnImport_OnClick);
             $("#btnExport").on("click", btnExport_OnClick);
             $("#inputFile").on("change", inputFile_OnChange);
+            $("#btnSearch").on("click", btnSearch_OnClick);
+
+            btnSearch_OnClick();
         });
+
+        function btnSearch_OnClick() {
+            Init();
+        }
 
         function Init() {
             $("#UserList").empty();
             var lPConfig = new PaginationConfiguration();
-            lPConfig.RequestUrl = "/Handler/User.ashx?RequestMethod=GET_LIST_PAGINATION";
+            var lUserName = $("#txtUserName").val();
+
+            lPConfig.RequestUrl = "/Handler/User.ashx?RequestMethod=GET_LIST_PAGINATION&UserName=" + lUserName;
             lPConfig.PageContainerID = "UserList";
 
             var lIDCol = new PaginationColumnConfiguration();
@@ -109,10 +116,18 @@
     </script>
 </head>
 <body>
-    <a href="/Html/User/UserAdd.html" class="btn btn-success">新增</a>
-    <a href="#" class="btn btn-success" id="btnImport">导入...</a>
-    <a href="#" class="btn btn-success" id="btnExport">导出...</a>
-    <div id="UserList">
+    <div class="form-inline">
+        <div class="form-group">
+            <label for="txtUserName">用户名</label>
+            <input type="text" id="txtUserName" name="txtUserName" class="form-control" />
+        </div>
+        <input type="button" id="btnSearch" name="btnSearch" class="btn btn-success" value="检索" />
+        <a href="/Html/User/UserAdd.html" class="btn btn-success">新增</a>
+        <a href="#" class="btn btn-success" id="btnImport">导入...</a>
+        <a href="#" class="btn btn-success" id="btnExport">导出...</a>
+    </div>
+
+    <div id="UserList" style="margin-top:20px;">
 
     </div>
     <form method="post" enctype="multipart/form-data" id="formFile" action="/Handler/user.ashx?RequestMethod=IMPORT">
