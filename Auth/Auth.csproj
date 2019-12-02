@@ -120,6 +120,9 @@
     <Content Include="Html\Feature\FeatureAdd.html" />
     <Content Include="Html\Feature\FeatureEdit.html" />
     <Content Include="Html\Feature\FeatureList.html" />
+    <Content Include="Html\Map\HtmlPage1.html" />
+    <Content Include="Html\Map\BaiduAPI.txt" />
+    <Content Include="Html\Map\marker.png" />
     <Content Include="Html\Plan\PlanList.html" />
     <Content Include="Html\product.html" />
     <Content Include="Html\Record\RecordList.html" />

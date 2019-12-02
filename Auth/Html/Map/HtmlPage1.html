@@ -1,0 +1,105 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <script src="../../JavaScript/jQuery/jquery-3.4.1.min.js"></script>
+    <style>
+        html {
+            height: 100%;
+        }
+
+        body {
+            height: 100%;
+        }
+
+        #container {
+            height: 100%;
+        }
+    </style>
+
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=3.0&ak=eH5dZzlbt0puXQEAG1GgdunmSW7qVjse">
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+            var map = new BMap.Map("container");
+            var point = new BMap.Point(120.885506, 32.03671);
+            map.centerAndZoom(point, 15);
+            map.addControl(new BMap.NavigationControl());
+            map.enableScrollWheelZoom(true);
+
+            //var marker = new BMap.Marker(point);
+            //map.addOverlay(marker);
+
+            //map.setMapStyleV2({ styleId: "d3e26893f574d006f3e9f3e6c4cedd1e" });
+            //map.addControl(new BMap.OverviewMapControl());
+            map.addControl(new BMap.ScaleControl());
+            //map.addControl(new BMap.MapTypeControl());
+            //map.addControl(new BMap.CopyrightControl());
+            //map.disableBizAuthLogo();
+            //map.enableBizAuthLogo();
+
+
+            // 创建标注对象并添加到地图
+            addMarker(map, point);
+
+            var polyline = new BMap.Polyline([
+                    new BMap.Point(120.88736549240558, 32.03639627224456)
+                    , new BMap.Point(120.88728015338214, 32.03805298654319)
+                    , new BMap.Point(120.88710947533524, 32.039522195145516)
+                    , new BMap.Point(120.88697472950874, 32.04055904417888)
+                    , new BMap.Point(120.8866378649425, 32.04251410363964)
+                    , new BMap.Point(120.8862515935732, 32.04477136055606)
+                    , new BMap.Point(120.88600905108552, 32.046309323751686)
+                    , new BMap.Point(120.88577100012537, 32.047701884830936)
+                    , new BMap.Point(120.88556888138562, 32.04886106084092)
+                    , new BMap.Point(120.88548354236218, 32.05045633823745)
+                    , new BMap.Point(120.88549701694483, 32.05198272845137)
+                    , new BMap.Point(120.88556438985808, 32.05370801576054)
+                    , new BMap.Point(120.88377227036567, 32.053761571825426)
+                    , new BMap.Point(120.88166574394478, 32.053761571825426)
+                    , new BMap.Point(120.88078989607254, 32.05381130242877)
+                    , new BMap.Point(120.8803901501206, 32.053830429576635)
+                    , new BMap.Point(120.87950082766572, 32.05389546184916)
+                    , new BMap.Point(120.87815336940076, 32.054040827936646)
+                    , new BMap.Point(120.87718319944999, 32.05417471754778)
+                    , new BMap.Point(120.87572345299627, 32.05432390859573)
+                    , new BMap.Point(120.87434455403846, 32.054492226406204)
+                    , new BMap.Point(120.87350014685907, 32.05453813120934)
+                    , new BMap.Point(120.87127234919433, 32.05462611535036)
+                    , new BMap.Point(120.86890531417554, 32.0547064486219)
+                    , new BMap.Point(120.86675836400669, 32.05478678182223)
+                    , new BMap.Point(120.86419819330325, 32.05491684494795)
+                    , new BMap.Point(120.86266209088119, 32.054981876440806)
+                    , new BMap.Point(120.86107209012853, 32.05501630485929)
+                    , new BMap.Point(120.85883081788113, 32.05511193928649)
+                    , new BMap.Point(120.85813013958335, 32.05509663778493)
+                    , new BMap.Point(120.85706564755402, 32.05513106615981)
+                    , new BMap.Point(120.8565760710511, 32.0551195900363)
+            ],
+            { strokeColor: "blue", strokeWeight: 6, strokeOpacity: 1 }
+            );
+            map.addOverlay(polyline);
+        });
+
+
+        function addMarker(map, point) {  // 创建图标对象
+            var myIcon = new BMap.Icon("marker.png", new BMap.Size(32, 32), {
+                anchor: new BMap.Size(16, 32)
+            });
+            var marker = new BMap.Marker(point, { icon: myIcon });
+            marker.enableDragging();
+            marker.addEventListener('click', function (event) { alert('你点击了标注！'); });
+            marker.addEventListener('dragend', function (event) { alert("当前位置：" + event.point.lng + ", " + event.point.lat); });
+            map.addOverlay(marker);
+        }
+
+    </script>
+</head>
+<body>
+    <div id="container">
+
+    </div>
+</body>
+</html>

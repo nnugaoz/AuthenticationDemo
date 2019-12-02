@@ -1,0 +1,53 @@
+﻿1、创建百度地图实列
+---参数说明---
+a：html容器id
+var map = new BMap.Map(a);
+
+2、创建百度地图位置点
+---参数说明---
+x：BD09坐标系X
+y：BD09坐标系Y
+var point = new BMap.Point(x,y);
+
+3、百度地图初始化，设置地图展示级别，及展示中心点坐标
+--参数说明---
+p:地图中心点坐标
+l:地图展示级别
+map.centerAndZoom(p, l);
+
+4、经纬度坐标转换成百度坐标
+//GPS坐标
+var x = 116.32715863448607;
+var y = 39.990912172420714;
+var ggPoint = new BMap.Point(x,y);
+
+var convertor = new BMap.Convertor();
+var pointArr = [];
+pointArr.push(ggPoint);
+convertor.translate(pointArr, 1, 5, translateCallback)
+
+function translateCallback(data){
+      if(data.status === 0) {
+        var bdPoint = data.points[0];
+	}
+}
+
+5、在地图上添加标注marker
+--参数说明---
+p:标注点
+var marker = new BMap.Marker(p);
+map.addOverlay(marker);
+
+6、在标注上增加标签说明
+var label = new BMap.Label("Message",{offset:new BMap.Size(20,-10)});
+marker.setLabel(label);
+
+7、在地图上添加地图导航条
+map.addControl(new BMap.NavigationControl());
+
+8、设置地图中心点
+map.setCenter(p);
+
+9、开启鼠标滚轮缩放
+map.enableScrollWheelZoom(true)
+
