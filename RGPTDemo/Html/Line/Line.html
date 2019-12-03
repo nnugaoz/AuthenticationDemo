@@ -30,14 +30,6 @@
             map.centerAndZoom(point, 15);
             map.enableScrollWheelZoom();
 
-            //var polyline = new BMap.Polyline([
-            //    new BMap.Point(120.8871409, 32.03805681),
-            //    new BMap.Point(120.887626, 32.02905739)
-            //            ],
-            //    { strokeColor: "blue", strokeWeight: 6, strokeOpacity: 0.5 }
-            //    );
-            //map.addOverlay(polyline);
-
             $.ajax({
                 type: "GET"
                 , url: "/Handler/Line.ashx?LineID=CD288980-3966-4855-B877-296861425AC6"
