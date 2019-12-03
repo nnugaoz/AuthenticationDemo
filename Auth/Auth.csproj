@@ -11,7 +11,7 @@
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Auth</RootNamespace>
+    <RootNamespace>Lib</RootNamespace>
     <AssemblyName>Auth</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
@@ -120,9 +120,6 @@
     <Content Include="Html\Feature\FeatureAdd.html" />
     <Content Include="Html\Feature\FeatureEdit.html" />
     <Content Include="Html\Feature\FeatureList.html" />
-    <Content Include="Html\Map\HtmlPage1.html" />
-    <Content Include="Html\Map\BaiduAPI.txt" />
-    <Content Include="Html\Map\marker.png" />
     <Content Include="Html\Plan\PlanList.html" />
     <Content Include="Html\product.html" />
     <Content Include="Html\Record\RecordList.html" />
@@ -152,7 +149,6 @@
     <Content Include="JavaScript\activeReport\Scripts\locales\bootstrap-datetimepicker.ja.js" />
     <Content Include="JavaScript\activeReport\Scripts\locales\bootstrap-datetimepicker.zh-CN.js" />
     <Content Include="JavaScript\activeReport\Scripts\modernizr-2.8.3.js" />
-    <Content Include="JavaScript\baidumap\GeoUtils.js" />
     <Content Include="JavaScript\bootstrap-3.3.7-dist\css\bootstrap-theme.css" />
     <Content Include="JavaScript\bootstrap-3.3.7-dist\css\bootstrap-theme.min.css" />
     <Content Include="JavaScript\bootstrap-3.3.7-dist\css\bootstrap.css" />
@@ -222,7 +218,6 @@
     <Compile Include="Handler\Home.ashx.cs">
       <DependentUpon>Home.ashx</DependentUpon>
     </Compile>
-    <Compile Include="DBHelper\MsSqlHelper.cs" />
     <Compile Include="Handler\Feature.ashx.cs">
       <DependentUpon>Feature.ashx</DependentUpon>
     </Compile>

@@ -1,10 +1,4 @@
-﻿using Auth.DBHelper;
-using Auth.Handler;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
+﻿using System.Data;
 
 namespace Auth.Dao
 {

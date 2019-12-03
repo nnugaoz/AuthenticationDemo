@@ -5,7 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using Newtonsoft.Json;
-using Auth.DBHelper;
+using Lib.DBHelper;
 using Auth.Dao;
 using System.IO;
 using Lib;

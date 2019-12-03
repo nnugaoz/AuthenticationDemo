@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <style>
+        html {
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            height: 100%;
+            width: 100%;
+        }
+
+        #container {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+    <script src="../../JavaScript/jQuery/jquery-3.4.1.min.js"></script>
+    <script src="http://api.map.baidu.com/api?v=3.0&ak=eH5dZzlbt0puXQEAG1GgdunmSW7qVjse"></script>
+    <script src="../../JavaScript/baidumap/GeoUtils.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            var map = new BMap.Map("container");
+            var point = new BMap.Point(120.885506, 32.03671);
+            map.centerAndZoom(point, 15);
+            map.enableScrollWheelZoom();
+
+            var marker = new BMap.Marker(point);
+            map.addOverlay(marker);
+
+            //添加多边形地理围栏
+            //var polygon = new BMap.Polygon([
+            //    new BMap.Point(120.87898430199749, 32.042242463849064),
+            //    new BMap.Point(120.87903820032808, 32.03873785497367),
+            //    new BMap.Point(120.88658396661191, 32.03861542077365),
+            //    new BMap.Point(120.88572159332233, 32.04297703718188)
+            //], {
+            //    strokeColor: "blue",
+            //    strokeWeight: 2,
+            //    strokeOpacity: 1
+            //}); //创建多边形
+            //map.addOverlay(polygon);
+
+            //var circle = new BMap.Circle(new BMap.Point(120.885506, 32.03671), 1000, {
+            //    fillColor: "blue",
+            //    strokeWeight: 1,
+            //    fillOpacity: 0.3,
+            //    strokeOpacity: 0.3
+            //});
+
+            //map.addOverlay(circle);
+
+
+            map.addEventListener("click", function (e) {
+                var lng = e.point.lng;
+                var lat = e.point.lat;
+
+                alert(lng + "," + lat);
+
+                //console.log("lng:" + lng)
+                //console.log("lat" + lat)
+
+                //console.log("clicked")
+                //var myPoint = new BMap.Point(lng, lat)
+                //if (BMapLib.GeoUtils.isPointInPolygon(myPoint, circle)) {
+                //    alert("在监控方位内")
+                //} else {
+                //    alert("你已经逃离监控区域")
+                //}
+            });
+
+            //map.addEventListener("mousemove", function (e) {
+            //    var lng = e.point.lng;
+            //    var lat = e.point.lat;
+
+            //    console.log(lng + "," + lat)
+
+            //});
+        });
+    </script>
+</head>
+<body>
+    <div id="container">
+
+    </div>
+</body>
+</html>

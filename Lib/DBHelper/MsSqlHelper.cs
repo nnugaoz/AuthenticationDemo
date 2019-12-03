@@ -7,7 +7,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 
-namespace Auth.DBHelper
+namespace Lib.DBHelper
 {
     public class MsSqlHelper
     {
