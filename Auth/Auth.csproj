@@ -152,6 +152,7 @@
     <Content Include="JavaScript\activeReport\Scripts\locales\bootstrap-datetimepicker.ja.js" />
     <Content Include="JavaScript\activeReport\Scripts\locales\bootstrap-datetimepicker.zh-CN.js" />
     <Content Include="JavaScript\activeReport\Scripts\modernizr-2.8.3.js" />
+    <Content Include="JavaScript\baidumap\GeoUtils.js" />
     <Content Include="JavaScript\bootstrap-3.3.7-dist\css\bootstrap-theme.css" />
     <Content Include="JavaScript\bootstrap-3.3.7-dist\css\bootstrap-theme.min.css" />
     <Content Include="JavaScript\bootstrap-3.3.7-dist\css\bootstrap.css" />
