@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>公交线路</title>
+    <meta charset="utf-8" />
+    <style>
+        html {
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            width: 100%;
+            height: 100%;
+        }
+
+        #container {
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+
+    <script src="../../JavaScript/jQuery/jquery-3.4.1.min.js"></script>
+    <script src="http://api.map.baidu.com/api?v=3.0&ak=eH5dZzlbt0puXQEAG1GgdunmSW7qVjse"></script>
+    <script type="text/javascript">
+        $(function () {
+            var map = new BMap.Map("container");
+            var point = new BMap.Point(120.885506, 32.03671);
+            map.centerAndZoom(point, 15);
+            map.enableScrollWheelZoom();
+
+            //var polyline = new BMap.Polyline([
+            //    new BMap.Point(120.8871409, 32.03805681),
+            //    new BMap.Point(120.887626, 32.02905739)
+            //            ],
+            //    { strokeColor: "blue", strokeWeight: 6, strokeOpacity: 0.5 }
+            //    );
+            //map.addOverlay(polyline);
+
+            $.ajax({
+                type: "GET"
+                , url: "/Handler/Line.ashx?LineID=CD288980-3966-4855-B877-296861425AC6"
+                , success: function (pData) {
+                    var lData = JSON.parse(pData);
+
+                    var lLinePoints = new Array();
+                    for (var i = 0; i < lData.Data[0].length; i++) {
+                        var lPoint = new BMap.Point(lData.Data[0][i].Lng, lData.Data[0][i].Lat);
+                        lLinePoints.push(lPoint);
+                    }
+                    var lPloyline = new BMap.Polyline(lLinePoints, { strokeColor: "blue", strokeWeight: 6, strokeOpacity: 0.5, strokeStyle: "solid" });
+                    map.addOverlay(lPloyline);
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <div id="container">
+
+    </div>
+</body>
+</html>
