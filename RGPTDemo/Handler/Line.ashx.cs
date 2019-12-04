@@ -16,10 +16,12 @@ namespace RGPTDemo.Handler
             string lLineID = context.Request.QueryString["LineID"].ToString();
             LineDao lLineDao = new LineDao();
 
-            DataTable lDT = lLineDao.GetLineTrack(lLineID);
+            DataTable lDTLineTrack = lLineDao.GetLineTrack(lLineID);
+            DataTable lDTLineStation = lLineDao.GetLineStation(lLineID);
 
             RequestResponse lRR = new RequestResponse();
-            lRR.Data.Add(lDT);
+            lRR.Data.Add(lDTLineTrack);
+            lRR.Data.Add(lDTLineStation);
 
             context.Response.ContentType = "text/plain";
             context.Response.Write(JsonConvert.SerializeObject(lRR));

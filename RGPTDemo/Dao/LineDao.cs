@@ -54,7 +54,7 @@ namespace RGPTDemo.Dao
             lSQL += " FROM T_Line_Station T_Lin_Sta";
             lSQL += " LEFT JOIN T_Station T_Sta ON T_Lin_Sta.SID=T_Sta.ID";
             lSQL += " WHERE T_Lin_Sta.LID=@LID";
-            lSQL += " T_Lin_Sta.Seq";
+            lSQL += " ORDER BY T_Lin_Sta.Seq";
 
             SqlParameter[] lParams = new SqlParameter[]
             {

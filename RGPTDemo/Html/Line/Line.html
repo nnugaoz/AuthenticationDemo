@@ -35,14 +35,24 @@
                 , url: "/Handler/Line.ashx?LineID=CD288980-3966-4855-B877-296861425AC6"
                 , success: function (pData) {
                     var lData = JSON.parse(pData);
-
                     var lLinePoints = new Array();
-                    for (var i = 0; i < lData.Data[0].length; i++) {
-                        var lPoint = new BMap.Point(lData.Data[0][i].Lng, lData.Data[0][i].Lat);
-                        lLinePoints.push(lPoint);
+                    if (lData.Data.length > 0) {
+                        for (var i = 0; i < lData.Data[0].length; i++) {
+                            var lPoint = new BMap.Point(lData.Data[0][i].Lng, lData.Data[0][i].Lat);
+                            lLinePoints.push(lPoint);
+                        }
+                        var lPloyline = new BMap.Polyline(lLinePoints, { strokeColor: "blue", strokeWeight: 6, strokeOpacity: 0.5, strokeStyle: "solid" });
+                        map.addOverlay(lPloyline);
                     }
-                    var lPloyline = new BMap.Polyline(lLinePoints, { strokeColor: "blue", strokeWeight: 6, strokeOpacity: 0.5, strokeStyle: "solid" });
-                    map.addOverlay(lPloyline);
+                    if (lData.Data.length > 1) {
+                        for (var i = 0; i < lData.Data[1].length; i++) {
+                            var lPoint = new BMap.Point(lData.Data[1][i].Lng, lData.Data[1][i].Lat);
+                            var lMarker = new BMap.Marker(lPoint);
+                            map.addOverlay(lMarker);
+                        }
+                    }
+                }
+                , complete: function () {
                 }
             });
         });
