@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lib", "Lib\Lib.csproj", "{7
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RGPTDemo", "RGPTDemo\RGPTDemo.csproj", "{F2614D86-3960-4104-8769-5AFC78D2418B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tools", "Tools\Tools.csproj", "{F842F35C-484E-4025-97FC-0202D00E7577}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{F2614D86-3960-4104-8769-5AFC78D2418B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F2614D86-3960-4104-8769-5AFC78D2418B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F2614D86-3960-4104-8769-5AFC78D2418B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F842F35C-484E-4025-97FC-0202D00E7577}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F842F35C-484E-4025-97FC-0202D00E7577}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F842F35C-484E-4025-97FC-0202D00E7577}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F842F35C-484E-4025-97FC-0202D00E7577}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
