@@ -102,6 +102,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.EnterpriseServices" />
@@ -113,6 +114,7 @@
     <Content Include="DBScript\Auth_script.sql" />
     <Content Include="Html\car.html" />
     <Content Include="Html\carteam.html" />
+    <Content Include="Html\CarTeam\T_CarTeamList.html" />
     <Content Include="Html\Error\404.html" />
     <Content Include="Html\Error\500.html" />
     <Content Include="Html\Home\Home.css" />
@@ -213,6 +215,7 @@
     <Compile Include="Dao\FeatureDao.cs" />
     <Compile Include="Dao\HomeDao.cs" />
     <Compile Include="Dao\RoleDao.cs" />
+    <Compile Include="Dao\T_WeightDao.cs" />
     <Compile Include="Dao\UserDao.cs" />
     <Compile Include="Dao\CommonDao.cs" />
     <Compile Include="Handler\Home.ashx.cs">
@@ -229,9 +232,13 @@
     <Compile Include="Handler\Role.ashx.cs">
       <DependentUpon>Role.ashx</DependentUpon>
     </Compile>
+    <Compile Include="Handler\T_CarTeam.ashx.cs">
+      <DependentUpon>T_CarTeam.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Handler\User.ashx.cs">
       <DependentUpon>User.ashx</DependentUpon>
     </Compile>
+    <Compile Include="Model\T_WeightModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -260,6 +267,7 @@
     <Content Include="ARReport\CCountWeightByMonth.rdlx">
       <SubType>Component</SubType>
     </Content>
+    <Content Include="Handler\T_CarTeam.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -268,7 +276,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Model\" />
     <Folder Include="TempFile\" />
   </ItemGroup>
   <ItemGroup>

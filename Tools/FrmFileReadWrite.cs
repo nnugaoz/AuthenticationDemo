@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Tools
 {
-    public partial class FrmDriver : Form
+    public partial class FrmFileReadWrite : Form
     {
-        public FrmDriver()
+        public FrmFileReadWrite()
         {
             InitializeComponent();
         }
@@ -58,13 +58,59 @@ namespace Tools
         {
             if (Directory.Exists(txtCurrentPath.Text))
             {
-                File.Create(txtCurrentPath.Text + @"\" + DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss") + ".txt");
+                FileStream lFileStream = File.Create(txtCurrentPath.Text + @"\" + DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss") + ".txt");
+
+                byte[] lData = System.Text.Encoding.UTF8.GetBytes("你好");
+                lFileStream.Write(lData, 0, lData.Length);
+                lFileStream.Close();
+
+                FileInfo lFileInfo = new FileInfo(txtCurrentPath.Text + @"\" + DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss_fff") + ".txt");
+
+                if (!lFileInfo.Exists)
+                {
+                    lFileStream = lFileInfo.Create();
+                }
+                else
+                {
+                    lFileStream = lFileInfo.Open(FileMode.Append);
+                }
+
+                lData = System.Text.Encoding.UTF8.GetBytes("您好");
+                lFileStream.Write(lData, 0, lData.Length);
+                lFileStream.Close();
             }
         }
 
         private void lstFile_SelectedIndexChanged(object sender, EventArgs e)
         {
-            txtCurrentPath.Text = lstFile.SelectedItems.ToString();
+            if (lstFile.SelectedItems.Count > 0)
+            {
+                txtCurrentPath.Text = lstFile.SelectedItems[0].Text.ToString();
+            }
+        }
+
+        private void btnWriteFile_Click(object sender, EventArgs e)
+        {
+            FileStream lFileStream = File.Open(txtCurrentPath.Text, FileMode.Append);
+            String lContent = "星期四";
+            byte[] lData = System.Text.Encoding.UTF8.GetBytes(lContent);
+            lFileStream.Write(lData, 0, lData.Length);
+            lFileStream.Close();
+        }
+
+        private void btnReadFile_Click(object sender, EventArgs e)
+        {
+            FileStream lFileStream = File.OpenRead(txtCurrentPath.Text);
+            string lContent = "";
+            byte[] lData = new byte[1024];
+
+            while (lFileStream.Read(lData, 0, lData.Length) > 0)
+            {
+                lContent += System.Text.Encoding.UTF8.GetString((lData));
+            }
+
+            lFileStream.Close();
+            MessageBox.Show(lContent);
         }
     }
 }
