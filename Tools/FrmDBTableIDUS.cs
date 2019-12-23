@@ -18,6 +18,7 @@ namespace Tools
         private string mDaoPath = "Dao/";
         private string mHtmlPath = "Html/";
         private string mHandlerPath = "Handler/";
+        private string mPageProcedure = "Procedure/Page/";
 
         public FrmDBTableIDUS()
         {
@@ -287,9 +288,16 @@ namespace Tools
                 }
             }
             lLine += "lSQL += \"FROM " + lTableName + "\";\n";
-
             lLine += "lSQL += \")\";\n";
             lLine += "lSQL += \"WHERE ID=@ID\";\n";
+            lLine += "return lSQL;\n";
+            lLine += "}";
+            AppendLine(lFileStream, lLine);
+
+            //SelectPage
+            lLine = "public static string SelectPageSQL(){\n";
+            lLine += "string lSQL=\"\";\n";
+            lLine += "lSQL += \"EXEC " + lTableName + "_Page @BeginIndex,@EndIndex\";\n";
             lLine += "return lSQL;\n";
             lLine += "}";
             AppendLine(lFileStream, lLine);
@@ -396,6 +404,40 @@ namespace Tools
             lLine = "}";
             AppendLine(lFileStream, lLine);
 
+            lLine = "public DataTable SelectPage(int BeginIndex,int EndIndex)";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "{";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "string lSQL = SelectPageSQL();";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "DataTable lDT = null;";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "List<SqlParameter> lParams = new List<SqlParameter>();";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "lParams.Add(new SqlParameter(\"@BeginIndex\", BeginIndex));";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "lParams.Add(new SqlParameter(\"@EndIndex\", EndIndex));";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "MsSqlHelper lMSSqlHelper = new MsSqlHelper();";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "lDT = lMSSqlHelper.GetDataTable(lSQL,lParams.ToArray());";
+
+            AppendLine(lFileStream, lLine);
+
+            lLine = "return lDT;";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "}";
+            AppendLine(lFileStream, lLine);
+
             lLine = "}";
             AppendLine(lFileStream, lLine);
 
@@ -434,6 +476,9 @@ namespace Tools
             lLine = "<script src='jquery-3.4.1.min.js'></script>";
             AppendLine(lFileStream, lLine);
 
+            lLine = "< script src = 'Pagination.js'></ script >";
+            AppendLine(lFileStream, lLine);
+
             lLine = "<script type='text/javascript'>";
             AppendLine(lFileStream, lLine);
 
@@ -455,7 +500,7 @@ namespace Tools
             lLine = "var lPConfig = new PaginationConfiguration();";
             AppendLine(lFileStream, lLine);
 
-            lLine = "lPConfig.RequestUrl = '/Handler/" + lTableName + ".ashx?RequestMethod=GET_LIST_PAGINATION'";
+            lLine = "lPConfig.RequestUrl = '/Handler/" + lTableName + ".ashx?RequestMethod=SelectPage'";
             AppendLine(lFileStream, lLine);
 
             lLine = "lPConfig.PageContainerID = '" + lTableName + "List';";
@@ -536,6 +581,9 @@ namespace Tools
             lLine = "function btnDel_OnClick(){}";
             AppendLine(lFileStream, lLine);
 
+            lLine = "function btnNew_OnClick(){window.location.href='" + lTableName + "New.html'}";
+            AppendLine(lFileStream, lLine);
+
             lLine = " </script>";
             AppendLine(lFileStream, lLine);
 
@@ -545,7 +593,7 @@ namespace Tools
             lLine = "<body> ";
             AppendLine(lFileStream, lLine);
 
-            lLine = "<input type='button' id='btnNew' class='btn btn-success' value='新增' />";
+            lLine = "<input type='button' id='btnNew' class='btn btn-success' value='新增' onclick='btnNew_OnClick();'/>";
             AppendLine(lFileStream, lLine);
 
             lLine = "<div id='" + lTableName + "List' style='margin-top:20px;'></div>";
@@ -648,6 +696,15 @@ namespace Tools
             lLine = "         break;";
             AppendLine(lFileStream, lLine);
 
+            lLine = "     case \"SelectPage\":";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "         SelectPage(context);";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "         break;";
+            AppendLine(lFileStream, lLine);
+
             lLine = "}";
             AppendLine(lFileStream, lLine);
 
@@ -667,6 +724,33 @@ namespace Tools
             AppendLine(lFileStream, lLine);
 
             lLine = "lDT = lDao.Select();";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "context.Response.Write(JsonConvert.SerializeObject(lDT));";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "}";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "private void SelectPage(HttpContext context)";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "{";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "DataTable lDT = null;";
+            AppendLine(lFileStream, lLine);
+
+            lLine = lTableName + "Dao lDao = new " + lTableName + "Dao();";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "int BeginIndex = Convert.ToInt32(context.Request.Params[\"BeginIndex\"].ToString());";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "int EndIndex = Convert.ToInt32(context.Request.Params[\"EndIndex\"].ToString());";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "lDT = lDao.SelectPage(BeginIndex,EndIndex);";
             AppendLine(lFileStream, lLine);
 
             lLine = "context.Response.Write(JsonConvert.SerializeObject(lDT));";
@@ -911,6 +995,69 @@ namespace Tools
             AppendLine(lFileStream, lLine);
 
             lFileStream.Close();
+        }
+
+        private void btnCreatePagePS_Click(object sender, EventArgs e)
+        {
+            String lTableName = lstTable.SelectedItem.ToString();
+            if (!Directory.Exists(mPageProcedure + @"/"))
+            {
+                Directory.CreateDirectory(mPageProcedure + @"/");
+            }
+
+            FileStream lFileStream = new FileStream(mPageProcedure + @"/" + lTableName + "_Page.sql", FileMode.OpenOrCreate, FileAccess.ReadWrite);
+            String lLine = "";
+
+            lLine = "CREATE PROCEDURE " + lTableName + "_Page ";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "@BeginIndex INT";
+            AppendLine(lFileStream, lLine);
+
+            lLine = ", @EndIndex INT";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "AS";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "BEGIN";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "SET NOCOUNT ON;";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "DECLARE @RowCnt AS INT";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "SELECT @RowCnt = COUNT(*) FROM " + lTableName;
+            AppendLine(lFileStream, lLine);
+
+            lLine = "SELECT* FROM(";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "SELECT";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "ROW_NUMBER()OVER(ORDER BY ID) RowIdx";
+            AppendLine(lFileStream, lLine);
+
+            lLine = ", @RowCnt RowCnt";
+            AppendLine(lFileStream, lLine);
+
+            lLine = " , *";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "FROM " + lTableName + ")T";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "WHERE RowIdx >= @BeginIndex AND RowIdx <= @EndIndex";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "END";
+            AppendLine(lFileStream, lLine);
+
+            lFileStream.Close();
+
         }
     }
 }

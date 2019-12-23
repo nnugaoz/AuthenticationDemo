@@ -13,7 +13,7 @@
         function Init() {
             $('#T_CarTeamList').empty();
             var lPConfig = new PaginationConfiguration();
-            lPConfig.RequestUrl = '/Handler/T_CarTeam.ashx?RequestMethod=GET_LIST_PAGINATION'
+            lPConfig.RequestUrl = '/Handler/T_CarTeam.ashx?RequestMethod=SelectPage'
             lPConfig.PageContainerID = 'T_CarTeamList';
             var IDCol = new PaginationColumnConfiguration();
             IDCol.HeaderText = 'ID';
@@ -25,16 +25,6 @@
             NameCol.Type = 'TXT';
             NameCol.DataField = 'Name';
             lPConfig.Columns.push(NameCol);
-            var EditManCol = new PaginationColumnConfiguration();
-            EditManCol.HeaderText = 'EditMan';
-            EditManCol.Type = 'TXT';
-            EditManCol.DataField = 'EditMan';
-            lPConfig.Columns.push(EditManCol);
-            var EditDateCol = new PaginationColumnConfiguration();
-            EditDateCol.HeaderText = 'EditDate';
-            EditDateCol.Type = 'TXT';
-            EditDateCol.DataField = 'EditDate';
-            lPConfig.Columns.push(EditDateCol);
             var EditCol = new PaginationColumnConfiguration();
             EditCol.HeaderText = '编辑';
             EditCol.Type = 'BTN';
@@ -54,10 +44,14 @@
         }
         function btnEdit_OnClick() { }
         function btnDel_OnClick() { }
+        function btnNew_OnClick() {
+            window.location.href = "T_CarTeamNew.html";
+        }
+
     </script>
 </head>
 <body>
-    <input type='button' id='btnNew' class='btn btn-success' value='新增' />
+    <input type='button' id='btnNew' class='btn btn-success' value='新增' onclick="btnNew_OnClick();" />
     <div id='T_CarTeamList' style='margin-top:20px;'></div>
 </body>
 </html>
