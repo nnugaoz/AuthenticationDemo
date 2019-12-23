@@ -1,19 +1,63 @@
 ﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset = utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>T_CarTeam列表 </title>
-
-    <link href="/JavaScript/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
-    <script type="text/javascript">
+    <link href="../../JavaScript/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="../../JavaScript/jQuery/jquery-3.4.1.min.js"></script>
+    <script src="../../JavaScript/Common/Pagination.js"></script>
+    <script type='text/javascript'>
+        $(function () {
+            Init();
+        })
+        function Init() {
+            $('#T_CarTeamList').empty();
+            var lPConfig = new PaginationConfiguration();
+            lPConfig.RequestUrl = '/Handler/T_CarTeam.ashx?RequestMethod=GET_LIST_PAGINATION'
+            lPConfig.PageContainerID = 'T_CarTeamList';
+            var IDCol = new PaginationColumnConfiguration();
+            IDCol.HeaderText = 'ID';
+            IDCol.Type = 'TXT';
+            IDCol.DataField = 'ID';
+            lPConfig.Columns.push(IDCol);
+            var NameCol = new PaginationColumnConfiguration();
+            NameCol.HeaderText = 'Name';
+            NameCol.Type = 'TXT';
+            NameCol.DataField = 'Name';
+            lPConfig.Columns.push(NameCol);
+            var EditManCol = new PaginationColumnConfiguration();
+            EditManCol.HeaderText = 'EditMan';
+            EditManCol.Type = 'TXT';
+            EditManCol.DataField = 'EditMan';
+            lPConfig.Columns.push(EditManCol);
+            var EditDateCol = new PaginationColumnConfiguration();
+            EditDateCol.HeaderText = 'EditDate';
+            EditDateCol.Type = 'TXT';
+            EditDateCol.DataField = 'EditDate';
+            lPConfig.Columns.push(EditDateCol);
+            var EditCol = new PaginationColumnConfiguration();
+            EditCol.HeaderText = '编辑';
+            EditCol.Type = 'BTN';
+            EditCol.DataField = '编辑';
+            EditCol.CssClass = 'btn btn-success';
+            EditCol.OnClickEventHandler = btnEdit_OnClick;
+            lPConfig.Columns.push(EditCol);
+            var DelCol = new PaginationColumnConfiguration();
+            DelCol.HeaderText = '删除';
+            DelCol.Type = 'BTN';
+            DelCol.DataField = '删除';
+            DelCol.CssClass = 'btn btn-success';
+            DelCol.OnClickEventHandler = btnDel_OnClick;
+            lPConfig.Columns.push(DelCol);
+            var T_CarTeamListPagination = new Pagination(lPConfig);
+            T_CarTeamListPagination.RequestData(1);
+        }
+        function btnEdit_OnClick() { }
+        function btnDel_OnClick() { }
     </script>
 </head>
 <body>
-    <table class="table table-bordered table-striped table-hover">
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-        </tr>
-    </table>
+    <input type='button' id='btnNew' class='btn btn-success' value='新增' />
+    <div id='T_CarTeamList' style='margin-top:20px;'></div>
 </body>
 </html>

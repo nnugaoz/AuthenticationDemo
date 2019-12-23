@@ -100,6 +100,11 @@ namespace Tools
 
         private void btnGenerateEntityClass_Click(object sender, EventArgs e)
         {
+            if (lstTable.Items.Count == 0)
+            {
+                MessageBox.Show("请先连接数据库!", "系统", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             String lTableName = lstTable.SelectedItem.ToString();
             String lEntityClassFileName = lTableName + "Model.cs";
             String lFieldName = "";
@@ -172,11 +177,20 @@ namespace Tools
 
             FileStream lFileStream = File.Create(mDaoPath + @"\" + lDaoFileName);
 
+            lLine = "using System.Collections.Generic;";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "using System.Data.SqlClient;";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "using System.Data;";
+            AppendLine(lFileStream, lLine);
+
             lLine = "public class " + lTableName + "Dao{";
             AppendLine(lFileStream, lLine);
 
             //INSERT
-            lLine = "public string Insert(){";
+            lLine = "public static string InsertSQL(){";
             lLine += "string lSQL=\"\";\n";
             lLine += "lSQL += \"INSERT INTO " + lTableName + "(\";\n";
             for (int i = 0; i < dgvFields.Rows.Count; i++)
@@ -208,7 +222,7 @@ namespace Tools
             AppendLine(lFileStream, lLine);
 
             //Delete
-            lLine = "public string Delete(){\n";
+            lLine = "public static string DeleteSQL(){\n";
             lLine += "string lSQL=\"\";\n";
             lLine += "lSQL += \"DELETE FROM " + lTableName + " \";\n";
             lLine += "lSQL += \" WHERE ID=@ID\";\n";
@@ -217,7 +231,7 @@ namespace Tools
             AppendLine(lFileStream, lLine);
 
             //UPDATE
-            lLine = "public string Update(){\n";
+            lLine = "public static string UpdateSQL(){\n";
             lLine += "string lSQL=\"\";\n";
             lLine += "lSQL += \"UPDATE " + lTableName + " SET \";\n";
             for (int i = 0; i < dgvFields.Rows.Count; i++)
@@ -237,7 +251,7 @@ namespace Tools
             AppendLine(lFileStream, lLine);
 
             //SELECT
-            lLine = "public string Select(){\n";
+            lLine = "public static string SelectSQL(){\n";
             lLine += "string lSQL=\"\";\n";
             lLine += "lSQL += \"SELECT \";\n";
             for (int i = 0; i < dgvFields.Rows.Count; i++)
@@ -251,15 +265,14 @@ namespace Tools
                     lLine += "lSQL += \"," + dgvFields.Rows[i].Cells["Name"].Value.ToString() + "\";\n";
                 }
             }
-            lLine += "lSQL += \"FROM " + lTableName + "\";\n";
+            lLine += "lSQL += \" FROM " + lTableName + "\";\n";
 
-            lLine += "lSQL += \")\";\n";
             lLine += "return lSQL;\n";
             lLine += "}";
             AppendLine(lFileStream, lLine);
 
             //SELECTByID
-            lLine = "public string SelectByID(){\n";
+            lLine = "public static string SelectByIDSQL(){\n";
             lLine += "string lSQL=\"\";\n";
             lLine += "lSQL += \"SELECT \";\n";
             for (int i = 0; i < dgvFields.Rows.Count; i++)
@@ -279,6 +292,108 @@ namespace Tools
             lLine += "lSQL += \"WHERE ID=@ID\";\n";
             lLine += "return lSQL;\n";
             lLine += "}";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "public int Insert(" + lTableName + "Model " + lTableName + "Model)";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "{";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "string lSQL = InsertSQL();";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "List<SqlParameter> lParams = new List<SqlParameter>();";
+            AppendLine(lFileStream, lLine);
+
+            for (int i = 0; i < dgvFields.Rows.Count; i++)
+            {
+                lLine = "lParams.Add(new SqlParameter(\"@" + dgvFields.Rows[i].Cells["Name"].Value.ToString() + "\", " + lTableName + "Model." + dgvFields.Rows[i].Cells["Name"].Value.ToString() + "));";
+                AppendLine(lFileStream, lLine);
+            }
+
+            lLine = "MsSqlHelper lMSSqlHelper = new MsSqlHelper();";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "return lMSSqlHelper.ExecuteSQL(lSQL, lParams.ToArray());";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "}";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "public int Update(" + lTableName + "Model " + lTableName + "Model)";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "{";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "string lSQL = UpdateSQL();";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "List<SqlParameter> lParams = new List<SqlParameter>();";
+            AppendLine(lFileStream, lLine);
+
+            for (int i = 0; i < dgvFields.Rows.Count; i++)
+            {
+                lLine = "lParams.Add(new SqlParameter(\"@" + dgvFields.Rows[i].Cells["Name"].Value.ToString() + "\", " + lTableName + "Model." + dgvFields.Rows[i].Cells["Name"].Value.ToString() + "));";
+                AppendLine(lFileStream, lLine);
+            }
+
+            lLine = "MsSqlHelper lMSSqlHelper = new MsSqlHelper();";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "return lMSSqlHelper.ExecuteSQL(lSQL, lParams.ToArray());";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "}";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "public int Delete(string pID)";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "{";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "string lSQL = DeleteSQL();";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "List<SqlParameter> lParams = new List<SqlParameter>();";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "lParams.Add(new SqlParameter(\"@ID\", pID));";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "MsSqlHelper lMSSqlHelper = new MsSqlHelper();";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "return lMSSqlHelper.ExecuteSQL(lSQL, lParams.ToArray());";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "}";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "public DataTable Select()";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "{";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "string lSQL = SelectSQL();";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "DataTable lDT = null;";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "MsSqlHelper lMSSqlHelper = new MsSqlHelper();";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "lDT = lMSSqlHelper.GetDataTable(lSQL);";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "return lDT;";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "}";
             AppendLine(lFileStream, lLine);
 
             lLine = "}";
@@ -307,16 +422,121 @@ namespace Tools
             lLine = "<head > ";
             AppendLine(lFileStream, lLine);
 
-            lLine = "<meta http-equiv=\"Content-Type\" content=\"text/html; charset = utf-8\" />";
+            lLine = "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />";
             AppendLine(lFileStream, lLine);
 
             lLine = "<title>" + lTableName + "列表 </title>";
             AppendLine(lFileStream, lLine);
 
-            lLine = "<script type=\"text/javascript\" >";
+            lLine = "<link href='bootstrap.min.css' rel='stylesheet'/>";
             AppendLine(lFileStream, lLine);
 
-            lLine = "</script>";
+            lLine = "<script src='jquery-3.4.1.min.js'></script>";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "<script type='text/javascript'>";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "$(function () {";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "Init();";
+            AppendLine(lFileStream, lLine);
+
+            lLine = " })";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "function Init() {";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "$('#" + lTableName + "List').empty();";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "var lPConfig = new PaginationConfiguration();";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "lPConfig.RequestUrl = '/Handler/" + lTableName + ".ashx?RequestMethod=GET_LIST_PAGINATION'";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "lPConfig.PageContainerID = '" + lTableName + "List';";
+            AppendLine(lFileStream, lLine);
+
+            for (int i = 0; i < dgvFields.Rows.Count; i++)
+            {
+                lLine = "var " + dgvFields.Rows[i].Cells["Name"].Value.ToString() + "Col = new PaginationColumnConfiguration();";
+                AppendLine(lFileStream, lLine);
+
+                lLine = dgvFields.Rows[i].Cells["Name"].Value.ToString() + "Col.HeaderText = '" + dgvFields.Rows[i].Cells["Name"].Value.ToString() + "';";
+                AppendLine(lFileStream, lLine);
+
+                lLine = dgvFields.Rows[i].Cells["Name"].Value.ToString() + "Col.Type = 'TXT';";
+                AppendLine(lFileStream, lLine);
+
+                lLine = dgvFields.Rows[i].Cells["Name"].Value.ToString() + "Col.DataField = '" + dgvFields.Rows[i].Cells["Name"].Value.ToString() + "';";
+                AppendLine(lFileStream, lLine);
+
+                lLine = "lPConfig.Columns.push(" + dgvFields.Rows[i].Cells["Name"].Value.ToString() + "Col);";
+                AppendLine(lFileStream, lLine);
+            }
+
+            lLine = "var EditCol = new PaginationColumnConfiguration();";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "EditCol.HeaderText = '编辑';";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "EditCol.Type = 'BTN';";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "EditCol.DataField = '编辑';";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "EditCol.CssClass = 'btn btn-success';";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "EditCol.OnClickEventHandler = btnEdit_OnClick;";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "lPConfig.Columns.push(EditCol);";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "var DelCol = new PaginationColumnConfiguration();";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "DelCol.HeaderText = '删除';";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "DelCol.Type = 'BTN';";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "DelCol.DataField = '删除';";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "DelCol.CssClass = 'btn btn-success';";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "DelCol.OnClickEventHandler = btnDel_OnClick;";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "lPConfig.Columns.push(DelCol);";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "var " + lTableName + "ListPagination = new Pagination(lPConfig);";
+            AppendLine(lFileStream, lLine);
+
+            lLine = lTableName + "ListPagination.RequestData(1);";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "}";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "function btnEdit_OnClick(){}";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "function btnDel_OnClick(){}";
+            AppendLine(lFileStream, lLine);
+
+            lLine = " </script>";
             AppendLine(lFileStream, lLine);
 
             lLine = "</head> ";
@@ -325,21 +545,10 @@ namespace Tools
             lLine = "<body> ";
             AppendLine(lFileStream, lLine);
 
-            lLine = "<table class=\"table table-bordered table - striped table - hover\">";
+            lLine = "<input type='button' id='btnNew' class='btn btn-success' value='新增' />";
             AppendLine(lFileStream, lLine);
 
-            lLine = "<tr>";
-            AppendLine(lFileStream, lLine);
-
-            for (int i = 0; i < dgvFields.Rows.Count; i++)
-            {
-                lLine = "<th>" + dgvFields.Rows[i].Cells["Name"].Value.ToString() + "</th>";
-                AppendLine(lFileStream, lLine);
-            }
-            lLine = "</tr>";
-            AppendLine(lFileStream, lLine);
-
-            lLine = "</table>";
+            lLine = "<div id='" + lTableName + "List' style='margin-top:20px;'></div>";
             AppendLine(lFileStream, lLine);
 
             lLine = "</body> ";
@@ -369,6 +578,16 @@ namespace Tools
             lFileStream.Close();
 
             lFileStream = File.Create(mHandlerPath + @"\" + lTableName + ".ashx.cs");
+
+            lLine = "using Newtonsoft.Json;";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "using System;";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "using System.Data;";
+            AppendLine(lFileStream, lLine);
+
             lLine = "using System.Web;";
             AppendLine(lFileStream, lLine);
 
@@ -382,6 +601,222 @@ namespace Tools
             AppendLine(lFileStream, lLine);
 
             lLine = "{";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "string lRequestMethod = context.Request.Params[\"RequestMethod\"].ToString();";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "switch (lRequestMethod)";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "{";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "    case \"Insert\":";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "        Insert(context);";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "        break;";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "   case \"Update\":";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "        Update(context);";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "         break;";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "    case \"Delete\":";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "        Delete(context);";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "         break;";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "     case \"Select\":";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "         Select(context);";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "         break;";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "}";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "}";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "private void Select(HttpContext context)";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "{";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "DataTable lDT = null;";
+            AppendLine(lFileStream, lLine);
+
+            lLine = lTableName + "Dao lDao = new " + lTableName + "Dao();";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "lDT = lDao.Select();";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "context.Response.Write(JsonConvert.SerializeObject(lDT));";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "}";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "private void Delete(HttpContext context)";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "{";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "string lID = context.Request.Params[\"ID\"].ToString();";
+            AppendLine(lFileStream, lLine);
+
+            lLine = lTableName + "Dao lDao = new " + lTableName + "Dao();";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "if (lDao.Delete(lID) > 0)";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "{";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "    context.Response.Write(\"successed!\");";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "}";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "else";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "{";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "    context.Response.Write(\"failed!\");";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "}";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "}";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "private void Update(HttpContext context)";
+            AppendLine(lFileStream, lLine);
+
+            lLine = " {";
+            AppendLine(lFileStream, lLine);
+
+            lLine = lTableName + "Model lModel = new " + lTableName + "Model();";
+            AppendLine(lFileStream, lLine);
+
+            for (int i = 0; i < dgvFields.Rows.Count; i++)
+            {
+                lLine = "lModel." + dgvFields.Rows[i].Cells["Name"].Value.ToString() + " = context.Request.Params[\"" + dgvFields.Rows[i].Cells["Name"].Value.ToString() + "\"].ToString();";
+                AppendLine(lFileStream, lLine);
+            }
+
+            lLine = "lModel.ID = Guid.NewGuid().ToString();";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "lModel.EditMan = \"Admin\";";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "lModel.EditDate = DateTime.Now.ToString(\"yyyy-MM-dd HH:mm:ss.fff\");";
+            AppendLine(lFileStream, lLine);
+
+            lLine = lTableName + "Dao lDao = new " + lTableName + "Dao();";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "if (lDao.Update(lModel) > 0)";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "{";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "    context.Response.Write(\"successed!\");";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "}";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "else";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "{";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "    context.Response.Write(\"failed!\");";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "}";
+            AppendLine(lFileStream, lLine);
+
+            lLine = " }";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "private void Insert(HttpContext context)";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "{";
+            AppendLine(lFileStream, lLine);
+
+            lLine = lTableName + "Model lModel = new " + lTableName + "Model();";
+            AppendLine(lFileStream, lLine);
+
+            for (int i = 0; i < dgvFields.Rows.Count; i++)
+            {
+                lLine = "lModel." + dgvFields.Rows[i].Cells["Name"].Value.ToString() + " = context.Request.Params[\"" + dgvFields.Rows[i].Cells["Name"].Value.ToString() + "\"].ToString();";
+                AppendLine(lFileStream, lLine);
+            }
+
+            lLine = "lModel.ID = Guid.NewGuid().ToString();";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "lModel.EditMan = \"Admin\";";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "lModel.EditDate = DateTime.Now.ToString(\"yyyy-MM-dd HH:mm:ss.fff\");";
+            AppendLine(lFileStream, lLine);
+
+            lLine = lTableName + "Dao lDao = new " + lTableName + "Dao();";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "if (lDao.Insert(lModel) > 0)";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "{";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "    context.Response.Write(\"successed!\");";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "}";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "else";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "{";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "    context.Response.Write(\"failed!\");";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "}";
             AppendLine(lFileStream, lLine);
 
             lLine = "}";
@@ -409,6 +844,70 @@ namespace Tools
             AppendLine(lFileStream, lLine);
 
             lLine = "}";
+            AppendLine(lFileStream, lLine);
+
+            lFileStream.Close();
+        }
+
+        private void btnCreateHtmlEditPage_Click(object sender, EventArgs e)
+        {
+            string lTableName = lstTable.SelectedItem.ToString();
+            if (!Directory.Exists(mHtmlPath + @"\" + lTableName))
+            {
+                Directory.CreateDirectory(mHtmlPath + @"\" + lTableName);
+            }
+
+            FileStream lFileStream = new FileStream(mHtmlPath + @"\" + lTableName + @"\" + lTableName + "New.html", FileMode.OpenOrCreate, FileAccess.ReadWrite);
+
+            String lLine = "";
+
+            lLine = "<!DOCTYPE html>";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "<html>";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "<head>";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/>";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "    <title></title>";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "	<meta charset=\"utf-8\" />";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "</head>";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "<body>";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "<form method=\"POST\" action=\"/Handler/" + lTableName + ".ashx?RequestMethod=Insert\">";
+            AppendLine(lFileStream, lLine);
+
+            for (int i = 0; i < dgvFields.Rows.Count; i++)
+            {
+                lLine = "<label for=\"" + dgvFields.Rows[i].Cells["Name"].Value.ToString() + "\">" + dgvFields.Rows[i].Cells["Name"].Value.ToString() + "</label>";
+                AppendLine(lFileStream, lLine);
+                lLine = "<input type=\"text\" id=\"" + dgvFields.Rows[i].Cells["Name"].Value.ToString() + "\" name=\"" + dgvFields.Rows[i].Cells["Name"].Value.ToString() + "\"/>";
+                AppendLine(lFileStream, lLine);
+                lLine = "<br/>";
+                AppendLine(lFileStream, lLine);
+            }
+
+            lLine = "<input type=\"submit\" value=\"提交\" />";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "</form>";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "</body>";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "</html>";
             AppendLine(lFileStream, lLine);
 
             lFileStream.Close();
