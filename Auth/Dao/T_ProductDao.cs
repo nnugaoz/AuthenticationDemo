@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Data;
 using Lib.DBHelper;
-public class T_CarTeamDao{
+public class T_ProductDao{
 public static string InsertSQL(){string lSQL="";
-lSQL += "INSERT INTO T_CarTeam(";
+lSQL += "INSERT INTO T_Product(";
 lSQL += "ID";
 lSQL += ",Name";
 lSQL += ",EditMan";
@@ -19,13 +19,13 @@ return lSQL;
 }
 public static string DeleteSQL(){
 string lSQL="";
-lSQL += "DELETE FROM T_CarTeam ";
+lSQL += "DELETE FROM T_Product ";
 lSQL += " WHERE ID=@ID";
 return lSQL;
 }
 public static string UpdateSQL(){
 string lSQL="";
-lSQL += "UPDATE T_CarTeam SET ";
+lSQL += "UPDATE T_Product SET ";
 lSQL += "ID=@ID";
 lSQL += ",Name=@Name";
 lSQL += ",EditMan=@EditMan";
@@ -40,7 +40,7 @@ lSQL += "ID";
 lSQL += ",Name";
 lSQL += ",EditMan";
 lSQL += ",EditDate";
-lSQL += " FROM T_CarTeam";
+lSQL += " FROM T_Product";
 return lSQL;
 }
 public static string SelectByIDSQL(){
@@ -50,34 +50,34 @@ lSQL += "ID";
 lSQL += ",Name";
 lSQL += ",EditMan";
 lSQL += ",EditDate";
-lSQL += " FROM T_CarTeam";
+lSQL += " FROM T_Product";
 lSQL += " WHERE ID=@ID";
 return lSQL;
 }
 public static string SelectPageSQL(){
 string lSQL="";
-lSQL += "EXEC T_CarTeam_Page @BeginIndex,@EndIndex";
+lSQL += "EXEC T_Product_Page @BeginIndex,@EndIndex";
 return lSQL;
 }
-public int Insert(T_CarTeamModel T_CarTeamModel)
+public int Insert(T_ProductModel T_ProductModel)
 {
 string lSQL = InsertSQL();
 List<SqlParameter> lParams = new List<SqlParameter>();
-lParams.Add(new SqlParameter("@ID", T_CarTeamModel.ID));
-lParams.Add(new SqlParameter("@Name", T_CarTeamModel.Name));
-lParams.Add(new SqlParameter("@EditMan", T_CarTeamModel.EditMan));
-lParams.Add(new SqlParameter("@EditDate", T_CarTeamModel.EditDate));
+lParams.Add(new SqlParameter("@ID", T_ProductModel.ID));
+lParams.Add(new SqlParameter("@Name", T_ProductModel.Name));
+lParams.Add(new SqlParameter("@EditMan", T_ProductModel.EditMan));
+lParams.Add(new SqlParameter("@EditDate", T_ProductModel.EditDate));
 MsSqlHelper lMSSqlHelper = new MsSqlHelper();
 return lMSSqlHelper.ExecuteSQL(lSQL, lParams.ToArray());
 }
-public int Update(T_CarTeamModel T_CarTeamModel)
+public int Update(T_ProductModel T_ProductModel)
 {
 string lSQL = UpdateSQL();
 List<SqlParameter> lParams = new List<SqlParameter>();
-lParams.Add(new SqlParameter("@ID", T_CarTeamModel.ID));
-lParams.Add(new SqlParameter("@Name", T_CarTeamModel.Name));
-lParams.Add(new SqlParameter("@EditMan", T_CarTeamModel.EditMan));
-lParams.Add(new SqlParameter("@EditDate", T_CarTeamModel.EditDate));
+lParams.Add(new SqlParameter("@ID", T_ProductModel.ID));
+lParams.Add(new SqlParameter("@Name", T_ProductModel.Name));
+lParams.Add(new SqlParameter("@EditMan", T_ProductModel.EditMan));
+lParams.Add(new SqlParameter("@EditDate", T_ProductModel.EditDate));
 MsSqlHelper lMSSqlHelper = new MsSqlHelper();
 return lMSSqlHelper.ExecuteSQL(lSQL, lParams.ToArray());
 }

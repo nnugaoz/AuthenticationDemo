@@ -287,9 +287,8 @@ namespace Tools
                     lLine += "lSQL += \"," + dgvFields.Rows[i].Cells["Name"].Value.ToString() + "\";\n";
                 }
             }
-            lLine += "lSQL += \"FROM " + lTableName + "\";\n";
-            lLine += "lSQL += \")\";\n";
-            lLine += "lSQL += \"WHERE ID=@ID\";\n";
+            lLine += "lSQL += \" FROM " + lTableName + "\";\n";
+            lLine += "lSQL += \" WHERE ID=@ID\";\n";
             lLine += "return lSQL;\n";
             lLine += "}";
             AppendLine(lFileStream, lLine);
@@ -438,6 +437,37 @@ namespace Tools
             lLine = "}";
             AppendLine(lFileStream, lLine);
 
+            lLine = "public DataTable SelectByID(string ID)";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "{";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "string lSQL = SelectByIDSQL();";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "DataTable lDT = null;";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "List<SqlParameter> lParams = new List<SqlParameter>();";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "lParams.Add(new SqlParameter(\"@ID\", ID));";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "MsSqlHelper lMSSqlHelper = new MsSqlHelper();";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "lDT = lMSSqlHelper.GetDataTable(lSQL,lParams.ToArray());";
+
+            AppendLine(lFileStream, lLine);
+
+            lLine = "return lDT;";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "}";
+            AppendLine(lFileStream, lLine);
+
             lLine = "}";
             AppendLine(lFileStream, lLine);
 
@@ -476,7 +506,10 @@ namespace Tools
             lLine = "<script src='jquery-3.4.1.min.js'></script>";
             AppendLine(lFileStream, lLine);
 
-            lLine = "< script src = 'Pagination.js'></ script >";
+            lLine = "<script src='layer.js'></script>";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "<script src = 'Pagination.js'></script>";
             AppendLine(lFileStream, lLine);
 
             lLine = "<script type='text/javascript'>";
@@ -575,13 +608,100 @@ namespace Tools
             lLine = "}";
             AppendLine(lFileStream, lLine);
 
-            lLine = "function btnEdit_OnClick(){}";
+            lLine = "function btnEdit_OnClick(event) {";
             AppendLine(lFileStream, lLine);
 
-            lLine = "function btnDel_OnClick(){}";
+            lLine = "layer.open({";
             AppendLine(lFileStream, lLine);
 
-            lLine = "function btnNew_OnClick(){window.location.href='" + lTableName + "New.html'}";
+            lLine = "type: 2";
+            AppendLine(lFileStream, lLine);
+
+            lLine = ", title: '编辑'";
+            AppendLine(lFileStream, lLine);
+
+            lLine = ", content: '" + lTableName + "Edit.html?ID=' + event.data.RowData.ID";
+            AppendLine(lFileStream, lLine);
+
+            lLine = ", area: ['800px', '600px']";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "});";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "}";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "function btnDel_OnClick(event) {";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "layer.confirm('您确认要删除此条记录吗？', { icon: 3, title: '提示' }, function (index) {";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "$.ajax({";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "type: 'get'";
+            AppendLine(lFileStream, lLine);
+
+            lLine = ", url: '/Handler/" + lTableName + ".ashx?RequestMethod=Delete&ID=' + event.data.RowData.ID";
+            AppendLine(lFileStream, lLine);
+
+            lLine = ", success: function (pData) {";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "if (pData == '1') {";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "layer.alert('删除成功！', { icon: 1 });";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "Init();";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "} else {";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "layer.alert('删除失败！', { icon: 2 });";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "}";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "}";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "});";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "});";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "}";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "function btnNew_OnClick() {";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "layer.open({";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "type: 2";
+            AppendLine(lFileStream, lLine);
+
+            lLine = ", title: '新增'";
+            AppendLine(lFileStream, lLine);
+
+            lLine = ", content: '" + lTableName + "New.html'";
+            AppendLine(lFileStream, lLine);
+
+            lLine = ", area: ['800px', '600px']";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "});";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "}";
             AppendLine(lFileStream, lLine);
 
             lLine = " </script>";
@@ -705,6 +825,15 @@ namespace Tools
             lLine = "         break;";
             AppendLine(lFileStream, lLine);
 
+            lLine = "     case \"SelectByID\":";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "    SelectByID(context);";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "    break;";
+            AppendLine(lFileStream, lLine);
+
             lLine = "}";
             AppendLine(lFileStream, lLine);
 
@@ -724,6 +853,30 @@ namespace Tools
             AppendLine(lFileStream, lLine);
 
             lLine = "lDT = lDao.Select();";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "context.Response.Write(JsonConvert.SerializeObject(lDT));";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "}";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "private void SelectByID(HttpContext context)";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "{";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "DataTable lDT = null;";
+            AppendLine(lFileStream, lLine);
+
+            lLine = lTableName + "Dao lDao = new " + lTableName + "Dao();";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "String ID = context.Request.Params[\"ID\"].ToString();";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "lDT = lDao.SelectByID(ID);";
             AppendLine(lFileStream, lLine);
 
             lLine = "context.Response.Write(JsonConvert.SerializeObject(lDT));";
@@ -777,7 +930,7 @@ namespace Tools
             lLine = "{";
             AppendLine(lFileStream, lLine);
 
-            lLine = "    context.Response.Write(\"successed!\");";
+            lLine = "    context.Response.Write(\"1\");";
             AppendLine(lFileStream, lLine);
 
             lLine = "}";
@@ -789,7 +942,7 @@ namespace Tools
             lLine = "{";
             AppendLine(lFileStream, lLine);
 
-            lLine = "    context.Response.Write(\"failed!\");";
+            lLine = "    context.Response.Write(\"0\");";
             AppendLine(lFileStream, lLine);
 
             lLine = "}";
@@ -813,9 +966,6 @@ namespace Tools
                 AppendLine(lFileStream, lLine);
             }
 
-            lLine = "lModel.ID = Guid.NewGuid().ToString();";
-            AppendLine(lFileStream, lLine);
-
             lLine = "lModel.EditMan = \"Admin\";";
             AppendLine(lFileStream, lLine);
 
@@ -831,7 +981,7 @@ namespace Tools
             lLine = "{";
             AppendLine(lFileStream, lLine);
 
-            lLine = "    context.Response.Write(\"successed!\");";
+            lLine = "    context.Response.Write(\"1\");";
             AppendLine(lFileStream, lLine);
 
             lLine = "}";
@@ -843,7 +993,7 @@ namespace Tools
             lLine = "{";
             AppendLine(lFileStream, lLine);
 
-            lLine = "    context.Response.Write(\"failed!\");";
+            lLine = "    context.Response.Write(\"0\");";
             AppendLine(lFileStream, lLine);
 
             lLine = "}";
@@ -885,7 +1035,7 @@ namespace Tools
             lLine = "{";
             AppendLine(lFileStream, lLine);
 
-            lLine = "    context.Response.Write(\"successed!\");";
+            lLine = "    context.Response.Write(\"1\");";
             AppendLine(lFileStream, lLine);
 
             lLine = "}";
@@ -897,7 +1047,7 @@ namespace Tools
             lLine = "{";
             AppendLine(lFileStream, lLine);
 
-            lLine = "    context.Response.Write(\"failed!\");";
+            lLine = "    context.Response.Write(\"0\");";
             AppendLine(lFileStream, lLine);
 
             lLine = "}";
@@ -933,9 +1083,10 @@ namespace Tools
             lFileStream.Close();
         }
 
-        private void btnCreateHtmlEditPage_Click(object sender, EventArgs e)
+        private void btnCreateHtmlNewPage_Click(object sender, EventArgs e)
         {
             string lTableName = lstTable.SelectedItem.ToString();
+
             if (!Directory.Exists(mHtmlPath + @"\" + lTableName))
             {
                 Directory.CreateDirectory(mHtmlPath + @"\" + lTableName);
@@ -954,13 +1105,115 @@ namespace Tools
             lLine = "<head>";
             AppendLine(lFileStream, lLine);
 
-            lLine = "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/>";
+            lLine = "<meta http-equiv='Content-Type' content='text/html; charset=utf-8'/>";
             AppendLine(lFileStream, lLine);
 
             lLine = "    <title></title>";
             AppendLine(lFileStream, lLine);
 
-            lLine = "	<meta charset=\"utf-8\" />";
+            lLine = "	<meta charset='utf-8' />";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "<link href='bootstrap.min.css' rel='stylesheet'/>";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "<script src='jquery-3.4.1.min.js'></script>";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "<script src='layer.js'></script>";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "<script type=\"text/javascript\">";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "$(function () {";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "$('#btnSubmit').on('click', btnSubmit_OnClick);";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "});";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "function btnSubmit_OnClick(event) {";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "event.preventDefault();";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "var formData = new FormData($('form')[0]);";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "$.ajax({";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "type: 'post'";
+            AppendLine(lFileStream, lLine);
+
+            lLine = ", url: $('form').attr('action')";
+            AppendLine(lFileStream, lLine);
+
+            lLine = ", data: formData";
+            AppendLine(lFileStream, lLine);
+
+            lLine = ", processData: false";
+            AppendLine(lFileStream, lLine);
+
+            lLine = ", contentType: false";
+            AppendLine(lFileStream, lLine);
+
+            lLine = ", success: function (pData) {";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "if (pData === '1') {";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "layer.alert('保存成功!', { icon: 1 }, function (index) {";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "layer.close(index);";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "parent.layer.close(index); //再执行关闭";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "parent.Init();";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "})";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "} else {";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "layer.alert('保存失败!', { icon: 2 }, function (index) {";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "layer.close(index);";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "})";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "}";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "}";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "});";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "return false;";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "}";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "</script>";
             AppendLine(lFileStream, lLine);
 
             lLine = "</head>";
@@ -969,20 +1222,44 @@ namespace Tools
             lLine = "<body>";
             AppendLine(lFileStream, lLine);
 
-            lLine = "<form method=\"POST\" action=\"/Handler/" + lTableName + ".ashx?RequestMethod=Insert\">";
+            lLine = "<form method='POST' action='/Handler/" + lTableName + ".ashx?RequestMethod=Insert' class='form-horizontal'>";
             AppendLine(lFileStream, lLine);
 
             for (int i = 0; i < dgvFields.Rows.Count; i++)
             {
-                lLine = "<label for=\"" + dgvFields.Rows[i].Cells["Name"].Value.ToString() + "\">" + dgvFields.Rows[i].Cells["Name"].Value.ToString() + "</label>";
+                lLine = "<div class='form-group'>";
                 AppendLine(lFileStream, lLine);
-                lLine = "<input type=\"text\" id=\"" + dgvFields.Rows[i].Cells["Name"].Value.ToString() + "\" name=\"" + dgvFields.Rows[i].Cells["Name"].Value.ToString() + "\"/>";
+
+                lLine = "<label for='" + dgvFields.Rows[i].Cells["Name"].Value.ToString() + "' class='col-sm-2 control-label'>" + dgvFields.Rows[i].Cells["Name"].Value.ToString() + "</label>";
                 AppendLine(lFileStream, lLine);
-                lLine = "<br/>";
+
+                lLine = "<div class='col-sm-8'>";
                 AppendLine(lFileStream, lLine);
+
+                lLine = "<input type='text' id='" + dgvFields.Rows[i].Cells["Name"].Value.ToString() + "' name='" + dgvFields.Rows[i].Cells["Name"].Value.ToString() + "' class='form-control' />";
+                AppendLine(lFileStream, lLine);
+
+                lLine = "</div>";
+                AppendLine(lFileStream, lLine);
+
+                lLine = "</div>";
+                AppendLine(lFileStream, lLine);
+
             }
 
-            lLine = "<input type=\"submit\" value=\"提交\" />";
+            lLine = "<div class='form-group'>";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "<div class='col-sm-offset-2 col-sm-8'>";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "<input type='submit' value='提交' class='btn btn-success' id='btnSubmit'/>";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "</div>";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "</div>";
             AppendLine(lFileStream, lLine);
 
             lLine = "</form>";
@@ -1008,6 +1285,21 @@ namespace Tools
             FileStream lFileStream = new FileStream(mPageProcedure + @"/" + lTableName + "_Page.sql", FileMode.OpenOrCreate, FileAccess.ReadWrite);
             String lLine = "";
 
+            lLine = "IF OBJECT_ID('" + lTableName + "_Page') IS NOT NULL";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "BEGIN ";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "DROP PROCEDURE " + lTableName + "_Page ";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "END ";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "GO ";
+            AppendLine(lFileStream, lLine);
+
             lLine = "CREATE PROCEDURE " + lTableName + "_Page ";
             AppendLine(lFileStream, lLine);
 
@@ -1032,7 +1324,7 @@ namespace Tools
             lLine = "SELECT @RowCnt = COUNT(*) FROM " + lTableName;
             AppendLine(lFileStream, lLine);
 
-            lLine = "SELECT* FROM(";
+            lLine = "SELECT * FROM(";
             AppendLine(lFileStream, lLine);
 
             lLine = "SELECT";
@@ -1056,8 +1348,260 @@ namespace Tools
             lLine = "END";
             AppendLine(lFileStream, lLine);
 
+            lLine = "GO ";
+            AppendLine(lFileStream, lLine);
+
             lFileStream.Close();
 
+        }
+
+        private void btnCreateHtmlEditPage_Click(object sender, EventArgs e)
+        {
+            string lTableName = lstTable.SelectedItem.ToString();
+
+            if (!Directory.Exists(mHtmlPath + @"\" + lTableName))
+            {
+                Directory.CreateDirectory(mHtmlPath + @"\" + lTableName);
+            }
+
+            FileStream lFileStream = new FileStream(mHtmlPath + @"\" + lTableName + @"\" + lTableName + "Edit.html", FileMode.OpenOrCreate, FileAccess.ReadWrite);
+
+            String lLine = "";
+
+            lLine = "<!DOCTYPE html>";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "<html>";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "<head>";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "<meta http-equiv='Content-Type' content='text/html; charset=utf-8'/>";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "    <title></title>";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "	<meta charset='utf-8' />";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "<link href='bootstrap.min.css' rel='stylesheet'/>";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "<script src='jquery.min.js'></script>";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "<script src='layer.js'></script>";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "<script src='Common.js'></script>";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "<script type='text/javascript'>";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "$(function () {";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "var ID = GetParameterByName('ID');";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "$.ajax({";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "    type: 'get'";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "     , url: '/Handler/" + lTableName + ".ashx?RequestMethod=SelectByID&ID=' + ID";
+            AppendLine(lFileStream, lLine);
+
+            lLine = " , success: function (pData) { PageInit(pData); }";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "   });";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "$('#btnSubmit').on('click', btnSubmit_OnClick);";
+            AppendLine(lFileStream, lLine);
+
+            lLine = " });";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "function PageInit(pData) {";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "    var lData = JSON.parse(pData);";
+            AppendLine(lFileStream, lLine);
+
+            for (var i = 0; i < dgvFields.Rows.Count; i++)
+            {
+                lLine = "$('#" + dgvFields.Rows[i].Cells["Name"].Value.ToString() + "').val(lData[0]." + dgvFields.Rows[i].Cells["Name"].Value.ToString() + ");";
+                AppendLine(lFileStream, lLine);
+            }
+
+            lLine = "}";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "function btnSubmit_OnClick(event) {";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "event.preventDefault();";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "var formData = new FormData($('form')[0]);";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "$.ajax({";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "type: 'post'";
+            AppendLine(lFileStream, lLine);
+
+            lLine = ", url: $('form').attr('action')";
+            AppendLine(lFileStream, lLine);
+
+            lLine = ", contentType: false";
+            AppendLine(lFileStream, lLine);
+
+            lLine = ", processData: false";
+            AppendLine(lFileStream, lLine);
+
+            lLine = ", data: formData";
+            AppendLine(lFileStream, lLine);
+
+            lLine = ", success: function (pData) {";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "if (pData === '1') {";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "layer.alert('保存成功！'";
+            AppendLine(lFileStream, lLine);
+
+            lLine = ", { icon: 1 }";
+            AppendLine(lFileStream, lLine);
+
+            lLine = ", function (index) {";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "layer.close(index);";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "parent.layer.close(index); //再执行关闭";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "parent.Init();";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "});";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "} else {";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "layer.alert('保存失败！'";
+            AppendLine(lFileStream, lLine);
+
+            lLine = ", { icon: 2 }";
+            AppendLine(lFileStream, lLine);
+
+            lLine = ", function (index) {";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "layer.close(index);";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "});";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "}";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "}";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "});";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "return false;";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "}";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "</script>";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "</head>";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "<body>";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "<form method='POST' action='/Handler/" + lTableName + ".ashx?RequestMethod=Update' class='form-horizontal'>";
+            AppendLine(lFileStream, lLine);
+
+            for (int i = 0; i < dgvFields.Rows.Count; i++)
+            {
+                lLine = "<div class='form-group'>";
+                AppendLine(lFileStream, lLine);
+
+                lLine = "<label for='" + dgvFields.Rows[i].Cells["Name"].Value.ToString() + "' class='col-sm-2 control-label'>" + dgvFields.Rows[i].Cells["Name"].Value.ToString() + "</label>";
+                AppendLine(lFileStream, lLine);
+
+                lLine = "<div class='col-sm-8'>";
+                AppendLine(lFileStream, lLine);
+
+                lLine = "<input type='text' id='" + dgvFields.Rows[i].Cells["Name"].Value.ToString() + "' name='" + dgvFields.Rows[i].Cells["Name"].Value.ToString() + "' class='form-control' />";
+                AppendLine(lFileStream, lLine);
+
+                lLine = "</div>";
+                AppendLine(lFileStream, lLine);
+
+                lLine = "</div>";
+                AppendLine(lFileStream, lLine);
+            }
+
+            lLine = "<div class='form-group'>";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "<div class='col-sm-offset-2 col-sm-8'>";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "<input type='submit' value='提交' class='btn btn-success' id='btnSubmit'/>";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "</div>";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "</div>";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "</form>";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "</body>";
+            AppendLine(lFileStream, lLine);
+
+            lLine = "</html>";
+            AppendLine(lFileStream, lLine);
+
+            lFileStream.Close();
+        }
+
+        private void btnOneKey_Click(object sender, EventArgs e)
+        {
+            btnGenerateEntityClass_Click(sender, e);
+            btnGenerateDao_Click(sender, e);
+            btnCreateHtmlListPage_Click(sender, e);
+            btnCreateHtmlNewPage_Click(sender, e);
+            btnCreateHtmlEditPage_Click(sender, e);
+            btnCreateHandler_Click(sender, e);
+            btnCreatePagePS_Click(sender, e);
         }
     }
 }
