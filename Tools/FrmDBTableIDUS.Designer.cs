@@ -82,7 +82,7 @@
             this.lstDB.ItemHeight = 12;
             this.lstDB.Location = new System.Drawing.Point(9, 147);
             this.lstDB.Name = "lstDB";
-            this.lstDB.Size = new System.Drawing.Size(153, 292);
+            this.lstDB.Size = new System.Drawing.Size(153, 364);
             this.lstDB.TabIndex = 3;
             this.lstDB.SelectedIndexChanged += new System.EventHandler(this.lstDB_SelectedIndexChanged);
             // 
@@ -94,7 +94,7 @@
             this.lstTable.ItemHeight = 12;
             this.lstTable.Location = new System.Drawing.Point(167, 147);
             this.lstTable.Name = "lstTable";
-            this.lstTable.Size = new System.Drawing.Size(202, 292);
+            this.lstTable.Size = new System.Drawing.Size(202, 364);
             this.lstTable.TabIndex = 5;
             this.lstTable.SelectedIndexChanged += new System.EventHandler(this.lstTable_SelectedIndexChanged);
             // 
@@ -118,7 +118,7 @@
             // 
             // btnConnect
             // 
-            this.btnConnect.Location = new System.Drawing.Point(583, 20);
+            this.btnConnect.Location = new System.Drawing.Point(583, 24);
             this.btnConnect.Name = "btnConnect";
             this.btnConnect.Size = new System.Drawing.Size(85, 23);
             this.btnConnect.TabIndex = 8;
@@ -159,7 +159,7 @@
             this.dgvFields.Name = "dgvFields";
             this.dgvFields.RowHeadersVisible = false;
             this.dgvFields.RowTemplate.Height = 37;
-            this.dgvFields.Size = new System.Drawing.Size(264, 289);
+            this.dgvFields.Size = new System.Drawing.Size(691, 365);
             this.dgvFields.TabIndex = 11;
             // 
             // btnCreateHtmlListPage
@@ -226,7 +226,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(682, 454);
+            this.ClientSize = new System.Drawing.Size(1073, 530);
             this.Controls.Add(this.btnOneKey);
             this.Controls.Add(this.btnCreateHtmlEditPage);
             this.Controls.Add(this.btnCreatePagePS);

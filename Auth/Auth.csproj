@@ -131,6 +131,9 @@
     <Content Include="Html\T_CarTeam\T_CarTeamEdit.html" />
     <Content Include="Html\T_CarTeam\T_CarTeamList.html" />
     <Content Include="Html\T_CarTeam\T_CarTeamNew.html" />
+    <Content Include="Html\T_Freighter\T_FreighterEdit.html" />
+    <Content Include="Html\T_Freighter\T_FreighterList.html" />
+    <Content Include="Html\T_Freighter\T_FreighterNew.html" />
     <Content Include="Html\T_Product\T_ProductEdit.html" />
     <Content Include="Html\T_Product\T_ProductList.html" />
     <Content Include="Html\T_Product\T_ProductNew.html" />
@@ -221,6 +224,7 @@
     <Compile Include="Dao\HomeDao.cs" />
     <Compile Include="Dao\RoleDao.cs" />
     <Compile Include="Dao\T_CarTeamDao.cs" />
+    <Compile Include="Dao\T_FreighterDao.cs" />
     <Compile Include="Dao\T_ProductDao.cs" />
     <Compile Include="Dao\T_WeightDao.cs" />
     <Compile Include="Dao\UserDao.cs" />
@@ -242,6 +246,9 @@
     <Compile Include="Handler\T_CarTeam.ashx.cs">
       <DependentUpon>T_CarTeam.ashx</DependentUpon>
     </Compile>
+    <Compile Include="Handler\T_Freighter.ashx.cs">
+      <DependentUpon>T_Freighter.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Handler\T_Product.ashx.cs">
       <DependentUpon>T_Product.ashx</DependentUpon>
     </Compile>
@@ -249,6 +256,7 @@
       <DependentUpon>User.ashx</DependentUpon>
     </Compile>
     <Compile Include="Model\T_CarTeamModel.cs" />
+    <Compile Include="Model\T_FreighterModel.cs" />
     <Compile Include="Model\T_ProductModel.cs" />
     <Compile Include="Model\T_WeightModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -281,6 +289,7 @@
     </Content>
     <Content Include="Handler\T_CarTeam.ashx" />
     <Content Include="Handler\T_Product.ashx" />
+    <Content Include="Handler\T_Freighter.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
