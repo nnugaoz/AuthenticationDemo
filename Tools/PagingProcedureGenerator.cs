@@ -8,7 +8,7 @@ namespace Tools
 {
     class PagingProcedureGenerator
     {
-         private TableInfo mTable = null;
+        private TableInfo mTable = null;
         private String mPagingProcedurePath = "Procedure/Page/";
 
         public PagingProcedureGenerator(TableInfo pTable)
@@ -16,7 +16,8 @@ namespace Tools
             mTable = pTable;
         }
 
-        public void GeneratePagingProcedure(){
+        public void GeneratePagingProcedure()
+        {
 
             if (mTable == null) return;
 
@@ -28,7 +29,7 @@ namespace Tools
                 Directory.CreateDirectory(mPagingProcedurePath + @"/");
             }
 
-            FileStream lFileStream = new FileStream(mPagingProcedurePath + @"/" + lTableName + "_Page.sql", FileMode.OpenOrCreate, FileAccess.ReadWrite);
+            FileStream lFileStream = new FileStream(mPagingProcedurePath + @"/" + lTableName + "_Page.sql", FileMode.Create, FileAccess.ReadWrite);
             String lLine = "";
 
             lLine = "IF OBJECT_ID('" + lTableName + "_Page') IS NOT NULL";
@@ -49,6 +50,13 @@ namespace Tools
             lLine = "CREATE PROCEDURE " + lTableName + "_Page ";
             FileHelper.AppendLine(lFileStream, lLine);
 
+            for (int i = 0; i < mTable.Columns.Count; i++)
+            {
+                if (!mTable.Columns[i].CanSearch) continue;
+                lLine = "@" + mTable.Columns[i].Name + " VARCHAR(50) ,";
+                FileHelper.AppendLine(lFileStream, lLine);
+            }
+
             lLine = "@BeginIndex INT";
             FileHelper.AppendLine(lFileStream, lLine);
 
@@ -67,8 +75,15 @@ namespace Tools
             lLine = "DECLARE @RowCnt AS INT";
             FileHelper.AppendLine(lFileStream, lLine);
 
-            lLine = "SELECT @RowCnt = COUNT(*) FROM " + lTableName;
+            lLine = "SELECT @RowCnt = COUNT(*) FROM " + lTableName + " WHERE 1=1 ";
             FileHelper.AppendLine(lFileStream, lLine);
+
+            for (int i = 0; i < mTable.Columns.Count; i++)
+            {
+                if (!mTable.Columns[i].CanSearch) continue;
+                lLine = "AND " + mTable.Columns[i].Name + " LIKE '%'+@" + mTable.Columns[i].Name + "+'%'";
+                FileHelper.AppendLine(lFileStream, lLine);
+            }
 
             lLine = "SELECT * FROM(";
             FileHelper.AppendLine(lFileStream, lLine);
@@ -85,7 +100,17 @@ namespace Tools
             lLine = " , *";
             FileHelper.AppendLine(lFileStream, lLine);
 
-            lLine = "FROM " + lTableName + ")T";
+            lLine = "FROM " + lTableName + " WHERE 1=1 ";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            for (int i = 0; i < mTable.Columns.Count; i++)
+            {
+                if (!mTable.Columns[i].CanSearch) continue;
+                lLine = "AND " + mTable.Columns[i].Name + " LIKE '%'+@" + mTable.Columns[i].Name + "+'%'";
+                FileHelper.AppendLine(lFileStream, lLine);
+            }
+
+            lLine = ")T";
             FileHelper.AppendLine(lFileStream, lLine);
 
             lLine = "WHERE RowIdx >= @BeginIndex AND RowIdx <= @EndIndex";

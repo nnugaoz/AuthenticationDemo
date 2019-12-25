@@ -13,7 +13,6 @@ namespace Lib
             DataTable lDT = new DataTable();
             for (int i = pSheet.FirstRowNum; i < pSheet.LastRowNum; i++)
             {
-
                 if (i == pSheet.FirstRowNum)
                 {
                     for (int j = pSheet.GetRow(i).FirstCellNum; j < pSheet.GetRow(i).LastCellNum; j++)
@@ -71,8 +70,6 @@ namespace Lib
                     pSheet.CreateRow(lStartRowIdx);
                 }
                 pSheet.GetRow(lStartRowIdx).CreateCell(lStartColIdx + i).SetCellValue(pDT.Columns[i].ColumnName);
-                //pSheet.GetRow(lStartRowIdx).RowStyle.Alignment = HorizontalAlignment.Center;
-                //pSheet.GetRow(lStartRowIdx).RowStyle.BorderDiagonalLineStyle = BorderStyle.Dashed;
             }
             lStartRowIdx++;
 

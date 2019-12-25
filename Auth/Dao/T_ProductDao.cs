@@ -56,7 +56,7 @@ return lSQL;
 }
 public static string SelectPageSQL(){
 string lSQL="";
-lSQL += "EXEC T_Product_Page @BeginIndex,@EndIndex";
+lSQL += "EXEC T_Product_Page @Name,@BeginIndex,@EndIndex";
 return lSQL;
 }
 public int Insert(T_ProductModel T_ProductModel)
@@ -97,11 +97,12 @@ MsSqlHelper lMSSqlHelper = new MsSqlHelper();
 lDT = lMSSqlHelper.GetDataTable(lSQL);
 return lDT;
 }
-public DataTable SelectPage(int BeginIndex,int EndIndex)
+public DataTable SelectPage(string Name, int BeginIndex,int EndIndex)
 {
 string lSQL = SelectPageSQL();
 DataTable lDT = null;
 List<SqlParameter> lParams = new List<SqlParameter>();
+lParams.Add(new SqlParameter("@Name", Name));
 lParams.Add(new SqlParameter("@BeginIndex", BeginIndex));
 lParams.Add(new SqlParameter("@EndIndex", EndIndex));
 MsSqlHelper lMSSqlHelper = new MsSqlHelper();

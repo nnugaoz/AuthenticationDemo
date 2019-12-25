@@ -14,12 +14,6 @@ namespace Tools
     public partial class FrmDBTableIDUS : Form
     {
 
-        private string mModelPath = "Model/";
-        private string mDaoPath = "Dao/";
-        private string mHtmlPath = "Html/";
-        private string mHandlerPath = "Handler/";
-        private string mPageProcedure = "Procedure/Page/";
-
         public FrmDBTableIDUS()
         {
             InitializeComponent();
@@ -85,9 +79,11 @@ namespace Tools
                 lSQL += " SELECT syscol.name AS Name  ";
                 lSQL += ", systype.name AS Type";
                 lSQL += ", syscol.max_length AS Length";
+                lSQL += ", cast(tabcmt.value as varchar) AS Comment";
                 lSQL += " FROM";
                 lSQL += " sys.tables systab left join sys.columns syscol on systab.object_id=syscol.object_id";
                 lSQL += " left join sys.types systype on syscol.system_type_id=systype.system_type_id";
+                lSQL += " left join fn_listextendedproperty ('MS_DESCRIPTION','schema', 'dbo', 'table', '" + lTableName + "', 'column', null) tabcmt ON tabcmt.objname=syscol.name COLLATE Chinese_PRC_CI_AS";
                 lSQL += " WHERE systab.name = '" + lTableName + "'";
                 lSQL += " ORDER BY syscol.column_id";
 
@@ -97,6 +93,29 @@ namespace Tools
             }
 
             dgvFields.DataSource = lDT;
+
+            if (dgvFields.Rows.Count > 0)
+            {
+                DataGridViewCheckBoxColumn lListVisibleCol = new DataGridViewCheckBoxColumn();
+                lListVisibleCol.Name = "ListVisible";
+                lListVisibleCol.DefaultCellStyle.NullValue = true;
+                dgvFields.Columns.Add(lListVisibleCol);
+
+                DataGridViewCheckBoxColumn lNewVisibleCol = new DataGridViewCheckBoxColumn();
+                lNewVisibleCol.Name = "NewVisible";
+                lNewVisibleCol.DefaultCellStyle.NullValue = true;
+                dgvFields.Columns.Add(lNewVisibleCol);
+
+                DataGridViewCheckBoxColumn lEditVisibleCol = new DataGridViewCheckBoxColumn();
+                lEditVisibleCol.Name = "EditVisible";
+                lEditVisibleCol.DefaultCellStyle.NullValue = true;
+                dgvFields.Columns.Add(lEditVisibleCol);
+
+                DataGridViewCheckBoxColumn lCanSearchCol = new DataGridViewCheckBoxColumn();
+                lCanSearchCol.Name = "CanSearch";
+                lCanSearchCol.DefaultCellStyle.NullValue = true;
+                dgvFields.Columns.Add(lCanSearchCol);
+            }
         }
 
         private void btnGenerateEntityClass_Click(object sender, EventArgs e)
@@ -120,17 +139,19 @@ namespace Tools
             for (int i = 0; i < dgvFields.Rows.Count; i++)
             {
                 lColumn = new ColumnInfo();
+
                 lColumn.Name = dgvFields.Rows[i].Cells["Name"].Value.ToString();
                 lColumn.Type = dgvFields.Rows[i].Cells["Type"].Value.ToString();
                 lColumn.Length = dgvFields.Rows[i].Cells["Length"].Value.ToString();
+                lColumn.Comment = dgvFields.Rows[i].Cells["Comment"].Value.ToString();
+
+                lColumn.ListVisible = Convert.ToBoolean(dgvFields.Rows[i].Cells["ListVisible"].Value ?? true);
+                lColumn.NewVisible = Convert.ToBoolean(dgvFields.Rows[i].Cells["NewVisible"].Value ?? true);
+                lColumn.EditVisible = Convert.ToBoolean(dgvFields.Rows[i].Cells["EditVisible"].Value ?? true);
+                lColumn.CanSearch = Convert.ToBoolean(dgvFields.Rows[i].Cells["CanSearch"].Value ?? true);
+
                 pTable.Columns.Add(lColumn);
             }
-        }
-
-        private void AppendLine(FileStream pFs, String pLine)
-        {
-            byte[] lData = Encoding.UTF8.GetBytes(pLine + "\r\n");
-            pFs.Write(lData, 0, lData.Length);
         }
 
         private void btnGenerateDao_Click(object sender, EventArgs e)
@@ -175,7 +196,7 @@ namespace Tools
             GetSelectedInfo(ref lTable);
             if (lTable == null) return;
             PagingProcedureGenerator lPagingProcedureGenerator = new PagingProcedureGenerator(lTable);
-            lPagingProcedureGenerator.GeneratePagingProcedure(); 
+            lPagingProcedureGenerator.GeneratePagingProcedure();
         }
 
         private void btnCreateHtmlEditPage_Click(object sender, EventArgs e)

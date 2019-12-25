@@ -107,8 +107,6 @@ namespace Auth.Handler
                     lRR.Msg = "文件格式错误！";
                 }
             }
-
-
             context.Response.Write(JsonConvert.SerializeObject(lRR));
         }
 

@@ -50,7 +50,8 @@ DataTable lDT = null;
 T_ProductDao lDao = new T_ProductDao();
 int BeginIndex = Convert.ToInt32(context.Request.Params["BeginIndex"].ToString());
 int EndIndex = Convert.ToInt32(context.Request.Params["EndIndex"].ToString());
-lDT = lDao.SelectPage(BeginIndex,EndIndex);
+string Name = context.Request.Params["Name"].ToString();
+lDT = lDao.SelectPage(Name, BeginIndex, EndIndex);
 context.Response.Write(JsonConvert.SerializeObject(lDT));
 }
 private void Delete(HttpContext context)

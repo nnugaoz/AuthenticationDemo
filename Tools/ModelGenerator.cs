@@ -39,6 +39,9 @@ namespace Tools
 
             for (int i = 0; i < mTable.Columns.Count; i++)
             {
+                lLine = "//" + mTable.Columns[i].Comment;
+                FileHelper.AppendLine(lFileStream, lLine);
+
                 lLine = "//MaxLength=" + mTable.Columns[i].Length;
                 FileHelper.AppendLine(lFileStream, lLine);
 

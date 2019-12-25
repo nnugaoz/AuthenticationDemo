@@ -54,10 +54,45 @@ namespace Tools
             lLine = "<body> ";
             FileHelper.AppendLine(lFileStream, lLine);
 
-            lLine = "<input type='button' id='btnNew' class='btn btn-success' value='新增' onclick='btnNew_OnClick();'/>";
+            lLine = "<div class='form-inline' style='padding:10px;'>";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            for (int i = 0; i < mTable.Columns.Count; i++)
+            {
+                if (!mTable.Columns[i].CanSearch) continue;
+
+                lLine = "<div class='form-group'>";
+                FileHelper.AppendLine(lFileStream, lLine);
+
+                lLine = "<label for='" + mTable.Columns[i].Name + "'>" + mTable.Columns[i].Comment + "</label>";
+                FileHelper.AppendLine(lFileStream, lLine);
+
+                lLine = "<input type='text' id='" + mTable.Columns[i].Name + "' name='" + mTable.Columns[i].Name + "' class='form-control' />";
+                FileHelper.AppendLine(lFileStream, lLine);
+
+                lLine = "</div>";
+                FileHelper.AppendLine(lFileStream, lLine);
+            }
+
+            lLine = "<input type='button' class='btn btn-success' value='检索' id='btnSearch' />";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "<input type='button' class='btn btn-primary' value='清空' id='btnClear' />";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "</div>";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "<div style='padding:10px'>";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "<input type='button' id='btnNew' class='btn btn-success' value='新增'/>";
             FileHelper.AppendLine(lFileStream, lLine);
 
             lLine = "<div id='" + mTable.Name + "List' style='margin-top:20px;'></div>";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "</div>";
             FileHelper.AppendLine(lFileStream, lLine);
 
             lLine = "</body> ";
@@ -97,11 +132,51 @@ namespace Tools
             lLine = "Init();";
             FileHelper.AppendLine(lFileStream, lLine);
 
+            lLine = "$('#btnSearch').on('click', btnSearch_OnClick);";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "$('#btnClear').on('click', btnClear_OnClick);";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "$('#btnNew').on('click', btnNew_OnClick);";
+            FileHelper.AppendLine(lFileStream, lLine);
+
             lLine = " })";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "function btnSearch_OnClick() {";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "Init();";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "}";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "function btnClear_OnClick() {";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            for (int i = 0; i < mTable.Columns.Count; i++)
+            {
+                if (!mTable.Columns[i].CanSearch) continue;
+
+                lLine = "$('#" + mTable.Columns[i].Name + "').val('');";
+                FileHelper.AppendLine(lFileStream, lLine);
+            }
+
+            lLine = "}";
             FileHelper.AppendLine(lFileStream, lLine);
 
             lLine = "function Init() {";
             FileHelper.AppendLine(lFileStream, lLine);
+
+            for (int i = 0; i < mTable.Columns.Count; i++)
+            {
+                if (!mTable.Columns[i].CanSearch) continue;
+
+                lLine = "var " + mTable.Columns[i].Name + " = $('#" + mTable.Columns[i].Name + "').val();";
+                FileHelper.AppendLine(lFileStream, lLine);
+            }
 
             lLine = "$('#" + mTable.Name + "List').empty();";
             FileHelper.AppendLine(lFileStream, lLine);
@@ -112,15 +187,25 @@ namespace Tools
             lLine = "lPConfig.RequestUrl = '/Handler/" + mTable.Name + ".ashx?RequestMethod=SelectPage'";
             FileHelper.AppendLine(lFileStream, lLine);
 
+            for (int i = 0; i < mTable.Columns.Count; i++)
+            {
+                if (!mTable.Columns[i].CanSearch) continue;
+
+                lLine = "lPConfig.RequestUrl += '&" + mTable.Columns[i].Name + "='+" + mTable.Columns[i].Name + ";";
+                FileHelper.AppendLine(lFileStream, lLine);
+            }
+
             lLine = "lPConfig.PageContainerID = '" + mTable.Name + "List';";
             FileHelper.AppendLine(lFileStream, lLine);
 
             for (int i = 0; i < mTable.Columns.Count; i++)
             {
+                if (!mTable.Columns[i].ListVisible) continue;
+
                 lLine = "var " + mTable.Columns[i].Name + "Col = new PaginationColumnConfiguration();";
                 FileHelper.AppendLine(lFileStream, lLine);
 
-                lLine = mTable.Columns[i].Name + "Col.HeaderText = '" + mTable.Columns[i].Name + "';";
+                lLine = mTable.Columns[i].Name + "Col.HeaderText = '" + mTable.Columns[i].Comment + "';";
                 FileHelper.AppendLine(lFileStream, lLine);
 
                 lLine = mTable.Columns[i].Name + "Col.Type = 'TXT';";

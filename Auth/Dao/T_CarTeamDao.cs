@@ -56,7 +56,7 @@ return lSQL;
 }
 public static string SelectPageSQL(){
 string lSQL="";
-lSQL += "EXEC T_CarTeam_Page @BeginIndex,@EndIndex";
+lSQL += "EXEC T_CarTeam_Page @ID,@Name,@EditMan,@EditDate,@BeginIndex,@EndIndex";
 return lSQL;
 }
 public int Insert(T_CarTeamModel T_CarTeamModel)
@@ -97,11 +97,15 @@ MsSqlHelper lMSSqlHelper = new MsSqlHelper();
 lDT = lMSSqlHelper.GetDataTable(lSQL);
 return lDT;
 }
-public DataTable SelectPage(int BeginIndex,int EndIndex)
+public DataTable SelectPage(string ID, string Name, string EditMan, string EditDate, int BeginIndex,int EndIndex)
 {
 string lSQL = SelectPageSQL();
 DataTable lDT = null;
 List<SqlParameter> lParams = new List<SqlParameter>();
+lParams.Add(new SqlParameter("@ID", ID));
+lParams.Add(new SqlParameter("@Name", Name));
+lParams.Add(new SqlParameter("@EditMan", EditMan));
+lParams.Add(new SqlParameter("@EditDate", EditDate));
 lParams.Add(new SqlParameter("@BeginIndex", BeginIndex));
 lParams.Add(new SqlParameter("@EndIndex", EndIndex));
 MsSqlHelper lMSSqlHelper = new MsSqlHelper();

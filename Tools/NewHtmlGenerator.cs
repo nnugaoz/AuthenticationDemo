@@ -31,7 +31,7 @@ namespace Tools
                 Directory.CreateDirectory(mHtmlPath + @"/" + lTableName);
             }
 
-            FileStream lFileStream = new FileStream(mHtmlPath + @"\" + lTableName + @"\" + lTableName + "New.html", FileMode.OpenOrCreate, FileAccess.ReadWrite);
+            FileStream lFileStream = new FileStream(mHtmlPath + @"\" + lTableName + @"\" + lTableName + "New.html", FileMode.Create, FileAccess.ReadWrite);
 
             lLine = "<!DOCTYPE html>";
             FileHelper.AppendLine(lFileStream, lLine);
@@ -53,7 +53,7 @@ namespace Tools
         {
             String lLine = "";
 
-            lLine = "<body>";
+            lLine = "<body style='overflow:hidden;'>";
             FileHelper.AppendLine(lFileStream, lLine);
 
             lLine = "<form method='POST' action='/Handler/" + mTable.Name + ".ashx?RequestMethod=Insert' class='form-horizontal'>";
@@ -61,10 +61,18 @@ namespace Tools
 
             for (int i = 0; i < mTable.Columns.Count; i++)
             {
-                lLine = "<div class='form-group'>";
-                FileHelper.AppendLine(lFileStream, lLine);
-
-                lLine = "<label for='" + mTable.Columns[i].Name + "' class='col-sm-2 control-label'>" + mTable.Columns[i].Name + "</label>";
+                if (mTable.Columns[i].NewVisible)
+                {
+                    lLine = "<div class='form-group'>";
+                    FileHelper.AppendLine(lFileStream, lLine);
+                }
+                else
+                {
+                    lLine = "<div class='form-group' style='visibility:hidden'>";
+                    FileHelper.AppendLine(lFileStream, lLine);
+                }
+                                
+                lLine = "<label for='" + mTable.Columns[i].Name + "' class='col-sm-2 control-label'>" + mTable.Columns[i].Comment + "</label>";
                 FileHelper.AppendLine(lFileStream, lLine);
 
                 lLine = "<div class='col-sm-8'>";

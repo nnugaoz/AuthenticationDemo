@@ -159,6 +159,7 @@
             this.dgvFields.Name = "dgvFields";
             this.dgvFields.RowHeadersVisible = false;
             this.dgvFields.RowTemplate.Height = 37;
+            this.dgvFields.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvFields.Size = new System.Drawing.Size(691, 365);
             this.dgvFields.TabIndex = 11;
             // 

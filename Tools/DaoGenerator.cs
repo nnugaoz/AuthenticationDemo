@@ -114,7 +114,16 @@ namespace Tools
         private void Generate_SelectPage_Function(FileStream lFileStream)
         {
             String lLine = "";
-            lLine = "public DataTable SelectPage(int BeginIndex,int EndIndex)";
+            lLine = "public DataTable SelectPage(";
+
+            for (int i = 0; i < mTable.Columns.Count; i++)
+            {
+                if (!mTable.Columns[i].CanSearch) continue;
+                lLine += "string " + mTable.Columns[i].Name + ", ";
+
+            }
+            lLine += "int BeginIndex,int EndIndex)";
+
             FileHelper.AppendLine(lFileStream, lLine);
 
             lLine = "{";
@@ -128,6 +137,13 @@ namespace Tools
 
             lLine = "List<SqlParameter> lParams = new List<SqlParameter>();";
             FileHelper.AppendLine(lFileStream, lLine);
+
+            for (int i = 0; i < mTable.Columns.Count; i++)
+            {
+                if (!mTable.Columns[i].CanSearch) continue;
+                lLine = "lParams.Add(new SqlParameter(\"@" + mTable.Columns[i].Name + "\", " + mTable.Columns[i].Name + "));";
+                FileHelper.AppendLine(lFileStream, lLine);
+            }
 
             lLine = "lParams.Add(new SqlParameter(\"@BeginIndex\", BeginIndex));";
             FileHelper.AppendLine(lFileStream, lLine);
@@ -272,10 +288,16 @@ namespace Tools
         private void Generate_SelectPageSQL_Function(FileStream lFileStream)
         {
             String lLine = "";
-            lLine = "public static string SelectPageSQL(){\n";
-            lLine += "string lSQL=\"\";\n";
-            lLine += "lSQL += \"EXEC " + mTable.Name + "_Page @BeginIndex,@EndIndex\";\n";
-            lLine += "return lSQL;\n";
+            lLine = "public static string SelectPageSQL(){\r\n";
+            lLine += "string lSQL=\"\";\r\n";
+            lLine += "lSQL += \"EXEC " + mTable.Name + "_Page ";
+            for (int i = 0; i < mTable.Columns.Count; i++)
+            {
+                if (!mTable.Columns[i].CanSearch) continue;
+                lLine += "@" + mTable.Columns[i].Name + ",";
+            }
+            lLine += "@BeginIndex,@EndIndex\";\r\n";
+            lLine += "return lSQL;\r\n";
             lLine += "}";
             FileHelper.AppendLine(lFileStream, lLine);
         }
@@ -283,23 +305,23 @@ namespace Tools
         private void Generate_SelectByIDSQL_Function(FileStream lFileStream)
         {
             String lLine = "";
-            lLine = "public static string SelectByIDSQL(){\n";
-            lLine += "string lSQL=\"\";\n";
-            lLine += "lSQL += \"SELECT \";\n";
+            lLine = "public static string SelectByIDSQL(){\r\n";
+            lLine += "string lSQL=\"\";\r\n";
+            lLine += "lSQL += \"SELECT \";\r\n";
             for (int i = 0; i < mTable.Columns.Count; i++)
             {
                 if (i == 0)
                 {
-                    lLine += "lSQL += \"" + mTable.Columns[i].Name + "\";\n";
+                    lLine += "lSQL += \"" + mTable.Columns[i].Name + "\";\r\n";
                 }
                 else
                 {
-                    lLine += "lSQL += \"," + mTable.Columns[i].Name + "\";\n";
+                    lLine += "lSQL += \"," + mTable.Columns[i].Name + "\";\r\n";
                 }
             }
-            lLine += "lSQL += \" FROM " + mTable.Name + "\";\n";
-            lLine += "lSQL += \" WHERE ID=@ID\";\n";
-            lLine += "return lSQL;\n";
+            lLine += "lSQL += \" FROM " + mTable.Name + "\";\r\n";
+            lLine += "lSQL += \" WHERE ID=@ID\";\r\n";
+            lLine += "return lSQL;\r\n";
             lLine += "}";
             FileHelper.AppendLine(lFileStream, lLine);
         }
@@ -308,23 +330,23 @@ namespace Tools
         {
             String lLine = "";
             //SELECT
-            lLine = "public static string SelectSQL(){\n";
-            lLine += "string lSQL=\"\";\n";
-            lLine += "lSQL += \"SELECT \";\n";
+            lLine = "public static string SelectSQL(){\r\n";
+            lLine += "string lSQL=\"\";\r\n";
+            lLine += "lSQL += \"SELECT \";\r\n";
             for (int i = 0; i < mTable.Columns.Count; i++)
             {
                 if (i == 0)
                 {
-                    lLine += "lSQL += \"" + mTable.Columns[i].Name + "\";\n";
+                    lLine += "lSQL += \"" + mTable.Columns[i].Name + "\";\r\n";
                 }
                 else
                 {
-                    lLine += "lSQL += \"," + mTable.Columns[i].Name + "\";\n";
+                    lLine += "lSQL += \"," + mTable.Columns[i].Name + "\";\r\n";
                 }
             }
-            lLine += "lSQL += \" FROM " + mTable.Name + "\";\n";
+            lLine += "lSQL += \" FROM " + mTable.Name + "\";\r\n";
 
-            lLine += "return lSQL;\n";
+            lLine += "return lSQL;\r\n";
             lLine += "}";
             FileHelper.AppendLine(lFileStream, lLine);
         }
@@ -332,22 +354,22 @@ namespace Tools
         private void Generate_UpdateSQL_Function(FileStream lFileStream)
         {
             String lLine = "";
-            lLine = "public static string UpdateSQL(){\n";
-            lLine += "string lSQL=\"\";\n";
-            lLine += "lSQL += \"UPDATE " + mTable.Name + " SET \";\n";
+            lLine = "public static string UpdateSQL(){\r\n";
+            lLine += "string lSQL=\"\";\r\n";
+            lLine += "lSQL += \"UPDATE " + mTable.Name + " SET \";\r\n";
             for (int i = 0; i < mTable.Columns.Count; i++)
             {
                 if (i == 0)
                 {
-                    lLine += "lSQL += \"" + mTable.Columns[i].Name + "=@" + mTable.Columns[i].Name + "\";\n";
+                    lLine += "lSQL += \"" + mTable.Columns[i].Name + "=@" + mTable.Columns[i].Name + "\";\r\n";
                 }
                 else
                 {
-                    lLine += "lSQL += \"," + mTable.Columns[i].Name + "=@" + mTable.Columns[i].Name + "\";\n";
+                    lLine += "lSQL += \"," + mTable.Columns[i].Name + "=@" + mTable.Columns[i].Name + "\";\r\n";
                 }
             }
-            lLine += "lSQL += \" WHERE ID=@ID\";\n";
-            lLine += "return lSQL;\n";
+            lLine += "lSQL += \" WHERE ID=@ID\";\r\n";
+            lLine += "return lSQL;\r\n";
             lLine += "}";
             FileHelper.AppendLine(lFileStream, lLine);
         }
@@ -355,11 +377,11 @@ namespace Tools
         private void Generate_DeleteSQL_Function(FileStream lFileStream)
         {
             String lLine = "";
-            lLine = "public static string DeleteSQL(){\n";
-            lLine += "string lSQL=\"\";\n";
-            lLine += "lSQL += \"DELETE FROM " + mTable.Name + " \";\n";
-            lLine += "lSQL += \" WHERE ID=@ID\";\n";
-            lLine += "return lSQL;\n";
+            lLine = "public static string DeleteSQL(){\r\n";
+            lLine += "string lSQL=\"\";\r\n";
+            lLine += "lSQL += \"DELETE FROM " + mTable.Name + " \";\r\n";
+            lLine += "lSQL += \" WHERE ID=@ID\";\r\n";
+            lLine += "return lSQL;\r\n";
             lLine += "}";
             FileHelper.AppendLine(lFileStream, lLine);
         }
@@ -369,37 +391,37 @@ namespace Tools
             String lLine = "";
 
             lLine = "public static string InsertSQL(){";
-            lLine += "string lSQL=\"\";\n";
-            lLine += "lSQL += \"INSERT INTO " + mTable.Name + "(\";\n";
+            lLine += "string lSQL=\"\";\r\n";
+            lLine += "lSQL += \"INSERT INTO " + mTable.Name + "(\";\r\n";
 
             for (int i = 0; i < mTable.Columns.Count; i++)
             {
                 if (i == 0)
                 {
-                    lLine += "lSQL += \"" + mTable.Columns[i].Name + "\";\n";
+                    lLine += "lSQL += \"" + mTable.Columns[i].Name + "\";\r\n";
                 }
                 else
                 {
-                    lLine += "lSQL += \"," + mTable.Columns[i].Name + "\";\n";
+                    lLine += "lSQL += \"," + mTable.Columns[i].Name + "\";\r\n";
                 }
             }
 
-            lLine += "lSQL += \")VALUES(\";\n";
+            lLine += "lSQL += \")VALUES(\";\r\n";
 
             for (int i = 0; i < mTable.Columns.Count; i++)
             {
                 if (i == 0)
                 {
-                    lLine += "lSQL += \"@" + mTable.Columns[i].Name + "\";\n";
+                    lLine += "lSQL += \"@" + mTable.Columns[i].Name + "\";\r\n";
                 }
                 else
                 {
-                    lLine += "lSQL += \",@" + mTable.Columns[i].Name + "\";\n";
+                    lLine += "lSQL += \",@" + mTable.Columns[i].Name + "\";\r\n";
                 }
             }
 
-            lLine += "lSQL += \")\";\n";
-            lLine += "return lSQL;\n";
+            lLine += "lSQL += \")\";\r\n";
+            lLine += "return lSQL;\r\n";
             lLine += "}";
             FileHelper.AppendLine(lFileStream, lLine);
         }

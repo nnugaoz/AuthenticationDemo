@@ -282,7 +282,21 @@ namespace Tools
             lLine = "int EndIndex = Convert.ToInt32(context.Request.Params[\"EndIndex\"].ToString());";
             FileHelper.AppendLine(lFileStream, lLine);
 
-            lLine = "lDT = lDao.SelectPage(BeginIndex,EndIndex);";
+            for (int i = 0; i < mTable.Columns.Count; i++)
+            {
+                if (!mTable.Columns[i].CanSearch) continue;
+
+                lLine = "string " + mTable.Columns[i].Name + " = context.Request.Params[\"" + mTable.Columns[i].Name + "\"].ToString();";
+                FileHelper.AppendLine(lFileStream, lLine);
+            }
+
+            lLine = "lDT = lDao.SelectPage(";
+            for (int i = 0; i < mTable.Columns.Count; i++)
+            {
+                if (!mTable.Columns[i].CanSearch) continue;
+                lLine += mTable.Columns[i].Name + ", ";
+            }
+            lLine += "BeginIndex, EndIndex);";
             FileHelper.AppendLine(lFileStream, lLine);
 
             lLine = "context.Response.Write(JsonConvert.SerializeObject(lDT));";
