@@ -7,31 +7,50 @@
     <link href="../../JavaScript/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
     <script src="../../JavaScript/jQuery/jquery-3.4.1.min.js"></script>
     <script src="../../JavaScript/layer/layer.js"></script>
-<script type="text/javascript">
+    <script src="../../JavaScript/Common/Common.js"></script>
+<script type='text/javascript'>
 $(function () {
+var ID = GetParameterByName('ID');
+$.ajax({
+    type: 'get'
+     , url: '/Handler/T_Car.ashx?RequestMethod=SelectByID&ID=' + ID
+ , success: function (pData) { PageInit(pData); }
+   });
 $('#btnSubmit').on('click', btnSubmit_OnClick);
-});
+ });
+function PageInit(pData) {
+    var lData = JSON.parse(pData);
+$('#ID').val(lData[0].ID);
+$('#CarNO').val(lData[0].CarNO);
+$('#CarTeamName').val(lData[0].CarTeamName);
+$('#EditMan').val(lData[0].EditMan);
+$('#EditDate').val(lData[0].EditDate);
+}
 function btnSubmit_OnClick(event) {
 event.preventDefault();
 var formData = new FormData($('form')[0]);
 $.ajax({
 type: 'post'
 , url: $('form').attr('action')
-, data: formData
-, processData: false
 , contentType: false
+, processData: false
+, data: formData
 , success: function (pData) {
 if (pData === '1') {
-layer.alert('保存成功!', { icon: 1 }, function (index) {
+layer.alert('保存成功！'
+, { icon: 1 }
+, function (index) {
 layer.close(index);
 index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
 parent.layer.close(index); //再执行关闭
 parent.Init();
-})
+});
 } else {
-layer.alert('保存失败!', { icon: 2 }, function (index) {
+layer.alert('保存失败！'
+, { icon: 2 }
+, function (index) {
 layer.close(index);
-})
+});
 }
 }
 });
@@ -40,7 +59,7 @@ return false;
 </script>
 </head>
 <body style='overflow:hidden;'>
-<form method='POST' action='/Handler/T_CarTeam.ashx?RequestMethod=Insert' class='form-horizontal'>
+<form method='POST' action='/Handler/T_Car.ashx?RequestMethod=Update' class='form-horizontal'>
 <div class='form-group' style='visibility:hidden'>
 <label for='ID' class='col-sm-2 control-label'>主键</label>
 <div class='col-sm-8'>
@@ -48,9 +67,15 @@ return false;
 </div>
 </div>
 <div class='form-group'>
-<label for='Name' class='col-sm-2 control-label'>车队名称</label>
+<label for='CarNO' class='col-sm-2 control-label'>车号</label>
 <div class='col-sm-8'>
-<input type='text' id='Name' name='Name' class='form-control' />
+<input type='text' id='CarNO' name='CarNO' class='form-control' />
+</div>
+</div>
+<div class='form-group'>
+<label for='CarTeamName' class='col-sm-2 control-label'>车队名称</label>
+<div class='col-sm-8'>
+<input type='text' id='CarTeamName' name='CarTeamName' class='form-control' />
 </div>
 </div>
 <div class='form-group' style='visibility:hidden'>

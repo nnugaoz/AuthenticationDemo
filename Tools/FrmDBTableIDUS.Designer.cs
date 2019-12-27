@@ -61,7 +61,7 @@
             // txtConnectionString
             // 
             this.txtConnectionString.Location = new System.Drawing.Point(12, 36);
-            this.txtConnectionString.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtConnectionString.Margin = new System.Windows.Forms.Padding(4);
             this.txtConnectionString.Name = "txtConnectionString";
             this.txtConnectionString.Size = new System.Drawing.Size(852, 28);
             this.txtConnectionString.TabIndex = 1;
@@ -84,7 +84,7 @@
             this.lstDB.FormattingEnabled = true;
             this.lstDB.ItemHeight = 18;
             this.lstDB.Location = new System.Drawing.Point(14, 220);
-            this.lstDB.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.lstDB.Margin = new System.Windows.Forms.Padding(4);
             this.lstDB.Name = "lstDB";
             this.lstDB.Size = new System.Drawing.Size(228, 544);
             this.lstDB.TabIndex = 3;
@@ -97,7 +97,7 @@
             this.lstTable.FormattingEnabled = true;
             this.lstTable.ItemHeight = 18;
             this.lstTable.Location = new System.Drawing.Point(250, 220);
-            this.lstTable.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.lstTable.Margin = new System.Windows.Forms.Padding(4);
             this.lstTable.Name = "lstTable";
             this.lstTable.Size = new System.Drawing.Size(301, 544);
             this.lstTable.TabIndex = 5;
@@ -126,7 +126,7 @@
             // btnConnect
             // 
             this.btnConnect.Location = new System.Drawing.Point(872, 28);
-            this.btnConnect.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnConnect.Margin = new System.Windows.Forms.Padding(4);
             this.btnConnect.Name = "btnConnect";
             this.btnConnect.Size = new System.Drawing.Size(128, 34);
             this.btnConnect.TabIndex = 8;
@@ -137,7 +137,7 @@
             // btnGenerateEntityClass
             // 
             this.btnGenerateEntityClass.Location = new System.Drawing.Point(12, 80);
-            this.btnGenerateEntityClass.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnGenerateEntityClass.Margin = new System.Windows.Forms.Padding(4);
             this.btnGenerateEntityClass.Name = "btnGenerateEntityClass";
             this.btnGenerateEntityClass.Size = new System.Drawing.Size(198, 34);
             this.btnGenerateEntityClass.TabIndex = 9;
@@ -148,7 +148,7 @@
             // btnGenerateDao
             // 
             this.btnGenerateDao.Location = new System.Drawing.Point(210, 80);
-            this.btnGenerateDao.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnGenerateDao.Margin = new System.Windows.Forms.Padding(4);
             this.btnGenerateDao.Name = "btnGenerateDao";
             this.btnGenerateDao.Size = new System.Drawing.Size(198, 34);
             this.btnGenerateDao.TabIndex = 10;
@@ -161,11 +161,12 @@
             this.dgvFields.AllowUserToAddRows = false;
             this.dgvFields.AllowUserToDeleteRows = false;
             this.dgvFields.AllowUserToResizeRows = false;
-            this.dgvFields.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
+            this.dgvFields.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvFields.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvFields.Location = new System.Drawing.Point(558, 220);
-            this.dgvFields.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dgvFields.Margin = new System.Windows.Forms.Padding(2);
             this.dgvFields.Name = "dgvFields";
             this.dgvFields.RowHeadersVisible = false;
             this.dgvFields.RowTemplate.Height = 37;
@@ -176,7 +177,7 @@
             // btnCreateHtmlListPage
             // 
             this.btnCreateHtmlListPage.Location = new System.Drawing.Point(408, 80);
-            this.btnCreateHtmlListPage.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnCreateHtmlListPage.Margin = new System.Windows.Forms.Padding(4);
             this.btnCreateHtmlListPage.Name = "btnCreateHtmlListPage";
             this.btnCreateHtmlListPage.Size = new System.Drawing.Size(198, 34);
             this.btnCreateHtmlListPage.TabIndex = 12;
@@ -187,7 +188,7 @@
             // btnCreateHtmlNewPage
             // 
             this.btnCreateHtmlNewPage.Location = new System.Drawing.Point(606, 80);
-            this.btnCreateHtmlNewPage.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnCreateHtmlNewPage.Margin = new System.Windows.Forms.Padding(4);
             this.btnCreateHtmlNewPage.Name = "btnCreateHtmlNewPage";
             this.btnCreateHtmlNewPage.Size = new System.Drawing.Size(198, 34);
             this.btnCreateHtmlNewPage.TabIndex = 13;
@@ -198,7 +199,7 @@
             // btnCreateHandler
             // 
             this.btnCreateHandler.Location = new System.Drawing.Point(12, 124);
-            this.btnCreateHandler.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnCreateHandler.Margin = new System.Windows.Forms.Padding(4);
             this.btnCreateHandler.Name = "btnCreateHandler";
             this.btnCreateHandler.Size = new System.Drawing.Size(198, 34);
             this.btnCreateHandler.TabIndex = 14;
@@ -209,7 +210,7 @@
             // btnCreatePagePS
             // 
             this.btnCreatePagePS.Location = new System.Drawing.Point(210, 124);
-            this.btnCreatePagePS.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnCreatePagePS.Margin = new System.Windows.Forms.Padding(4);
             this.btnCreatePagePS.Name = "btnCreatePagePS";
             this.btnCreatePagePS.Size = new System.Drawing.Size(198, 34);
             this.btnCreatePagePS.TabIndex = 15;
@@ -220,7 +221,7 @@
             // btnCreateHtmlEditPage
             // 
             this.btnCreateHtmlEditPage.Location = new System.Drawing.Point(804, 80);
-            this.btnCreateHtmlEditPage.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnCreateHtmlEditPage.Margin = new System.Windows.Forms.Padding(4);
             this.btnCreateHtmlEditPage.Name = "btnCreateHtmlEditPage";
             this.btnCreateHtmlEditPage.Size = new System.Drawing.Size(198, 34);
             this.btnCreateHtmlEditPage.TabIndex = 16;
@@ -231,7 +232,7 @@
             // btnOneKey
             // 
             this.btnOneKey.Location = new System.Drawing.Point(408, 124);
-            this.btnOneKey.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnOneKey.Margin = new System.Windows.Forms.Padding(4);
             this.btnOneKey.Name = "btnOneKey";
             this.btnOneKey.Size = new System.Drawing.Size(198, 34);
             this.btnOneKey.TabIndex = 17;
@@ -261,7 +262,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtConnectionString);
             this.Controls.Add(this.label1);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FrmDBTableIDUS";
             this.Text = "数据库工具";
             ((System.ComponentModel.ISupportInitialize)(this.dgvFields)).EndInit();

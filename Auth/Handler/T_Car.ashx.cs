@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Data;
 using System.Web;
-public class T_CarTeam : IHttpHandler
+public class T_Car : IHttpHandler
 {
 public void ProcessRequest(HttpContext context)
 {
@@ -39,14 +39,14 @@ switch (lRequestMethod)
 private void Select(HttpContext context)
 {
 DataTable lDT = null;
-T_CarTeamDao lDao = new T_CarTeamDao();
+T_CarDao lDao = new T_CarDao();
 lDT = lDao.Select();
 context.Response.Write(JsonConvert.SerializeObject(lDT));
 }
 private void SelectByID(HttpContext context)
 {
 DataTable lDT = null;
-T_CarTeamDao lDao = new T_CarTeamDao();
+T_CarDao lDao = new T_CarDao();
 String ID = context.Request.Params["ID"].ToString();
 lDT = lDao.SelectByID(ID);
 context.Response.Write(JsonConvert.SerializeObject(lDT));
@@ -54,19 +54,20 @@ context.Response.Write(JsonConvert.SerializeObject(lDT));
 private void SelectPage(HttpContext context)
 {
 DataTable lDT = null;
-T_CarTeamDao lDao = new T_CarTeamDao();
+T_CarDao lDao = new T_CarDao();
 int BeginIndex = Convert.ToInt32(context.Request.Params["BeginIndex"].ToString());
 int EndIndex = Convert.ToInt32(context.Request.Params["EndIndex"].ToString());
-string Name = context.Request.Params["Name"].ToString();
+string CarNO = context.Request.Params["CarNO"].ToString();
+string CarTeamName = context.Request.Params["CarTeamName"].ToString();
 string EditMan = context.Request.Params["EditMan"].ToString();
 string EditDate = context.Request.Params["EditDate"].ToString();
-lDT = lDao.SelectPage(Name, EditMan, EditDate, BeginIndex, EndIndex);
+lDT = lDao.SelectPage(CarNO, CarTeamName, EditMan, EditDate, BeginIndex, EndIndex);
 context.Response.Write(JsonConvert.SerializeObject(lDT));
 }
 private void Delete(HttpContext context)
 {
 string lID = context.Request.Params["ID"].ToString();
-T_CarTeamDao lDao = new T_CarTeamDao();
+T_CarDao lDao = new T_CarDao();
 if (lDao.Delete(lID) > 0)
 {
     context.Response.Write("1");
@@ -78,14 +79,15 @@ else
 }
 private void Update(HttpContext context)
  {
-T_CarTeamModel lModel = new T_CarTeamModel();
+T_CarModel lModel = new T_CarModel();
 lModel.ID = context.Request.Params["ID"].ToString();
-lModel.Name = context.Request.Params["Name"].ToString();
+lModel.CarNO = context.Request.Params["CarNO"].ToString();
+lModel.CarTeamName = context.Request.Params["CarTeamName"].ToString();
 lModel.EditMan = context.Request.Params["EditMan"].ToString();
 lModel.EditDate = context.Request.Params["EditDate"].ToString();
 lModel.EditMan = "Admin";
 lModel.EditDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
-T_CarTeamDao lDao = new T_CarTeamDao();
+T_CarDao lDao = new T_CarDao();
 if (lDao.Update(lModel) > 0)
 {
     context.Response.Write("1");
@@ -97,15 +99,16 @@ else
  }
 private void Insert(HttpContext context)
 {
-T_CarTeamModel lModel = new T_CarTeamModel();
+T_CarModel lModel = new T_CarModel();
 lModel.ID = context.Request.Params["ID"].ToString();
-lModel.Name = context.Request.Params["Name"].ToString();
+lModel.CarNO = context.Request.Params["CarNO"].ToString();
+lModel.CarTeamName = context.Request.Params["CarTeamName"].ToString();
 lModel.EditMan = context.Request.Params["EditMan"].ToString();
 lModel.EditDate = context.Request.Params["EditDate"].ToString();
 lModel.ID = Guid.NewGuid().ToString();
 lModel.EditMan = "Admin";
 lModel.EditDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
-T_CarTeamDao lDao = new T_CarTeamDao();
+T_CarDao lDao = new T_CarDao();
 if (lDao.Insert(lModel) > 0)
 {
     context.Response.Write("1");
@@ -124,7 +127,7 @@ if (context.Request.Files[0].ContentType == "application/vnd.openxmlformats-offi
 string lFileSept = DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss_fff") ;
 string lFileName = @"E:\00_Temp\" + lFileSept + context.Request.Files[0].FileName;
 context.Request.Files[0].SaveAs(lFileName);
-T_CarTeamDao lDao = new T_CarTeamDao();
+T_CarDao lDao = new T_CarDao();
 if (lDao.Import(lFileName) == 1)
 {
 context.Response.Write('1');
@@ -147,7 +150,7 @@ private void Export(HttpContext context)
 {
 RequestResult lRR = new RequestResult();
 String lExcelFilePath = "";
-T_CarTeamDao lDao = new T_CarTeamDao();
+T_CarDao lDao = new T_CarDao();
 lDao.Export(ref lExcelFilePath);
 lRR.Msg = @"\TempFile\" + lExcelFilePath;
 context.Response.Write(JsonConvert.SerializeObject(lRR));

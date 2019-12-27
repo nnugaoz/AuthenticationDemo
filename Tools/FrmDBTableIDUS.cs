@@ -73,6 +73,9 @@ namespace Tools
 
             using (SqlConnection lConnection = new SqlConnection(txtConnectionString.Text))
             {
+                dgvFields.DataSource = null;
+                dgvFields.Rows.Clear();
+
                 lConnection.Open();
                 string lSQL = "";
                 lSQL += "USE " + lDataBaseName + ";";
@@ -91,7 +94,6 @@ namespace Tools
                 SqlDataAdapter lSqlDataAdapter = new SqlDataAdapter(lSqlCommand);
                 lSqlDataAdapter.Fill(lDT);
             }
-            dgvFields.DataSource = null;
 
             dgvFields.DataSource = lDT;
 

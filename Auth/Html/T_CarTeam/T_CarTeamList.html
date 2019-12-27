@@ -21,29 +21,21 @@ function btnSearch_OnClick() {
 Init();
 }
 function btnClear_OnClick() {
-$('#ID').val('');
 $('#Name').val('');
 $('#EditMan').val('');
 $('#EditDate').val('');
 }
 function Init() {
-var ID = $('#ID').val();
 var Name = $('#Name').val();
 var EditMan = $('#EditMan').val();
 var EditDate = $('#EditDate').val();
 $('#T_CarTeamList').empty();
 var lPConfig = new PaginationConfiguration();
 lPConfig.RequestUrl = '/Handler/T_CarTeam.ashx?RequestMethod=SelectPage'
-lPConfig.RequestUrl += '&ID='+ID;
 lPConfig.RequestUrl += '&Name='+Name;
 lPConfig.RequestUrl += '&EditMan='+EditMan;
 lPConfig.RequestUrl += '&EditDate='+EditDate;
 lPConfig.PageContainerID = 'T_CarTeamList';
-var IDCol = new PaginationColumnConfiguration();
-IDCol.HeaderText = '主键';
-IDCol.Type = 'TXT';
-IDCol.DataField = 'ID';
-lPConfig.Columns.push(IDCol);
 var NameCol = new PaginationColumnConfiguration();
 NameCol.HeaderText = '车队名称';
 NameCol.Type = 'TXT';
@@ -80,7 +72,7 @@ function btnEdit_OnClick(event) {
 layer.open({
 type: 2
 , title: '编辑'
-, content: 'T_CarTeamEdit.html?ID=' + event.data.RowData.ID
+, content: '/Html/T_CarTeam/T_CarTeamEdit.html?ID=' + event.data.RowData.ID
 , area: ['800px', '600px']
 });
 }
@@ -104,7 +96,7 @@ function btnNew_OnClick() {
 layer.open({
 type: 2
 , title: '新增'
-, content: 'T_CarTeamNew.html'
+, content: '/Html/T_CarTeam/T_CarTeamNew.html'
 , area: ['800px', '600px']
 });
 }
@@ -157,10 +149,6 @@ layer.alert('导出失败', { icon: 2 });
 </head> 
 <body> 
 <div class='form-inline' style='padding:10px;'>
-<div class='form-group'>
-<label for='ID'>主键</label>
-<input type='text' id='ID' name='ID' class='form-control' />
-</div>
 <div class='form-group'>
 <label for='Name'>车队名称</label>
 <input type='text' id='Name' name='Name' class='form-control' />

@@ -1,3 +1,4 @@
+using Auth.Handler;
 using Newtonsoft.Json;
 using System;
 using System.Data;
@@ -27,6 +28,12 @@ switch (lRequestMethod)
      case "SelectByID":
     SelectByID(context);
     break;
+     case "Import":
+    Import(context);
+    break;
+     case "Export":
+    Export(context);
+    break;
 }
 }
 private void Select(HttpContext context)
@@ -51,7 +58,9 @@ T_ProductDao lDao = new T_ProductDao();
 int BeginIndex = Convert.ToInt32(context.Request.Params["BeginIndex"].ToString());
 int EndIndex = Convert.ToInt32(context.Request.Params["EndIndex"].ToString());
 string Name = context.Request.Params["Name"].ToString();
-lDT = lDao.SelectPage(Name, BeginIndex, EndIndex);
+string EditMan = context.Request.Params["EditMan"].ToString();
+string EditDate = context.Request.Params["EditDate"].ToString();
+lDT = lDao.SelectPage(Name, EditMan, EditDate, BeginIndex, EndIndex);
 context.Response.Write(JsonConvert.SerializeObject(lDT));
 }
 private void Delete(HttpContext context)
@@ -106,6 +115,43 @@ else
     context.Response.Write("0");
 }
 }
+private void Import(HttpContext context)
+{
+if (context.Request.Files.Count > 0)
+{
+if (context.Request.Files[0].ContentType == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+{
+string lFileSept = DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss_fff") ;
+string lFileName = @"E:\00_Temp\" + lFileSept + context.Request.Files[0].FileName;
+context.Request.Files[0].SaveAs(lFileName);
+T_ProductDao lDao = new T_ProductDao();
+if (lDao.Import(lFileName) == 1)
+{
+context.Response.Write('1');
+return;
+}
+else
+{
+context.Response.Write('0');
+return;
+}
+}
+else
+ {
+context.Response.Write('0');
+return;
+}
+}
+}
+private void Export(HttpContext context)
+{
+RequestResult lRR = new RequestResult();
+String lExcelFilePath = "";
+T_ProductDao lDao = new T_ProductDao();
+lDao.Export(ref lExcelFilePath);
+lRR.Msg = @"\TempFile\" + lExcelFilePath;
+context.Response.Write(JsonConvert.SerializeObject(lRR));
+ }
  public bool IsReusable
 {
 get

@@ -11,6 +11,7 @@ namespace Lib
         private DataTable ImportToDataTable(ISheet pSheet)
         {
             DataTable lDT = new DataTable();
+            DataFormatter formatter = new DataFormatter();
             for (int i = pSheet.FirstRowNum; i <= pSheet.LastRowNum; i++)
             {
                 if (i == pSheet.FirstRowNum)
@@ -19,7 +20,7 @@ namespace Lib
                     {
                         DataColumn lCol = new DataColumn();
                         lCol.DataType = "string".GetType();
-                        lCol.ColumnName = pSheet.GetRow(i).GetCell(j).StringCellValue;
+                        lCol.ColumnName = formatter.FormatCellValue(pSheet.GetRow(i).GetCell(j));
                         lDT.Columns.Add(lCol);
                     }
                 }
@@ -29,7 +30,7 @@ namespace Lib
                     DataRow lRow = lDT.NewRow();
                     for (int j = pSheet.GetRow(i).FirstCellNum; j < pSheet.GetRow(i).LastCellNum; j++)
                     {
-                        lRow[k++] = pSheet.GetRow(i).GetCell(j).StringCellValue;
+                        lRow[k++] = formatter.FormatCellValue(pSheet.GetRow(i).GetCell(j));
                     }
                     lDT.Rows.Add(lRow);
                 }

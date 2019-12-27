@@ -59,7 +59,7 @@ return lSQL;
 }
 public static string SelectPageSQL(){
 string lSQL="";
-lSQL += "EXEC T_CarTeam_Page @ID,@Name,@EditMan,@EditDate,@BeginIndex,@EndIndex";
+lSQL += "EXEC T_CarTeam_Page @Name,@EditMan,@EditDate,@BeginIndex,@EndIndex";
 return lSQL;
 }
 public static string ImportSQL(){string lSQL="";
@@ -114,12 +114,11 @@ MsSqlHelper lMSSqlHelper = new MsSqlHelper();
 lDT = lMSSqlHelper.GetDataTable(lSQL);
 return lDT;
 }
-public DataTable SelectPage(string ID, string Name, string EditMan, string EditDate, int BeginIndex,int EndIndex)
+public DataTable SelectPage(string Name, string EditMan, string EditDate, int BeginIndex,int EndIndex)
 {
 string lSQL = SelectPageSQL();
 DataTable lDT = null;
 List<SqlParameter> lParams = new List<SqlParameter>();
-lParams.Add(new SqlParameter("@ID", ID));
 lParams.Add(new SqlParameter("@Name", Name));
 lParams.Add(new SqlParameter("@EditMan", EditMan));
 lParams.Add(new SqlParameter("@EditDate", EditDate));
@@ -157,10 +156,7 @@ lSQL = ImportSQL();
  SqlParameter[] lParams = new SqlParameter[]
  {
     new SqlParameter("@ID",Guid.NewGuid().ToString())
-      ,new SqlParameter("@ID",lDT.Rows[i]["ID"].ToString())
       ,new SqlParameter("@Name",lDT.Rows[i]["Name"].ToString())
-      ,new SqlParameter("@EditMan",lDT.Rows[i]["EditMan"].ToString())
-      ,new SqlParameter("@EditDate",lDT.Rows[i]["EditDate"].ToString())
      ,new SqlParameter("@EditMan","Admin")
       ,new SqlParameter("@EditDate",DateTime.Now.ToString("yyyy - MM - dd HH: mm: ss"))
  };
