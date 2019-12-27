@@ -51,26 +51,29 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 9);
+            this.label1.Location = new System.Drawing.Point(9, 14);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(125, 12);
+            this.label1.Size = new System.Drawing.Size(188, 18);
             this.label1.TabIndex = 0;
             this.label1.Text = "Sql Server链接字符串";
             // 
             // txtConnectionString
             // 
-            this.txtConnectionString.Location = new System.Drawing.Point(8, 24);
+            this.txtConnectionString.Location = new System.Drawing.Point(12, 36);
+            this.txtConnectionString.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtConnectionString.Name = "txtConnectionString";
-            this.txtConnectionString.Size = new System.Drawing.Size(569, 21);
+            this.txtConnectionString.Size = new System.Drawing.Size(852, 28);
             this.txtConnectionString.TabIndex = 1;
             this.txtConnectionString.Text = "Data Source=127.0.0.1;Persist Security Info=True;User ID=sa;Password=1";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(8, 134);
+            this.label2.Location = new System.Drawing.Point(12, 201);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(65, 12);
+            this.label2.Size = new System.Drawing.Size(98, 18);
             this.label2.TabIndex = 2;
             this.label2.Text = "数据库列表";
             // 
@@ -79,10 +82,11 @@
             this.lstDB.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.lstDB.FormattingEnabled = true;
-            this.lstDB.ItemHeight = 12;
-            this.lstDB.Location = new System.Drawing.Point(9, 147);
+            this.lstDB.ItemHeight = 18;
+            this.lstDB.Location = new System.Drawing.Point(14, 220);
+            this.lstDB.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.lstDB.Name = "lstDB";
-            this.lstDB.Size = new System.Drawing.Size(153, 364);
+            this.lstDB.Size = new System.Drawing.Size(228, 544);
             this.lstDB.TabIndex = 3;
             this.lstDB.SelectedIndexChanged += new System.EventHandler(this.lstDB_SelectedIndexChanged);
             // 
@@ -91,36 +95,40 @@
             this.lstTable.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.lstTable.FormattingEnabled = true;
-            this.lstTable.ItemHeight = 12;
-            this.lstTable.Location = new System.Drawing.Point(167, 147);
+            this.lstTable.ItemHeight = 18;
+            this.lstTable.Location = new System.Drawing.Point(250, 220);
+            this.lstTable.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.lstTable.Name = "lstTable";
-            this.lstTable.Size = new System.Drawing.Size(202, 364);
+            this.lstTable.Size = new System.Drawing.Size(301, 544);
             this.lstTable.TabIndex = 5;
             this.lstTable.SelectedIndexChanged += new System.EventHandler(this.lstTable_SelectedIndexChanged);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(166, 134);
+            this.label3.Location = new System.Drawing.Point(249, 201);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(77, 12);
+            this.label3.Size = new System.Drawing.Size(116, 18);
             this.label3.TabIndex = 4;
             this.label3.Text = "数据库表列表";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(373, 134);
+            this.label4.Location = new System.Drawing.Point(560, 201);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(53, 12);
+            this.label4.Size = new System.Drawing.Size(80, 18);
             this.label4.TabIndex = 6;
             this.label4.Text = "字段列表";
             // 
             // btnConnect
             // 
-            this.btnConnect.Location = new System.Drawing.Point(583, 24);
+            this.btnConnect.Location = new System.Drawing.Point(872, 28);
+            this.btnConnect.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnConnect.Name = "btnConnect";
-            this.btnConnect.Size = new System.Drawing.Size(85, 23);
+            this.btnConnect.Size = new System.Drawing.Size(128, 34);
             this.btnConnect.TabIndex = 8;
             this.btnConnect.Text = "连接";
             this.btnConnect.UseVisualStyleBackColor = true;
@@ -128,21 +136,23 @@
             // 
             // btnGenerateEntityClass
             // 
-            this.btnGenerateEntityClass.Location = new System.Drawing.Point(8, 47);
+            this.btnGenerateEntityClass.Location = new System.Drawing.Point(12, 80);
+            this.btnGenerateEntityClass.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnGenerateEntityClass.Name = "btnGenerateEntityClass";
-            this.btnGenerateEntityClass.Size = new System.Drawing.Size(75, 23);
+            this.btnGenerateEntityClass.Size = new System.Drawing.Size(198, 34);
             this.btnGenerateEntityClass.TabIndex = 9;
-            this.btnGenerateEntityClass.Text = "创建实体类";
+            this.btnGenerateEntityClass.Text = "创建Model";
             this.btnGenerateEntityClass.UseVisualStyleBackColor = true;
             this.btnGenerateEntityClass.Click += new System.EventHandler(this.btnGenerateEntityClass_Click);
             // 
             // btnGenerateDao
             // 
-            this.btnGenerateDao.Location = new System.Drawing.Point(91, 47);
+            this.btnGenerateDao.Location = new System.Drawing.Point(210, 80);
+            this.btnGenerateDao.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnGenerateDao.Name = "btnGenerateDao";
-            this.btnGenerateDao.Size = new System.Drawing.Size(120, 23);
+            this.btnGenerateDao.Size = new System.Drawing.Size(198, 34);
             this.btnGenerateDao.TabIndex = 10;
-            this.btnGenerateDao.Text = "创建数据表操作类";
+            this.btnGenerateDao.Text = "创建Dao";
             this.btnGenerateDao.UseVisualStyleBackColor = true;
             this.btnGenerateDao.Click += new System.EventHandler(this.btnGenerateDao_Click);
             // 
@@ -154,80 +164,86 @@
             this.dgvFields.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.dgvFields.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvFields.Location = new System.Drawing.Point(372, 147);
-            this.dgvFields.Margin = new System.Windows.Forms.Padding(1);
+            this.dgvFields.Location = new System.Drawing.Point(558, 220);
+            this.dgvFields.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.dgvFields.Name = "dgvFields";
             this.dgvFields.RowHeadersVisible = false;
             this.dgvFields.RowTemplate.Height = 37;
             this.dgvFields.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvFields.Size = new System.Drawing.Size(691, 365);
+            this.dgvFields.Size = new System.Drawing.Size(1036, 548);
             this.dgvFields.TabIndex = 11;
             // 
             // btnCreateHtmlListPage
             // 
-            this.btnCreateHtmlListPage.Location = new System.Drawing.Point(217, 47);
+            this.btnCreateHtmlListPage.Location = new System.Drawing.Point(408, 80);
+            this.btnCreateHtmlListPage.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnCreateHtmlListPage.Name = "btnCreateHtmlListPage";
-            this.btnCreateHtmlListPage.Size = new System.Drawing.Size(143, 23);
+            this.btnCreateHtmlListPage.Size = new System.Drawing.Size(198, 34);
             this.btnCreateHtmlListPage.TabIndex = 12;
-            this.btnCreateHtmlListPage.Text = "创建HTML列表页面";
+            this.btnCreateHtmlListPage.Text = "创建HTML List";
             this.btnCreateHtmlListPage.UseVisualStyleBackColor = true;
             this.btnCreateHtmlListPage.Click += new System.EventHandler(this.btnCreateHtmlListPage_Click);
             // 
             // btnCreateHtmlNewPage
             // 
-            this.btnCreateHtmlNewPage.Location = new System.Drawing.Point(366, 47);
+            this.btnCreateHtmlNewPage.Location = new System.Drawing.Point(606, 80);
+            this.btnCreateHtmlNewPage.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnCreateHtmlNewPage.Name = "btnCreateHtmlNewPage";
-            this.btnCreateHtmlNewPage.Size = new System.Drawing.Size(143, 23);
+            this.btnCreateHtmlNewPage.Size = new System.Drawing.Size(198, 34);
             this.btnCreateHtmlNewPage.TabIndex = 13;
-            this.btnCreateHtmlNewPage.Text = "创建HTML新增页面";
+            this.btnCreateHtmlNewPage.Text = "创建HTML New";
             this.btnCreateHtmlNewPage.UseVisualStyleBackColor = true;
             this.btnCreateHtmlNewPage.Click += new System.EventHandler(this.btnCreateHtmlNewPage_Click);
             // 
             // btnCreateHandler
             // 
-            this.btnCreateHandler.Location = new System.Drawing.Point(8, 76);
+            this.btnCreateHandler.Location = new System.Drawing.Point(12, 124);
+            this.btnCreateHandler.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnCreateHandler.Name = "btnCreateHandler";
-            this.btnCreateHandler.Size = new System.Drawing.Size(132, 23);
+            this.btnCreateHandler.Size = new System.Drawing.Size(198, 34);
             this.btnCreateHandler.TabIndex = 14;
-            this.btnCreateHandler.Text = "创建一般处理程序";
+            this.btnCreateHandler.Text = "创建Handler";
             this.btnCreateHandler.UseVisualStyleBackColor = true;
             this.btnCreateHandler.Click += new System.EventHandler(this.btnCreateHandler_Click);
             // 
             // btnCreatePagePS
             // 
-            this.btnCreatePagePS.Location = new System.Drawing.Point(148, 76);
+            this.btnCreatePagePS.Location = new System.Drawing.Point(210, 124);
+            this.btnCreatePagePS.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnCreatePagePS.Name = "btnCreatePagePS";
-            this.btnCreatePagePS.Size = new System.Drawing.Size(132, 23);
+            this.btnCreatePagePS.Size = new System.Drawing.Size(198, 34);
             this.btnCreatePagePS.TabIndex = 15;
-            this.btnCreatePagePS.Text = "创建分页存储过程";
+            this.btnCreatePagePS.Text = "创建Paging Procedure";
             this.btnCreatePagePS.UseVisualStyleBackColor = true;
             this.btnCreatePagePS.Click += new System.EventHandler(this.btnCreatePagePS_Click);
             // 
             // btnCreateHtmlEditPage
             // 
-            this.btnCreateHtmlEditPage.Location = new System.Drawing.Point(516, 47);
+            this.btnCreateHtmlEditPage.Location = new System.Drawing.Point(804, 80);
+            this.btnCreateHtmlEditPage.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnCreateHtmlEditPage.Name = "btnCreateHtmlEditPage";
-            this.btnCreateHtmlEditPage.Size = new System.Drawing.Size(120, 23);
+            this.btnCreateHtmlEditPage.Size = new System.Drawing.Size(198, 34);
             this.btnCreateHtmlEditPage.TabIndex = 16;
-            this.btnCreateHtmlEditPage.Text = "创建HTML编辑页面";
+            this.btnCreateHtmlEditPage.Text = "创建HTML Edit";
             this.btnCreateHtmlEditPage.UseVisualStyleBackColor = true;
             this.btnCreateHtmlEditPage.Click += new System.EventHandler(this.btnCreateHtmlEditPage_Click);
             // 
             // btnOneKey
             // 
-            this.btnOneKey.Location = new System.Drawing.Point(286, 76);
+            this.btnOneKey.Location = new System.Drawing.Point(408, 124);
+            this.btnOneKey.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnOneKey.Name = "btnOneKey";
-            this.btnOneKey.Size = new System.Drawing.Size(350, 23);
+            this.btnOneKey.Size = new System.Drawing.Size(198, 34);
             this.btnOneKey.TabIndex = 17;
-            this.btnOneKey.Text = "根据数据库表一键生成增、删、改、查页面及代码";
+            this.btnOneKey.Text = "One Key Create";
             this.btnOneKey.UseVisualStyleBackColor = true;
             this.btnOneKey.Click += new System.EventHandler(this.btnOneKey_Click);
             // 
             // FrmDBTableIDUS
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1073, 530);
+            this.ClientSize = new System.Drawing.Size(1610, 795);
             this.Controls.Add(this.btnOneKey);
             this.Controls.Add(this.btnCreateHtmlEditPage);
             this.Controls.Add(this.btnCreatePagePS);
@@ -245,6 +261,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtConnectionString);
             this.Controls.Add(this.label1);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "FrmDBTableIDUS";
             this.Text = "数据库工具";
             ((System.ComponentModel.ISupportInitialize)(this.dgvFields)).EndInit();

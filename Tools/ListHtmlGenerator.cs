@@ -59,7 +59,7 @@ namespace Tools
 
             for (int i = 0; i < mTable.Columns.Count; i++)
             {
-                if (!mTable.Columns[i].CanSearch) continue;
+                if (!mTable.Columns[i].SearchFlg) continue;
 
                 lLine = "<div class='form-group'>";
                 FileHelper.AppendLine(lFileStream, lLine);
@@ -87,6 +87,15 @@ namespace Tools
             FileHelper.AppendLine(lFileStream, lLine);
 
             lLine = "<input type='button' id='btnNew' class='btn btn-success' value='新增'/>";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "<input type = 'button' id = 'btnImport' class='btn btn-success' value='导入' />";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "<input type = 'button' id='btnExport' class='btn btn-success' value='导出' />";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "<input type = 'file' id='fileImport' name ='fileImport' accept ='.xls,.xlsx' style ='display:none;' />";
             FileHelper.AppendLine(lFileStream, lLine);
 
             lLine = "<div id='" + mTable.Name + "List' style='margin-top:20px;'></div>";
@@ -141,6 +150,15 @@ namespace Tools
             lLine = "$('#btnNew').on('click', btnNew_OnClick);";
             FileHelper.AppendLine(lFileStream, lLine);
 
+            lLine = " $('#btnImport').on('click', btnImport_OnClick);";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = " $('#fileImport').on('change', fileImport_OnChange);";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "$('#btnExport').on('click', btnExport_OnClick);";
+            FileHelper.AppendLine(lFileStream, lLine);
+
             lLine = " })";
             FileHelper.AppendLine(lFileStream, lLine);
 
@@ -158,7 +176,7 @@ namespace Tools
 
             for (int i = 0; i < mTable.Columns.Count; i++)
             {
-                if (!mTable.Columns[i].CanSearch) continue;
+                if (!mTable.Columns[i].SearchFlg) continue;
 
                 lLine = "$('#" + mTable.Columns[i].Name + "').val('');";
                 FileHelper.AppendLine(lFileStream, lLine);
@@ -172,7 +190,7 @@ namespace Tools
 
             for (int i = 0; i < mTable.Columns.Count; i++)
             {
-                if (!mTable.Columns[i].CanSearch) continue;
+                if (!mTable.Columns[i].SearchFlg) continue;
 
                 lLine = "var " + mTable.Columns[i].Name + " = $('#" + mTable.Columns[i].Name + "').val();";
                 FileHelper.AppendLine(lFileStream, lLine);
@@ -189,7 +207,7 @@ namespace Tools
 
             for (int i = 0; i < mTable.Columns.Count; i++)
             {
-                if (!mTable.Columns[i].CanSearch) continue;
+                if (!mTable.Columns[i].SearchFlg) continue;
 
                 lLine = "lPConfig.RequestUrl += '&" + mTable.Columns[i].Name + "='+" + mTable.Columns[i].Name + ";";
                 FileHelper.AppendLine(lFileStream, lLine);
@@ -357,6 +375,141 @@ namespace Tools
             FileHelper.AppendLine(lFileStream, lLine);
 
             lLine = ", area: ['800px', '600px']";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "});";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "}";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "function fileImport_OnChange() {";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "var formData = new FormData();";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "formData.append('fileImport', $('#fileImport')[0].files[0]);";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "$.ajax({";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "type: 'post'";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = ", url: '/Handler/T_CarTeam.ashx?RequestMethod=Import'";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = ", data: formData";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = ", contentType: false";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = ", cache: false";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = ", processData: false";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = ", success: function(pData) {";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "if (pData === '1')";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "{";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "layer.alert('导入成功！', { icon: 1 });";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "Init();";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "}";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "else";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "{";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "layer.alert('导入失败！', { icon: 1 });";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "Init();";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "}";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "}";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "});";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "}";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "function btnImport_OnClick() {";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "$('#fileImport').click();";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "}";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "function btnExport_OnClick(event) {";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "$.ajax({";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "async: false";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = ", type: 'GET'";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = ", url: '/Handler/" + mTable.Name + ".ashx?RequestMethod=Export'";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = ", success: function(pData) {";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "var lData = JSON.parse(pData);";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "if (lData.Status === '1')";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "{";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "window.location.href = lData.Msg";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "}";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "else";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "{";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "layer.alert('导出失败', { icon: 2 });";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "}";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "}";
             FileHelper.AppendLine(lFileStream, lLine);
 
             lLine = "});";

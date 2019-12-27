@@ -1,7 +1,10 @@
+using Lib;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Data;
 using Lib.DBHelper;
+
 public class T_CarTeamDao{
 public static string InsertSQL(){string lSQL="";
 lSQL += "INSERT INTO T_CarTeam(";
@@ -57,6 +60,20 @@ return lSQL;
 public static string SelectPageSQL(){
 string lSQL="";
 lSQL += "EXEC T_CarTeam_Page @ID,@Name,@EditMan,@EditDate,@BeginIndex,@EndIndex";
+return lSQL;
+}
+public static string ImportSQL(){string lSQL="";
+lSQL += "INSERT INTO T_CarTeam(";
+lSQL += "ID";
+lSQL += ",Name";
+lSQL += ",EditMan";
+lSQL += ",EditDate";
+lSQL += ")VALUES(";
+lSQL += "@ID";
+lSQL += ",@Name";
+lSQL += ",@EditMan";
+lSQL += ",@EditDate";
+lSQL += ")";
 return lSQL;
 }
 public int Insert(T_CarTeamModel T_CarTeamModel)
@@ -122,4 +139,44 @@ MsSqlHelper lMSSqlHelper = new MsSqlHelper();
 lDT = lMSSqlHelper.GetDataTable(lSQL,lParams.ToArray());
 return lDT;
 }
+public int Import(string lFileName){
+int lRet = -1;
+DataSet lDS = null;
+DataTable lDT = null;
+NPOIExcelHelper lExcelHelper = new NPOIExcelHelper();
+Dictionary<string, SqlParameter[]> lSqlDic = new Dictionary<string, SqlParameter[]>();
+string lSQL = "";
+MsSqlHelper lMsSqlHelper = new MsSqlHelper();
+lDS = lExcelHelper.ImportToDataSet(lFileName);
+ if (lDS != null && lDS.Tables.Count > 0)
+ {
+lDT = lDS.Tables[0];
+for (var i = 0; i < lDT.Rows.Count; i++)
+{
+lSQL = ImportSQL();
+ SqlParameter[] lParams = new SqlParameter[]
+ {
+    new SqlParameter("@ID",Guid.NewGuid().ToString())
+      ,new SqlParameter("@ID",lDT.Rows[i]["ID"].ToString())
+      ,new SqlParameter("@Name",lDT.Rows[i]["Name"].ToString())
+      ,new SqlParameter("@EditMan",lDT.Rows[i]["EditMan"].ToString())
+      ,new SqlParameter("@EditDate",lDT.Rows[i]["EditDate"].ToString())
+     ,new SqlParameter("@EditMan","Admin")
+      ,new SqlParameter("@EditDate",DateTime.Now.ToString("yyyy - MM - dd HH: mm: ss"))
+ };
+ lSqlDic.Add(lSQL + new string(' ', i), lParams);
+}
+ lRet = lMsSqlHelper.ExecuteSQLWithTransaction(lSqlDic);
+}
+return lRet;
+}
+internal void Export(ref string lExcelFilePath)
+{
+NPOIExcelHelper lExcelHelper = new NPOIExcelHelper();
+DataSet lDS = new DataSet();
+DataTable lDT = new DataTable();
+lDT = Select();
+lDS.Tables.Add(lDT.Copy());
+lExcelHelper.DataSetExport(lDS, ref lExcelFilePath);
+ }
 }

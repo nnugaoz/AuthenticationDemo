@@ -68,9 +68,135 @@ namespace Tools
 
             Generate_Insert_Function(lFileStream);
 
+            Generate_Import_Function(lFileStream);
+
+            Generate_Export_Function(lFileStream);
+
             Generate_IsReusable_Property(lFileStream);
 
             lFileStream.Close();
+        }
+
+        private void Generate_Export_Function(FileStream lFileStream)
+        {
+            String lLine = "";
+
+            lLine = "private void Export(HttpContext context)";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "{";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "RequestResult lRR = new RequestResult();";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "String lExcelFilePath = \"\";";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = mTable.Name + "Dao lDao = new " + mTable.Name + "Dao();";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "lDao.Export(ref lExcelFilePath);";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "lRR.Msg = @\"\\TempFile\\\" + lExcelFilePath;";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "context.Response.Write(JsonConvert.SerializeObject(lRR));";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = " }";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+        }
+
+        private void Generate_Import_Function(FileStream lFileStream)
+        {
+            String lLine = "";
+
+            lLine = "private void Import(HttpContext context)";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "{";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "if (context.Request.Files.Count > 0)";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "{";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "if (context.Request.Files[0].ContentType == \"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet\")";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "{";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "string lFileSept = DateTime.Now.ToString(\"yyyy_MM_dd_HH_mm_ss_fff\") ;";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "string lFileName = @\"E:\\00_Temp\\\" + lFileSept + context.Request.Files[0].FileName;";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "context.Request.Files[0].SaveAs(lFileName);";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = mTable.Name + "Dao lDao = new " + mTable.Name + "Dao();";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "if (lDao.Import(lFileName) == 1)";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "{";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "context.Response.Write('1');";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "return;";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "}";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "else";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "{";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "context.Response.Write('0');";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "return;";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "}";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "}";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "else";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = " {";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "context.Response.Write('0');";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "return;";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "}";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "}";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "}";
+            FileHelper.AppendLine(lFileStream, lLine);
         }
 
         private void Generate_IsReusable_Property(FileStream lFileStream)
@@ -284,7 +410,7 @@ namespace Tools
 
             for (int i = 0; i < mTable.Columns.Count; i++)
             {
-                if (!mTable.Columns[i].CanSearch) continue;
+                if (!mTable.Columns[i].SearchFlg) continue;
 
                 lLine = "string " + mTable.Columns[i].Name + " = context.Request.Params[\"" + mTable.Columns[i].Name + "\"].ToString();";
                 FileHelper.AppendLine(lFileStream, lLine);
@@ -293,7 +419,7 @@ namespace Tools
             lLine = "lDT = lDao.SelectPage(";
             for (int i = 0; i < mTable.Columns.Count; i++)
             {
-                if (!mTable.Columns[i].CanSearch) continue;
+                if (!mTable.Columns[i].SearchFlg) continue;
                 lLine += mTable.Columns[i].Name + ", ";
             }
             lLine += "BeginIndex, EndIndex);";
@@ -428,6 +554,24 @@ namespace Tools
             FileHelper.AppendLine(lFileStream, lLine);
 
             lLine = "    SelectByID(context);";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "    break;";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "     case \"Import\":";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "    Import(context);";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "    break;";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "     case \"Export\":";
+            FileHelper.AppendLine(lFileStream, lLine);
+
+            lLine = "    Export(context);";
             FileHelper.AppendLine(lFileStream, lLine);
 
             lLine = "    break;";

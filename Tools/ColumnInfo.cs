@@ -43,9 +43,19 @@ namespace Tools
         public bool EditVisible { get; set; }
 
         /// <summary>
-        /// 可检索
+        /// 检索字段标志位
         /// </summary>
-        public bool CanSearch { get; set; }
+        public bool SearchFlg { get; set; }
+
+        /// <summary>
+        /// 导入字段标志位
+        /// </summary>
+        public bool ImportFlg { get; set; }
+
+        /// <summary>
+        /// 导出字段标志位
+        /// </summary>
+        public bool ExportFlg { get; set; }
 
     }
 }

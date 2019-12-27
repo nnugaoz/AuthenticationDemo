@@ -91,6 +91,7 @@ namespace Tools
                 SqlDataAdapter lSqlDataAdapter = new SqlDataAdapter(lSqlCommand);
                 lSqlDataAdapter.Fill(lDT);
             }
+            dgvFields.DataSource = null;
 
             dgvFields.DataSource = lDT;
 
@@ -111,10 +112,20 @@ namespace Tools
                 lEditVisibleCol.DefaultCellStyle.NullValue = true;
                 dgvFields.Columns.Add(lEditVisibleCol);
 
-                DataGridViewCheckBoxColumn lCanSearchCol = new DataGridViewCheckBoxColumn();
-                lCanSearchCol.Name = "CanSearch";
-                lCanSearchCol.DefaultCellStyle.NullValue = true;
-                dgvFields.Columns.Add(lCanSearchCol);
+                DataGridViewCheckBoxColumn lSearchFlgCol = new DataGridViewCheckBoxColumn();
+                lSearchFlgCol.Name = "SearchFlg";
+                lSearchFlgCol.DefaultCellStyle.NullValue = true;
+                dgvFields.Columns.Add(lSearchFlgCol);
+
+                DataGridViewCheckBoxColumn lImportFlgCol = new DataGridViewCheckBoxColumn();
+                lImportFlgCol.Name = "ImportFlg";
+                lImportFlgCol.DefaultCellStyle.NullValue = true;
+                dgvFields.Columns.Add(lImportFlgCol);
+
+                DataGridViewCheckBoxColumn lExportFlgCol = new DataGridViewCheckBoxColumn();
+                lExportFlgCol.Name = "ExportFlg";
+                lExportFlgCol.DefaultCellStyle.NullValue = true;
+                dgvFields.Columns.Add(lExportFlgCol);
             }
         }
 
@@ -148,7 +159,9 @@ namespace Tools
                 lColumn.ListVisible = Convert.ToBoolean(dgvFields.Rows[i].Cells["ListVisible"].Value ?? true);
                 lColumn.NewVisible = Convert.ToBoolean(dgvFields.Rows[i].Cells["NewVisible"].Value ?? true);
                 lColumn.EditVisible = Convert.ToBoolean(dgvFields.Rows[i].Cells["EditVisible"].Value ?? true);
-                lColumn.CanSearch = Convert.ToBoolean(dgvFields.Rows[i].Cells["CanSearch"].Value ?? true);
+                lColumn.SearchFlg = Convert.ToBoolean(dgvFields.Rows[i].Cells["SearchFlg"].Value ?? true);
+                lColumn.ImportFlg = Convert.ToBoolean(dgvFields.Rows[i].Cells["ImportFlg"].Value ?? true);
+                lColumn.ExportFlg = Convert.ToBoolean(dgvFields.Rows[i].Cells["ExportFlg"].Value ?? true);
 
                 pTable.Columns.Add(lColumn);
             }

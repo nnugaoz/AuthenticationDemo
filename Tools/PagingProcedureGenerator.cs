@@ -52,7 +52,7 @@ namespace Tools
 
             for (int i = 0; i < mTable.Columns.Count; i++)
             {
-                if (!mTable.Columns[i].CanSearch) continue;
+                if (!mTable.Columns[i].SearchFlg) continue;
                 lLine = "@" + mTable.Columns[i].Name + " VARCHAR(50) ,";
                 FileHelper.AppendLine(lFileStream, lLine);
             }
@@ -80,7 +80,7 @@ namespace Tools
 
             for (int i = 0; i < mTable.Columns.Count; i++)
             {
-                if (!mTable.Columns[i].CanSearch) continue;
+                if (!mTable.Columns[i].SearchFlg) continue;
                 lLine = "AND " + mTable.Columns[i].Name + " LIKE '%'+@" + mTable.Columns[i].Name + "+'%'";
                 FileHelper.AppendLine(lFileStream, lLine);
             }
@@ -105,7 +105,7 @@ namespace Tools
 
             for (int i = 0; i < mTable.Columns.Count; i++)
             {
-                if (!mTable.Columns[i].CanSearch) continue;
+                if (!mTable.Columns[i].SearchFlg) continue;
                 lLine = "AND " + mTable.Columns[i].Name + " LIKE '%'+@" + mTable.Columns[i].Name + "+'%'";
                 FileHelper.AppendLine(lFileStream, lLine);
             }
