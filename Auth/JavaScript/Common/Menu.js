@@ -34,7 +34,6 @@ CMenu.prototype.GenerateMenuHtml = function (menuContainer) {
     for (var i = 0; i < this.menuItemsSorted.length; i++) {
 
         var lMenuItemContainer = $('<div>');
-        var lMenuItemImg = $('<img>');
         var lMenuItemSpan = $('<span>');
 
         lMenuItemContainer.attr('id', this.menuItemsSorted[i].ID);
@@ -45,16 +44,11 @@ CMenu.prototype.GenerateMenuHtml = function (menuContainer) {
             lMenuItemContainer.addClass('menu-l2');
         }
 
-        lMenuItemImg.attr('src', '../Image/menu.png');
-        lMenuItemImg.attr('style', 'width:20px;height:20px;');
-        lMenuItemImg.attr('align', 'bottom');
-
         lMenuItemSpan.text(this.menuItemsSorted[i].Caption);
 
-        lMenuItemContainer.append(lMenuItemImg);
         lMenuItemContainer.append(lMenuItemSpan);
 
-        lMenuItemContainer.on('click', this.Toggle);
+        lMenuItemContainer.on('click', { 'menuIns': this, 'selectedItem': lMenuItemContainer }, this.Toggle);
 
         menuContainer.append(lMenuItemContainer);
     }
@@ -93,11 +87,19 @@ CMenu.prototype.Collapsed = function (ID) {
 }
 
 CMenu.prototype.Toggle = function (e) {
-    var ID = $(e.target).attr('id');
-    for (var i = 0; i < this.menuItemsSorted.length; i++) {
-        if (this.menuItemsSorted[i].ParentID == ID) {
-            $('div[id=' + this.menuItemsSorted[i].ID + ']').Toggle('normal');
+    var lSelectedMenuItem = e.data.selectedItem;
+    var lCMenu = e.data.menuIns;
+    var lLeaf = true;
+
+    for (var i = 0; i < lCMenu.menuItemsSorted.length; i++) {
+        if (lCMenu.menuItemsSorted[i].ParentID == lSelectedMenuItem.attr('id')) {
+            $('div[id=' + lCMenu.menuItemsSorted[i].ID + ']').toggle('normal');
+            lLeaf = false;
         }
+    }
+    if (lLeaf) {
+        $('div[class*=menu]').removeClass('selected');
+        $(lSelectedMenuItem).addClass('selected');
     }
 }
 

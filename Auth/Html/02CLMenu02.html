@@ -23,21 +23,56 @@
             height: 100%;
             float: left;
             background-color: #444444;
+            overflow:hidden auto;
         }
 
             #CenterLeft .menu {
                 background-color: #444444;
                 padding: 10px;
                 cursor: pointer;
+                color: #999999;
             }
+
+                #CenterLeft .menu.selected {
+                    background-color: #1296db;
+                }
+
+                #CenterLeft .menu:hover {
+                    color: #ffffff;
+                }
 
             #CenterLeft .menu-l1 {
-                margin-left: 20px;
+                padding-left: 20px;
+                background-image: url('../Image/menu0.png');
+                background-size: 20px;
+                background-repeat: no-repeat;
+                background-position: left center;
             }
 
+                #CenterLeft .menu-l1:hover {
+                    background-image: url('../Image/menu1.png');
+                }
+
+                #CenterLeft .menu-l1.selected {
+                    background-image: url('../Image/menu1.png');
+                }
+
             #CenterLeft .menu-l2 {
-                margin-left: 40px;
+                padding-left: 40px;
+                background-image: url('../Image/page0.png');
+                background-size: 20px;
+                background-repeat: no-repeat;
+                background-position: left center;
+                background-position-x: 20px;
             }
+
+                #CenterLeft .menu-l2:hover {
+                    background-image: url('../Image/page1.png');
+                }
+
+                #CenterLeft .menu-l2.selected {
+                    background-image: url('../Image/page1.png');
+                }
 
         #CenterRight {
             height: 100%;
@@ -59,8 +94,6 @@
             lMenu.ExpandAll();
             lMenu.Expand('A');
             lMenu.Collapsed('B');
-
-
         });
     </script>
 </head>
