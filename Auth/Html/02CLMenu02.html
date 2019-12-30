@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <meta charset="utf-8" />
+    <style type="text/css">
+        body, html {
+            height: 100%;
+            margin: 0px;
+        }
+
+        #Header {
+            height: 10%;
+        }
+
+        #Center {
+            height: 85%;
+        }
+
+        #CenterLeft {
+            width: 15%;
+            height: 100%;
+            float: left;
+            background-color: #444444;
+        }
+
+            #CenterLeft .menu {
+                background-color: #444444;
+                padding: 10px;
+                cursor: pointer;
+            }
+
+            #CenterLeft .menu-l1 {
+                margin-left: 20px;
+            }
+
+            #CenterLeft .menu-l2 {
+                margin-left: 40px;
+            }
+
+        #CenterRight {
+            height: 100%;
+        }
+
+        #Footer {
+            height: 5%;
+        }
+    </style>
+    <script src="../JavaScript/jQuery/jquery-3.4.1.min.js"></script>
+    <script src="../JavaScript/Common/Menu.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            var lMenu = new CMenu();
+            lMenu.GenerateDemoData();
+            lMenu.SortMenuItems('');
+            lMenu.GenerateMenuHtml($('#Menu'));
+            lMenu.CollapsedAll();
+            lMenu.ExpandAll();
+            lMenu.Expand('A');
+            lMenu.Collapsed('B');
+
+
+        });
+    </script>
+</head>
+<body>
+    <div id="Header">header</div>
+    <div id="Center">
+        <div id="CenterLeft">
+            <div id="Menu">
+
+            </div>
+        </div>
+        <div id="CenterRight">
+            Center Right
+        </div>
+    </div>
+    <div id="Footer">footer</div>
+</body>
+</html>

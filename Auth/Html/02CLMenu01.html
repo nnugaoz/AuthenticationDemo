@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <meta charset="utf-8" />
+    <style type="text/css">
+        body, html {
+            height: 100%;
+            margin: 0px;
+        }
+
+        #Header {
+            height: 10%;
+        }
+
+        #Center {
+            height: 85%;
+        }
+
+        #CenterLeft {
+            width: 15%;
+            height: 100%;
+            float: left;
+            background-color: #444444;
+        }
+
+            #CenterLeft .menu {
+                background-color: #444444;
+                padding: 10px;
+                cursor: pointer;
+            }
+
+            #CenterLeft .menu-l1 {
+                margin-left: 20px;
+            }
+
+            #CenterLeft .menu-l2 {
+                margin-left: 40px;
+            }
+
+            #CenterLeft .menu:hover {
+                background-color: #666666;
+                color: #FFFFFF;
+            }
+
+        #CenterRight {
+            height: 100%;
+        }
+
+        #Footer {
+            height: 5%;
+        }
+    </style>
+    <script src="../JavaScript/jQuery/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript">
+        function menuItemA_Click() {
+            $("#menuA1").toggle("normal");
+            $("#menuA2").toggle("normal");
+            $("#menuA3").toggle("normal");
+        }
+
+        function menuItemB_Click() {
+            $("#menuB1").toggle("normal");
+            $("#menuB2").toggle("normal");
+            $("#menuB3").toggle("normal");
+        }
+
+        function menuItemC_Click() {
+            $("#menuC1").toggle("normal");
+            $("#menuC2").toggle("normal");
+            $("#menuC3").toggle("normal");
+        }
+
+        function menuItemD_Click() {
+            $("#menuD1").toggle("normal");
+            $("#menuD2").toggle("normal");
+            $("#menuD3").toggle("normal");
+        }
+
+    </script>
+</head>
+<body>
+    <div id="Header">header</div>
+    <div id="Center">
+        <div id="CenterLeft">
+
+        </div>
+        <div id="CenterRight">
+            Center Right
+        </div>
+    </div>
+    <div id="Footer">footer</div>
+</body>
+</html>
