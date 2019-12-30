@@ -151,8 +151,10 @@
     <Content Include="Html\weighting.html" />
     <Content Include="Image\404.png" />
     <Content Include="Image\500.png" />
-    <Content Include="Image\menu.png" />
-    <Content Include="Image\page.png" />
+    <Content Include="Image\menu0.png" />
+    <Content Include="Image\menu1.png" />
+    <Content Include="Image\page0.png" />
+    <Content Include="Image\page1.png" />
     <Content Include="Image\userlogo.png" />
     <Content Include="JavaScript\activeReport\css\bootstrap-datetimepicker.css" />
     <Content Include="JavaScript\activeReport\css\bootstrap.css" />
