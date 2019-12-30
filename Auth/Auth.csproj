@@ -112,6 +112,7 @@
     <Content Include="ARReport\ActiveReports.ReportService.asmx" />
     <Content Include="Content\Style\Main.css" />
     <Content Include="DBScript\Auth_script.sql" />
+    <Content Include="Html\02CLMenu.html" />
     <Content Include="Html\car.html" />
     <Content Include="Html\carteam.html" />
     <Content Include="Html\Error\404.html" />
@@ -121,6 +122,7 @@
     <Content Include="Html\Feature\FeatureAdd.html" />
     <Content Include="Html\Feature\FeatureEdit.html" />
     <Content Include="Html\Feature\FeatureList.html" />
+    <Content Include="Html\01ClassicLayout.html" />
     <Content Include="Html\Plan\PlanList.html" />
     <Content Include="Html\product.html" />
     <Content Include="Html\Record\RecordList.html" />
@@ -148,6 +150,8 @@
     <Content Include="Html\weighting.html" />
     <Content Include="Image\404.png" />
     <Content Include="Image\500.png" />
+    <Content Include="Image\menu.png" />
+    <Content Include="Image\page.png" />
     <Content Include="Image\userlogo.png" />
     <Content Include="JavaScript\activeReport\css\bootstrap-datetimepicker.css" />
     <Content Include="JavaScript\activeReport\css\bootstrap.css" />
