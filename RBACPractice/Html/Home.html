@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <meta charset="utf-8" />
+    <link href="Home.css" rel="stylesheet" />
+    <link href="../JSLIB/menu/theme/default/menu.css" rel="stylesheet" />
+    <script src="../JSLIB/jQuery/jquery-3.4.1.min.js"></script>
+    <script src="../JSLIB/menu/menu.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+
+            $.ajax({
+                type: 'get'
+                , url: '/Handler/Menu.ashx?RequestMethod=Select'
+                , success: function (pData) {
+                    var lData = JSON.parse(pData);
+                    var lMenu = new CMenu();
+
+                    for (var i = 0; i < lData.length; i++) {
+                        var lMenuItem = new CMenuItem();
+                        lMenuItem.Caption = lData[i].Name;
+                        lMenuItem.ID = lData[i].ID;
+                        lMenuItem.Sort = i + 1;
+                        lMenuItem.ParentID = '';
+                        lMenuItem.Url = '';
+                        lMenu.menuItems.push(lMenuItem);
+                    }
+                    lMenu.SortMenuItems('');
+                    lMenu.GenerateMenuHtml($('#Menu'));
+                    lMenu.ExpandAll();
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <div id="Header">header</div>
+    <div id="Center">
+        <div id="CenterLeft">
+            <div id="Menu">
+
+            </div>
+        </div>
+        <div id="CenterRight">
+            Center Right
+        </div>
+    </div>
+    <div id="Footer">footer</div>
+</body>
+</html>

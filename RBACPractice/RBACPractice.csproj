@@ -1,0 +1,255 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{AF13D789-BDAB-4C17-90AF-84222DF2981C}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>RBACPractice</RootNamespace>
+    <AssemblyName>RBACPractice</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NPOI, Version=2.4.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.4.1\lib\net40\NPOI.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NPOI.OOXML, Version=2.4.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.4.1\lib\net40\NPOI.OOXML.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NPOI.OpenXml4Net, Version=2.4.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.4.1\lib\net40\NPOI.OpenXml4Net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NPOI.OpenXmlFormats, Version=2.4.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.4.1\lib\net40\NPOI.OpenXmlFormats.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Html\Home.css" />
+    <Content Include="Html\Home.html" />
+    <Content Include="Html\Menu\MenuEdit.html" />
+    <Content Include="Html\Menu\MenuList.html" />
+    <Content Include="Html\Menu\MenuNew.html" />
+    <Content Include="Html\Role\RoleEdit.html" />
+    <Content Include="Html\Role\RoleList.html" />
+    <Content Include="Html\Role\RoleNew.html" />
+    <Content Include="Html\Role_Menu\Role_MenuEdit.html" />
+    <Content Include="Html\Role_Menu\Role_MenuList.html" />
+    <Content Include="Html\Role_Menu\Role_MenuNew.html" />
+    <Content Include="Html\User\UserEdit.html" />
+    <Content Include="Html\User\UserList.html" />
+    <Content Include="Html\User\UserNew.html" />
+    <Content Include="Html\User_Role\User_RoleEdit.html" />
+    <Content Include="Html\User_Role\User_RoleList.html" />
+    <Content Include="Html\User_Role\User_RoleNew.html" />
+    <Content Include="JSLIB\bootstrap-3.3.7-dist\css\bootstrap-theme.css" />
+    <Content Include="JSLIB\bootstrap-3.3.7-dist\css\bootstrap-theme.min.css" />
+    <Content Include="JSLIB\bootstrap-3.3.7-dist\css\bootstrap.css" />
+    <Content Include="JSLIB\bootstrap-3.3.7-dist\css\bootstrap.min.css" />
+    <Content Include="JSLIB\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="JSLIB\bootstrap-3.3.7-dist\js\bootstrap.js" />
+    <Content Include="JSLIB\bootstrap-3.3.7-dist\js\bootstrap.min.js" />
+    <Content Include="JSLIB\bootstrap-3.3.7-dist\js\npm.js" />
+    <Content Include="JSLIB\Common\Common.js" />
+    <Content Include="JSLIB\jQuery\jquery-3.4.1.min.js" />
+    <Content Include="JSLIB\layer\layer.js" />
+    <Content Include="JSLIB\layer\mobile\layer.js" />
+    <Content Include="JSLIB\layer\mobile\need\layer.css" />
+    <Content Include="JSLIB\layer\theme\default\icon-ext.png" />
+    <Content Include="JSLIB\layer\theme\default\icon.png" />
+    <Content Include="JSLIB\layer\theme\default\layer.css" />
+    <Content Include="JSLIB\layer\theme\default\loading-0.gif" />
+    <Content Include="JSLIB\layer\theme\default\loading-1.gif" />
+    <Content Include="JSLIB\layer\theme\default\loading-2.gif" />
+    <Content Include="JSLIB\menu\menu.js" />
+    <Content Include="JSLIB\menu\theme\default\menu.css" />
+    <Content Include="JSLIB\menu\theme\default\menu0.png" />
+    <Content Include="JSLIB\menu\theme\default\menu1.png" />
+    <Content Include="JSLIB\menu\theme\default\page0.png" />
+    <Content Include="JSLIB\menu\theme\default\page1.png" />
+    <Content Include="JSLIB\pagination\pagination.js" />
+    <Content Include="JSLIB\zTree\css\awesomeStyle\awesome.css" />
+    <Content Include="JSLIB\zTree\css\awesomeStyle\img\loading.gif" />
+    <Content Include="JSLIB\zTree\css\demo.css" />
+    <Content Include="JSLIB\zTree\css\metroStyle\img\line_conn.png" />
+    <Content Include="JSLIB\zTree\css\metroStyle\img\loading.gif" />
+    <Content Include="JSLIB\zTree\css\metroStyle\img\metro.gif" />
+    <Content Include="JSLIB\zTree\css\metroStyle\img\metro.png" />
+    <Content Include="JSLIB\zTree\css\metroStyle\metroStyle.css" />
+    <Content Include="JSLIB\zTree\css\zTreeStyle\img\diy\1_close.png" />
+    <Content Include="JSLIB\zTree\css\zTreeStyle\img\diy\1_open.png" />
+    <Content Include="JSLIB\zTree\css\zTreeStyle\img\diy\2.png" />
+    <Content Include="JSLIB\zTree\css\zTreeStyle\img\diy\3.png" />
+    <Content Include="JSLIB\zTree\css\zTreeStyle\img\diy\4.png" />
+    <Content Include="JSLIB\zTree\css\zTreeStyle\img\diy\5.png" />
+    <Content Include="JSLIB\zTree\css\zTreeStyle\img\diy\6.png" />
+    <Content Include="JSLIB\zTree\css\zTreeStyle\img\diy\7.png" />
+    <Content Include="JSLIB\zTree\css\zTreeStyle\img\diy\8.png" />
+    <Content Include="JSLIB\zTree\css\zTreeStyle\img\diy\9.png" />
+    <Content Include="JSLIB\zTree\css\zTreeStyle\img\line_conn.gif" />
+    <Content Include="JSLIB\zTree\css\zTreeStyle\img\loading.gif" />
+    <Content Include="JSLIB\zTree\css\zTreeStyle\img\zTreeStandard.gif" />
+    <Content Include="JSLIB\zTree\css\zTreeStyle\img\zTreeStandard.png" />
+    <Content Include="JSLIB\zTree\css\zTreeStyle\zTreeStyle.css" />
+    <Content Include="JSLIB\zTree\js\jquery-1.4.4.min.js" />
+    <Content Include="JSLIB\zTree\js\jquery.ztree.all.js" />
+    <Content Include="JSLIB\zTree\js\jquery.ztree.all.min.js" />
+    <Content Include="JSLIB\zTree\js\jquery.ztree.core.js" />
+    <Content Include="JSLIB\zTree\js\jquery.ztree.core.min.js" />
+    <Content Include="JSLIB\zTree\js\jquery.ztree.excheck.js" />
+    <Content Include="JSLIB\zTree\js\jquery.ztree.excheck.min.js" />
+    <Content Include="JSLIB\zTree\js\jquery.ztree.exedit.js" />
+    <Content Include="JSLIB\zTree\js\jquery.ztree.exedit.min.js" />
+    <Content Include="JSLIB\zTree\js\jquery.ztree.exhide.js" />
+    <Content Include="JSLIB\zTree\js\jquery.ztree.exhide.min.js" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Dao\MenuDao.cs" />
+    <Compile Include="Dao\RoleDao.cs" />
+    <Compile Include="Dao\Role_MenuDao.cs" />
+    <Compile Include="Dao\UserDao.cs" />
+    <Compile Include="Dao\User_RoleDao.cs" />
+    <Compile Include="DBHelper\MsSqlHelper.cs" />
+    <Compile Include="ExcelHelper\NPOIExcelHelper.cs" />
+    <Compile Include="Handler\Menu.ashx.cs">
+      <DependentUpon>Menu.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handler\RequestResult.cs" />
+    <Compile Include="Handler\Role.ashx.cs">
+      <DependentUpon>Role.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handler\Role_Menu.ashx.cs">
+      <DependentUpon>Role_Menu.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handler\User.ashx.cs">
+      <DependentUpon>User.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handler\User_Role.ashx.cs">
+      <DependentUpon>User_Role.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MenuModel.cs" />
+    <Compile Include="Model\RoleModel.cs" />
+    <Compile Include="Model\Role_MenuModel.cs" />
+    <Compile Include="Model\UserModel.cs" />
+    <Compile Include="Model\User_RoleModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="JSLIB\bootstrap-3.3.7-dist\css\bootstrap-theme.css.map" />
+    <Content Include="JSLIB\bootstrap-3.3.7-dist\css\bootstrap-theme.min.css.map" />
+    <Content Include="JSLIB\bootstrap-3.3.7-dist\css\bootstrap.css.map" />
+    <Content Include="JSLIB\bootstrap-3.3.7-dist\css\bootstrap.min.css.map" />
+    <Content Include="JSLIB\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="JSLIB\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="JSLIB\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="JSLIB\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="JSLIB\zTree\css\awesomeStyle\awesome.less" />
+    <Content Include="JSLIB\zTree\css\awesomeStyle\fa.less" />
+    <Content Include="Handler\Menu.ashx" />
+    <Content Include="Handler\Role.ashx" />
+    <Content Include="Handler\Role_Menu.ashx" />
+    <Content Include="Handler\User.ashx" />
+    <Content Include="Handler\User_Role.ashx" />
+    <Content Include="packages.config" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup />
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>62300</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:62300/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

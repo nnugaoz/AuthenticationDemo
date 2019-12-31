@@ -1,0 +1,48 @@
+﻿.menu {
+    background-color: #222222;
+    padding: 10px;
+    cursor: pointer;
+    color: #999999;
+}
+
+    .menu.selected {
+        background-color: #1296db;
+        color: #ffffff;
+    }
+
+    .menu:hover {
+        color: #ffffff;
+    }
+
+.menu-l1 {
+    padding-left: 20px;
+    background-image: url('/Image/menu0.png');
+    background-size: 20px;
+    background-repeat: no-repeat;
+    background-position: left center;
+}
+
+    .menu-l1:hover {
+        background-image: url('/Image/menu1.png');
+    }
+
+    .menu-l1.selected {
+        background-image: url('/Image/menu1.png');
+    }
+
+.menu-l2 {
+    padding-left: 40px;
+    background-image: url('/Image/page0.png');
+    background-size: 20px;
+    background-repeat: no-repeat;
+    background-position: left center;
+    background-position-x: 20px;
+}
+
+    .menu-l2:hover {
+        background-image: url('/Image/page1.png');
+    }
+
+    .menu-l2.selected {
+        background-image: url('/Image/page1.png');
+    }

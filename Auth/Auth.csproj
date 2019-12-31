@@ -112,8 +112,8 @@
     <Content Include="ARReport\ActiveReports.ReportService.asmx" />
     <Content Include="Content\Style\Main.css" />
     <Content Include="DBScript\Auth_script.sql" />
-    <Content Include="Html\02CLMenu02.html" />
-    <Content Include="Html\02CLMenu01.html" />
+    <Content Include="Html\Menu\02CLMenu02.html" />
+    <Content Include="Html\Menu\02CLMenu01.html" />
     <Content Include="Html\car.html" />
     <Content Include="Html\carteam.html" />
     <Content Include="Html\Error\404.html" />
@@ -123,7 +123,11 @@
     <Content Include="Html\Feature\FeatureAdd.html" />
     <Content Include="Html\Feature\FeatureEdit.html" />
     <Content Include="Html\Feature\FeatureList.html" />
-    <Content Include="Html\01ClassicLayout.html" />
+    <Content Include="Html\Menu\01ClassicLayout.html" />
+    <Content Include="Html\Menu\A1.html" />
+    <Content Include="Html\Menu\B1.html" />
+    <Content Include="Html\Menu\C1.html" />
+    <Content Include="Html\Menu\D1.html" />
     <Content Include="Html\Plan\PlanList.html" />
     <Content Include="Html\product.html" />
     <Content Include="Html\Record\RecordList.html" />

@@ -48,7 +48,7 @@ CMenu.prototype.GenerateMenuHtml = function (menuContainer) {
 
         lMenuItemContainer.append(lMenuItemSpan);
 
-        lMenuItemContainer.on('click', { 'menuIns': this, 'selectedItem': lMenuItemContainer }, this.Toggle);
+        lMenuItemContainer.on('click', { 'menuIns': this, 'selectedItem': lMenuItemContainer }, this.MenuItem_OnClick);
 
         menuContainer.append(lMenuItemContainer);
     }
@@ -86,7 +86,7 @@ CMenu.prototype.Collapsed = function (ID) {
     }
 }
 
-CMenu.prototype.Toggle = function (e) {
+CMenu.prototype.MenuItem_OnClick = function (e) {
     var lSelectedMenuItem = e.data.selectedItem;
     var lCMenu = e.data.menuIns;
     var lLeaf = true;
@@ -97,9 +97,20 @@ CMenu.prototype.Toggle = function (e) {
             lLeaf = false;
         }
     }
+
     if (lLeaf) {
         $('div[class*=menu]').removeClass('selected');
         $(lSelectedMenuItem).addClass('selected');
+    }
+
+    var lUrl = '';
+    for (var i = 0; i < lCMenu.menuItemsSorted.length; i++) {
+        if (lCMenu.menuItemsSorted[i].ID == lSelectedMenuItem.attr('id')) {
+            lUrl = lCMenu.menuItemsSorted[i].Url;
+        }
+    }
+    if (lUrl != '') {
+        $('#CenterRight').load(lUrl);
     }
 }
 
@@ -142,7 +153,7 @@ CMenu.prototype.GenerateDemoData = function () {
 
     var menuItem = new CMenuItem();
     menuItem.Caption = "B1";
-    menuItem.Url = "";
+    menuItem.Url = "/Html/Menu/B1.html";
     menuItem.ID = "B1";
     menuItem.ParentID = "B";
     menuItem.Order = 1;
@@ -169,7 +180,7 @@ CMenu.prototype.GenerateDemoData = function () {
 
     var menuItem = new CMenuItem();
     menuItem.Caption = "C1";
-    menuItem.Url = "";
+    menuItem.Url = "/Html/Menu/C1.html";
     menuItem.ID = "C1";
     menuItem.ParentID = "C";
     menuItem.Order = 1;
@@ -223,7 +234,7 @@ CMenu.prototype.GenerateDemoData = function () {
 
     var menuItem = new CMenuItem();
     menuItem.Caption = "D1";
-    menuItem.Url = "";
+    menuItem.Url = "/Html/Menu/D1.html";
     menuItem.ID = "D1";
     menuItem.ParentID = "D";
     menuItem.Order = 1;
@@ -268,7 +279,7 @@ CMenu.prototype.GenerateDemoData = function () {
 
     var menuItem = new CMenuItem();
     menuItem.Caption = "A1";
-    menuItem.Url = "";
+    menuItem.Url = "/Html/Menu/A1.html";
     menuItem.ID = "A1";
     menuItem.ParentID = "A";
     menuItem.Order = 1;

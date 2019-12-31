@@ -299,7 +299,7 @@ namespace Tools
             lLine = ", title: '编辑'";
             FileHelper.AppendLine(lFileStream, lLine);
 
-            lLine = ", content: '/" + mTable.Name + "/" + mTable.Name + "Edit.html?ID=' + event.data.RowData.ID";
+            lLine = ", content: '/Html/" + mTable.Name + "/" + mTable.Name + "Edit.html?ID=' + event.data.RowData.ID";
             FileHelper.AppendLine(lFileStream, lLine);
 
             lLine = ", area: ['800px', '600px']";
@@ -371,7 +371,7 @@ namespace Tools
             lLine = ", title: '新增'";
             FileHelper.AppendLine(lFileStream, lLine);
 
-            lLine = ", content: '/" + mTable.Name + "/" + mTable.Name + "New.html'";
+            lLine = ", content: '/Html/" + mTable.Name + "/" + mTable.Name + "New.html'";
             FileHelper.AppendLine(lFileStream, lLine);
 
             lLine = ", area: ['800px', '600px']";
