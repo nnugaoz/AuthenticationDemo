@@ -1,0 +1,117 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>T_Role列表 </title>
+    <link href="../../JSLIB/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="../../JSLIB/jQuery/jquery-3.4.1.min.js"></script>
+    <script src="../../JSLIB/pagination/pagination.js"></script>
+    <script type='text/javascript'>
+        $(function () {
+            Init();
+            $('#btnSearch').on('click', btnSearch_OnClick);
+            $('#btnClear').on('click', btnClear_OnClick);
+        })
+        function btnSearch_OnClick() {
+            Init();
+        }
+        function btnClear_OnClick() {
+            $('#Name').val('');
+        }
+
+        function Init() {
+            var Name = $('#Name').val();
+            $('#T_RoleList').empty();
+            var lPConfig = new PaginationConfiguration();
+            lPConfig.RequestUrl = '/Handler/T_Role.ashx?RequestMethod=SelectPage'
+            lPConfig.RequestUrl += '&Name=' + Name;
+            lPConfig.PageContainerID = 'T_RoleList';
+
+            var ChkCol = new PaginationColumnConfiguration();
+            ChkCol.HeaderText = '选择';
+            ChkCol.Type = 'CHK';
+            ChkCol.DataField = '';
+            ChkCol.OnClickEventHandler = ChkCol_OnClick;
+            lPConfig.Columns.push(ChkCol);
+
+            var NameCol = new PaginationColumnConfiguration();
+            NameCol.HeaderText = '角色名称';
+            NameCol.Type = 'TXT';
+            NameCol.DataField = 'Name';
+            lPConfig.Columns.push(NameCol);
+
+            var EditManCol = new PaginationColumnConfiguration();
+            EditManCol.HeaderText = '编辑人';
+            EditManCol.Type = 'TXT';
+            EditManCol.DataField = 'EditMan';
+            lPConfig.Columns.push(EditManCol);
+
+            var EditDateCol = new PaginationColumnConfiguration();
+            EditDateCol.HeaderText = '编辑时间';
+            EditDateCol.Type = 'TXT';
+            EditDateCol.DataField = 'EditDate';
+            lPConfig.Columns.push(EditDateCol);
+
+            var T_RoleListPagination = new Pagination(lPConfig);
+            T_RoleListPagination.RequestData(1);
+        }
+
+        function ChkCol_OnClick(event) {
+            if ($(event.currentTarget).prop('checked')) {
+
+                var lSelectedItem = $('<div style="float:left;margin-right:20px;">');
+                var lSelectedNameSpan = $('<span>');
+                var lDeleteIcon = $('<a href="javascript:void(0);"><img alt="删除" src="../../Image/deleteSelectedItem.png" class="img-rounded" />');
+
+                lSelectedItem.attr('id', event.data.RowData.ID);
+                lSelectedNameSpan.text(event.data.RowData.Name);
+
+                lDeleteIcon.on('click', DeleteSelectedItem_OnClick);
+
+                lSelectedItem.append(lSelectedNameSpan);
+                lSelectedItem.append(lDeleteIcon);
+
+                $('#divSelectedItems').append(lSelectedItem);
+
+            } else {
+                $('#divSelectedItems div').each(function (index, element) {
+
+                })
+            }
+        }
+
+        function DeleteSelectedItem_OnClick(event) {
+
+        }
+    </script>
+</head>
+<body>
+    <div class='form-inline' style='padding:10px;'>
+        <div class='form-group'>
+            <label for='Name'>角色名称</label>
+            <input type='text' id='Name' name='Name' class='form-control' />
+        </div>
+        <input type='button' class='btn btn-success' value='检索' id='btnSearch' />
+        <input type='button' class='btn btn-primary' value='清空' id='btnClear' />
+    </div>
+
+    <div style='padding:0px 10px'>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h4 class="panel-title">已选角色</h4>
+            </div>
+            <div class="panel-body" id="divSelectedItems">
+            </div>
+        </div>
+    </div>
+
+    <div style='padding:0px 10px'>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h4 class="panel-title">角色列表</h4>
+            </div>
+            <div class="panel-body" id='T_RoleList'></div>
+        </div>
+    </div>
+</body>
+</html>
