@@ -75,6 +75,7 @@ namespace Tools
             {
                 dgvFields.DataSource = null;
                 dgvFields.Rows.Clear();
+                dgvFields.Columns.Clear();
 
                 lConnection.Open();
                 string lSQL = "";

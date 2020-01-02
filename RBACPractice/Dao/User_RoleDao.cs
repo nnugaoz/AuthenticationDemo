@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Data;
 using DBHelper;
+
 public class User_RoleDao{
 public static string InsertSQL(){string lSQL="";
 lSQL += "INSERT INTO User_Role(";

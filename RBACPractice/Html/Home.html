@@ -23,9 +23,9 @@
                         var lMenuItem = new CMenuItem();
                         lMenuItem.Caption = lData[i].Name;
                         lMenuItem.ID = lData[i].ID;
-                        lMenuItem.Sort = i + 1;
-                        lMenuItem.ParentID = '';
-                        lMenuItem.Url = '';
+                        lMenuItem.Sort = lData[i].Sort;
+                        lMenuItem.ParentID = lData[i].PID;
+                        lMenuItem.Url = lData[i].Url;
                         lMenu.menuItems.push(lMenuItem);
                     }
                     lMenu.SortMenuItems('');

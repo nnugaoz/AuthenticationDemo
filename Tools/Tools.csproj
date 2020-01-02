@@ -37,8 +37,8 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\log4net.dll</HintPath>
+      <HintPath>..\packages\log4net.2.0.8\lib\net40-full\log4net.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="NPOI, Version=2.4.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
       <HintPath>..\packages\NPOI.2.4.1\lib\net40\NPOI.dll</HintPath>
@@ -101,6 +101,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="App.config" />
     <None Include="JSLIB\bootstrap-3.3.7-dist\css\bootstrap-theme.css.map" />
     <None Include="JSLIB\bootstrap-3.3.7-dist\css\bootstrap-theme.min.css.map" />
     <None Include="JSLIB\bootstrap-3.3.7-dist\css\bootstrap.css.map" />

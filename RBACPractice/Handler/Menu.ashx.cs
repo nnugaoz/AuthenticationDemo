@@ -56,11 +56,11 @@ DataTable lDT = null;
 MenuDao lDao = new MenuDao();
 int BeginIndex = Convert.ToInt32(context.Request.Params["BeginIndex"].ToString());
 int EndIndex = Convert.ToInt32(context.Request.Params["EndIndex"].ToString());
-string Name = context.Request.Params["Name"].ToString();
 string PID = context.Request.Params["PID"].ToString();
+string Name = context.Request.Params["Name"].ToString();
 string Sort = context.Request.Params["Sort"].ToString();
 string Url = context.Request.Params["Url"].ToString();
-lDT = lDao.SelectPage(Name, PID, Sort, Url, BeginIndex, EndIndex);
+lDT = lDao.SelectPage(PID, Name, Sort, Url, BeginIndex, EndIndex);
 context.Response.Write(JsonConvert.SerializeObject(lDT));
 }
 private void Delete(HttpContext context)
@@ -80,8 +80,8 @@ private void Update(HttpContext context)
  {
 MenuModel lModel = new MenuModel();
 lModel.ID = context.Request.Params["ID"].ToString();
-lModel.Name = context.Request.Params["Name"].ToString();
 lModel.PID = context.Request.Params["PID"].ToString();
+lModel.Name = context.Request.Params["Name"].ToString();
 lModel.Sort = context.Request.Params["Sort"].ToString();
 lModel.Url = context.Request.Params["Url"].ToString();
 MenuDao lDao = new MenuDao();
@@ -98,8 +98,8 @@ private void Insert(HttpContext context)
 {
 MenuModel lModel = new MenuModel();
 lModel.ID = context.Request.Params["ID"].ToString();
-lModel.Name = context.Request.Params["Name"].ToString();
 lModel.PID = context.Request.Params["PID"].ToString();
+lModel.Name = context.Request.Params["Name"].ToString();
 lModel.Sort = context.Request.Params["Sort"].ToString();
 lModel.Url = context.Request.Params["Url"].ToString();
 lModel.ID = Guid.NewGuid().ToString();

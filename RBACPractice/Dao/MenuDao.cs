@@ -4,18 +4,19 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Data;
 using DBHelper;
+
 public class MenuDao{
 public static string InsertSQL(){string lSQL="";
 lSQL += "INSERT INTO Menu(";
 lSQL += "ID";
-lSQL += ",Name";
 lSQL += ",PID";
+lSQL += ",Name";
 lSQL += ",Sort";
 lSQL += ",Url";
 lSQL += ")VALUES(";
 lSQL += "@ID";
-lSQL += ",@Name";
 lSQL += ",@PID";
+lSQL += ",@Name";
 lSQL += ",@Sort";
 lSQL += ",@Url";
 lSQL += ")";
@@ -31,8 +32,8 @@ public static string UpdateSQL(){
 string lSQL="";
 lSQL += "UPDATE Menu SET ";
 lSQL += "ID=@ID";
-lSQL += ",Name=@Name";
 lSQL += ",PID=@PID";
+lSQL += ",Name=@Name";
 lSQL += ",Sort=@Sort";
 lSQL += ",Url=@Url";
 lSQL += " WHERE ID=@ID";
@@ -42,8 +43,8 @@ public static string SelectSQL(){
 string lSQL="";
 lSQL += "SELECT ";
 lSQL += "ID";
-lSQL += ",Name";
 lSQL += ",PID";
+lSQL += ",Name";
 lSQL += ",Sort";
 lSQL += ",Url";
 lSQL += " FROM Menu";
@@ -53,8 +54,8 @@ public static string SelectByIDSQL(){
 string lSQL="";
 lSQL += "SELECT ";
 lSQL += "ID";
-lSQL += ",Name";
 lSQL += ",PID";
+lSQL += ",Name";
 lSQL += ",Sort";
 lSQL += ",Url";
 lSQL += " FROM Menu";
@@ -63,20 +64,20 @@ return lSQL;
 }
 public static string SelectPageSQL(){
 string lSQL="";
-lSQL += "EXEC Menu_Page @Name,@PID,@Sort,@Url,@BeginIndex,@EndIndex";
+lSQL += "EXEC Menu_Page @PID,@Name,@Sort,@Url,@BeginIndex,@EndIndex";
 return lSQL;
 }
 public static string ImportSQL(){string lSQL="";
 lSQL += "INSERT INTO Menu(";
 lSQL += "ID";
-lSQL += ",Name";
 lSQL += ",PID";
+lSQL += ",Name";
 lSQL += ",Sort";
 lSQL += ",Url";
 lSQL += ")VALUES(";
 lSQL += "@ID";
-lSQL += ",@Name";
 lSQL += ",@PID";
+lSQL += ",@Name";
 lSQL += ",@Sort";
 lSQL += ",@Url";
 lSQL += ")";
@@ -87,8 +88,8 @@ public int Insert(MenuModel MenuModel)
 string lSQL = InsertSQL();
 List<SqlParameter> lParams = new List<SqlParameter>();
 lParams.Add(new SqlParameter("@ID", MenuModel.ID));
-lParams.Add(new SqlParameter("@Name", MenuModel.Name));
 lParams.Add(new SqlParameter("@PID", MenuModel.PID));
+lParams.Add(new SqlParameter("@Name", MenuModel.Name));
 lParams.Add(new SqlParameter("@Sort", MenuModel.Sort));
 lParams.Add(new SqlParameter("@Url", MenuModel.Url));
 MsSqlHelper lMSSqlHelper = new MsSqlHelper();
@@ -99,8 +100,8 @@ public int Update(MenuModel MenuModel)
 string lSQL = UpdateSQL();
 List<SqlParameter> lParams = new List<SqlParameter>();
 lParams.Add(new SqlParameter("@ID", MenuModel.ID));
-lParams.Add(new SqlParameter("@Name", MenuModel.Name));
 lParams.Add(new SqlParameter("@PID", MenuModel.PID));
+lParams.Add(new SqlParameter("@Name", MenuModel.Name));
 lParams.Add(new SqlParameter("@Sort", MenuModel.Sort));
 lParams.Add(new SqlParameter("@Url", MenuModel.Url));
 MsSqlHelper lMSSqlHelper = new MsSqlHelper();
@@ -122,13 +123,13 @@ MsSqlHelper lMSSqlHelper = new MsSqlHelper();
 lDT = lMSSqlHelper.GetDataTable(lSQL);
 return lDT;
 }
-public DataTable SelectPage(string Name, string PID, string Sort, string Url, int BeginIndex,int EndIndex)
+public DataTable SelectPage(string PID, string Name, string Sort, string Url, int BeginIndex,int EndIndex)
 {
 string lSQL = SelectPageSQL();
 DataTable lDT = null;
 List<SqlParameter> lParams = new List<SqlParameter>();
-lParams.Add(new SqlParameter("@Name", Name));
 lParams.Add(new SqlParameter("@PID", PID));
+lParams.Add(new SqlParameter("@Name", Name));
 lParams.Add(new SqlParameter("@Sort", Sort));
 lParams.Add(new SqlParameter("@Url", Url));
 lParams.Add(new SqlParameter("@BeginIndex", BeginIndex));
@@ -165,8 +166,8 @@ lSQL = ImportSQL();
  SqlParameter[] lParams = new SqlParameter[]
  {
     new SqlParameter("@ID",Guid.NewGuid().ToString())
-      ,new SqlParameter("@Name",lDT.Rows[i]["Name"].ToString())
       ,new SqlParameter("@PID",lDT.Rows[i]["PID"].ToString())
+      ,new SqlParameter("@Name",lDT.Rows[i]["Name"].ToString())
       ,new SqlParameter("@Sort",lDT.Rows[i]["Sort"].ToString())
       ,new SqlParameter("@Url",lDT.Rows[i]["Url"].ToString())
      ,new SqlParameter("@EditMan","Admin")
