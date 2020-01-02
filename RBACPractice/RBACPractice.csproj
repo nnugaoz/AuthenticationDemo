@@ -88,21 +88,21 @@
   <ItemGroup>
     <Content Include="Html\Home.css" />
     <Content Include="Html\Home.html" />
-    <Content Include="Html\Menu\MenuEdit.html" />
-    <Content Include="Html\Menu\MenuList.html" />
-    <Content Include="Html\Menu\MenuNew.html" />
-    <Content Include="Html\Role\RoleEdit.html" />
-    <Content Include="Html\Role\RoleList.html" />
-    <Content Include="Html\Role\RoleNew.html" />
-    <Content Include="Html\Role_Menu\Role_MenuEdit.html" />
-    <Content Include="Html\Role_Menu\Role_MenuList.html" />
-    <Content Include="Html\Role_Menu\Role_MenuNew.html" />
-    <Content Include="Html\User\UserEdit.html" />
-    <Content Include="Html\User\UserList.html" />
-    <Content Include="Html\User\UserNew.html" />
-    <Content Include="Html\User_Role\User_RoleEdit.html" />
-    <Content Include="Html\User_Role\User_RoleList.html" />
-    <Content Include="Html\User_Role\User_RoleNew.html" />
+    <Content Include="Html\T_Menu\T_MenuEdit.html" />
+    <Content Include="Html\T_Menu\T_MenuList.html" />
+    <Content Include="Html\T_Menu\T_MenuNew.html" />
+    <Content Include="Html\T_Role\T_RoleEdit.html" />
+    <Content Include="Html\T_Role\T_RoleList.html" />
+    <Content Include="Html\T_Role\T_RoleNew.html" />
+    <Content Include="Html\T_Role_Menu\T_Role_MenuEdit.html" />
+    <Content Include="Html\T_Role_Menu\T_Role_MenuList.html" />
+    <Content Include="Html\T_Role_Menu\T_Role_MenuNew.html" />
+    <Content Include="Html\T_User\T_UserEdit.html" />
+    <Content Include="Html\T_User\T_UserList.html" />
+    <Content Include="Html\T_User\T_UserNew.html" />
+    <Content Include="Html\T_User_Role\T_User_RoleEdit.html" />
+    <Content Include="Html\T_User_Role\T_User_RoleList.html" />
+    <Content Include="Html\T_User_Role\T_User_RoleNew.html" />
     <Content Include="JSLIB\bootstrap-3.3.7-dist\css\bootstrap-theme.css" />
     <Content Include="JSLIB\bootstrap-3.3.7-dist\css\bootstrap-theme.min.css" />
     <Content Include="JSLIB\bootstrap-3.3.7-dist\css\bootstrap.css" />
@@ -166,34 +166,34 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Dao\MenuDao.cs" />
-    <Compile Include="Dao\RoleDao.cs" />
-    <Compile Include="Dao\Role_MenuDao.cs" />
-    <Compile Include="Dao\UserDao.cs" />
-    <Compile Include="Dao\User_RoleDao.cs" />
+    <Compile Include="Dao\T_MenuDao.cs" />
+    <Compile Include="Dao\T_RoleDao.cs" />
+    <Compile Include="Dao\T_Role_MenuDao.cs" />
+    <Compile Include="Dao\T_UserDao.cs" />
+    <Compile Include="Dao\T_User_RoleDao.cs" />
     <Compile Include="DBHelper\MsSqlHelper.cs" />
     <Compile Include="ExcelHelper\NPOIExcelHelper.cs" />
-    <Compile Include="Handler\Menu.ashx.cs">
-      <DependentUpon>Menu.ashx</DependentUpon>
-    </Compile>
     <Compile Include="Handler\RequestResult.cs" />
-    <Compile Include="Handler\Role.ashx.cs">
-      <DependentUpon>Role.ashx</DependentUpon>
+    <Compile Include="Handler\T_Menu.ashx.cs">
+      <DependentUpon>T_Menu.ashx</DependentUpon>
     </Compile>
-    <Compile Include="Handler\Role_Menu.ashx.cs">
-      <DependentUpon>Role_Menu.ashx</DependentUpon>
+    <Compile Include="Handler\T_Role.ashx.cs">
+      <DependentUpon>T_Role.ashx</DependentUpon>
     </Compile>
-    <Compile Include="Handler\User.ashx.cs">
-      <DependentUpon>User.ashx</DependentUpon>
+    <Compile Include="Handler\T_Role_Menu.ashx.cs">
+      <DependentUpon>T_Role_Menu.ashx</DependentUpon>
     </Compile>
-    <Compile Include="Handler\User_Role.ashx.cs">
-      <DependentUpon>User_Role.ashx</DependentUpon>
+    <Compile Include="Handler\T_User.ashx.cs">
+      <DependentUpon>T_User.ashx</DependentUpon>
     </Compile>
-    <Compile Include="Model\MenuModel.cs" />
-    <Compile Include="Model\RoleModel.cs" />
-    <Compile Include="Model\Role_MenuModel.cs" />
-    <Compile Include="Model\UserModel.cs" />
-    <Compile Include="Model\User_RoleModel.cs" />
+    <Compile Include="Handler\T_User_Role.ashx.cs">
+      <DependentUpon>T_User_Role.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Model\T_MenuModel.cs" />
+    <Compile Include="Model\T_RoleModel.cs" />
+    <Compile Include="Model\T_Role_MenuModel.cs" />
+    <Compile Include="Model\T_UserModel.cs" />
+    <Compile Include="Model\T_User_RoleModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -207,12 +207,12 @@
     <Content Include="JSLIB\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="JSLIB\zTree\css\awesomeStyle\awesome.less" />
     <Content Include="JSLIB\zTree\css\awesomeStyle\fa.less" />
-    <Content Include="Handler\Menu.ashx" />
-    <Content Include="Handler\Role.ashx" />
-    <Content Include="Handler\Role_Menu.ashx" />
-    <Content Include="Handler\User.ashx" />
-    <Content Include="Handler\User_Role.ashx" />
     <Content Include="packages.config" />
+    <Content Include="Handler\T_Menu.ashx" />
+    <Content Include="Handler\T_Role.ashx" />
+    <Content Include="Handler\T_Role_Menu.ashx" />
+    <Content Include="Handler\T_User.ashx" />
+    <Content Include="Handler\T_User_Role.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -220,7 +220,9 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="DBScript\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

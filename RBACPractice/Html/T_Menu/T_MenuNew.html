@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv='Content-Type' content='text/html; charset=utf-8'/>
+    <title></title>
+	<meta charset='utf-8' />
+    <link href="../../JSLIB/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="../../JSLIB/jQuery/jquery-3.4.1.min.js"></script>
+    <script src="../../JSLIB/layer/layer.js"></script>
+<script type="text/javascript">
+$(function () {
+$('#btnSubmit').on('click', btnSubmit_OnClick);
+});
+function btnSubmit_OnClick(event) {
+event.preventDefault();
+var formData = new FormData($('form')[0]);
+$.ajax({
+type: 'post'
+, url: $('form').attr('action')
+, data: formData
+, processData: false
+, contentType: false
+, success: function (pData) {
+if (pData === '1') {
+layer.alert('保存成功!', { icon: 1 }, function (index) {
+layer.close(index);
+index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+parent.layer.close(index); //再执行关闭
+parent.Init();
+})
+} else {
+layer.alert('保存失败!', { icon: 2 }, function (index) {
+layer.close(index);
+})
+}
+}
+});
+return false;
+}
+</script>
+</head>
+<body style='overflow:hidden;'>
+<form method='POST' action='/Handler/T_Menu.ashx?RequestMethod=Insert' class='form-horizontal'>
+<div class='form-group' style='visibility:hidden'>
+<label for='ID' class='col-sm-2 control-label'>主键</label>
+<div class='col-sm-8'>
+<input type='text' id='ID' name='ID' class='form-control' />
+</div>
+</div>
+<div class='form-group'>
+<label for='Name' class='col-sm-2 control-label'>菜单名称</label>
+<div class='col-sm-8'>
+<input type='text' id='Name' name='Name' class='form-control' />
+</div>
+</div>
+<div class='form-group'>
+<label for='PID' class='col-sm-2 control-label'>父菜单ID</label>
+<div class='col-sm-8'>
+<input type='text' id='PID' name='PID' class='form-control' />
+</div>
+</div>
+<div class='form-group'>
+<label for='Sort' class='col-sm-2 control-label'>排序</label>
+<div class='col-sm-8'>
+<input type='text' id='Sort' name='Sort' class='form-control' />
+</div>
+</div>
+<div class='form-group'>
+<label for='Addr' class='col-sm-2 control-label'>地址</label>
+<div class='col-sm-8'>
+<input type='text' id='Addr' name='Addr' class='form-control' />
+</div>
+</div>
+<div class='form-group' style='visibility:hidden'>
+<label for='EditMan' class='col-sm-2 control-label'>编辑人</label>
+<div class='col-sm-8'>
+<input type='text' id='EditMan' name='EditMan' class='form-control' />
+</div>
+</div>
+<div class='form-group' style='visibility:hidden'>
+<label for='EditDate' class='col-sm-2 control-label'>编辑时间</label>
+<div class='col-sm-8'>
+<input type='text' id='EditDate' name='EditDate' class='form-control' />
+</div>
+</div>
+<div class='form-group'>
+<div class='col-sm-offset-2 col-sm-8'>
+<input type='submit' value='提交' class='btn btn-success' id='btnSubmit'/>
+</div>
+</div>
+</form>
+</body>
+</html>

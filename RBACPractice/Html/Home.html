@@ -8,13 +8,12 @@
     <link href="../JSLIB/menu/theme/default/menu.css" rel="stylesheet" />
     <script src="../JSLIB/jQuery/jquery-3.4.1.min.js"></script>
     <script src="../JSLIB/menu/menu.js"></script>
-
     <script type="text/javascript">
         $(function () {
 
             $.ajax({
                 type: 'get'
-                , url: '/Handler/Menu.ashx?RequestMethod=Select'
+                , url: '/Handler/T_Menu.ashx?RequestMethod=Select'
                 , success: function (pData) {
                     var lData = JSON.parse(pData);
                     var lMenu = new CMenu();
@@ -25,7 +24,7 @@
                         lMenuItem.ID = lData[i].ID;
                         lMenuItem.Sort = lData[i].Sort;
                         lMenuItem.ParentID = lData[i].PID;
-                        lMenuItem.Url = lData[i].Url;
+                        lMenuItem.Url = lData[i].Addr;
                         lMenu.menuItems.push(lMenuItem);
                     }
                     lMenu.SortMenuItems('');
