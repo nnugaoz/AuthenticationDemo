@@ -11,10 +11,12 @@
             Init();
             $('#btnSearch').on('click', btnSearch_OnClick);
             $('#btnClear').on('click', btnClear_OnClick);
-        })
+        });
+
         function btnSearch_OnClick() {
             Init();
         }
+
         function btnClear_OnClick() {
             $('#Name').val('');
         }
@@ -30,7 +32,7 @@
             var ChkCol = new PaginationColumnConfiguration();
             ChkCol.HeaderText = '选择';
             ChkCol.Type = 'CHK';
-            ChkCol.DataField = '';
+            ChkCol.DataField = 'ID';
             ChkCol.OnClickEventHandler = ChkCol_OnClick;
             lPConfig.Columns.push(ChkCol);
 
@@ -54,6 +56,7 @@
 
             var T_RoleListPagination = new Pagination(lPConfig);
             T_RoleListPagination.RequestData(1);
+
         }
 
         function ChkCol_OnClick(event) {
@@ -75,14 +78,23 @@
 
             } else {
                 $('#divSelectedItems div').each(function (index, element) {
-
-                })
+                    if ($(element).attr('id') == event.data.RowData.ID) {
+                        $(element).remove();
+                    }
+                });
             }
         }
 
         function DeleteSelectedItem_OnClick(event) {
-
+            var id = $(event.currentTarget).parent().attr('id');
+            $(event.currentTarget).parent().remove();
+            $('#T_RoleList input[type="checkbox"]').each(function (index, element) {
+                if ($(element).val() == id) {
+                    $(element).prop('checked', false);
+                }
+            });
         }
+
     </script>
 </head>
 <body>

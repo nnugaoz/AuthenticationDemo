@@ -86,7 +86,7 @@ Pagination.prototype.RequestData = function (RequestPageIndex) {
                                 break;
 
                             case "CHK":
-                                var lChk = $("<input type='checkbox' class='checkbox'>");
+                                var lChk = $("<input type='checkbox' class='checkbox'>");                                
                                 lChk.val(lData[i][that.Columns[j].DataField]);
                                 lChk.on("change", { RowData: lData[i] }, that.Columns[j].OnClickEventHandler);
                                 if (that.Columns[j].OnColumnDataBinding) {
