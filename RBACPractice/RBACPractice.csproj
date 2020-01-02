@@ -104,6 +104,7 @@
     <Content Include="Html\T_User_Role\T_User_RoleEdit.html" />
     <Content Include="Html\T_User_Role\T_User_RoleList.html" />
     <Content Include="Html\T_User_Role\T_User_RoleNew.html" />
+    <Content Include="Image\deleteSelectedItem.png" />
     <Content Include="Image\popup_nav.png" />
     <Content Include="JSLIB\bootstrap-3.3.7-dist\css\bootstrap-theme.css" />
     <Content Include="JSLIB\bootstrap-3.3.7-dist\css\bootstrap-theme.min.css" />
