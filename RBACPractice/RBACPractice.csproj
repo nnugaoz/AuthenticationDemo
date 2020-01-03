@@ -86,11 +86,28 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Html\Home.css" />
-    <Content Include="Html\Home.html" />
-    <Content Include="Html\TabPageControllerDemo\1.html" />
-    <Content Include="Html\TabPageControllerDemo\2.html" />
+    <Content Include="Html\Home\Home.css" />
+    <Content Include="Html\Home\Home.html" />
+    <Content Include="Html\TabPageControllerDemo\A1.html" />
+    <Content Include="Html\TabPageControllerDemo\A2.html" />
+    <Content Include="Html\TabPageControllerDemo\A3.html" />
+    <Content Include="Html\TabPageControllerDemo\A4.html" />
+    <Content Include="Html\TabPageControllerDemo\B1.html" />
+    <Content Include="Html\TabPageControllerDemo\B2.html" />
+    <Content Include="Html\TabPageControllerDemo\B3.html" />
+    <Content Include="Html\TabPageControllerDemo\B4.html" />
+    <Content Include="Html\TabPageControllerDemo\C1.html" />
+    <Content Include="Html\TabPageControllerDemo\C2.html" />
+    <Content Include="Html\TabPageControllerDemo\C3.html" />
+    <Content Include="Html\TabPageControllerDemo\C4.html" />
+    <Content Include="Html\TabPageControllerDemo\D1.html" />
+    <Content Include="Html\TabPageControllerDemo\D2.html" />
+    <Content Include="Html\TabPageControllerDemo\D3.html" />
+    <Content Include="Html\TabPageControllerDemo\D4.html" />
+    <Content Include="Html\TabPageControllerDemo\Home.css" />
+    <Content Include="Html\TabPageControllerDemo\Home.html" />
     <Content Include="Html\TabPageControllerDemo\main.html" />
+    <Content Include="Html\TabPageControllerDemo\TestPage.html" />
     <Content Include="Html\T_Menu\T_MenuEdit.html" />
     <Content Include="Html\T_Menu\T_MenuList.html" />
     <Content Include="Html\T_Menu\T_MenuNew.html" />
@@ -136,6 +153,7 @@
     <Content Include="JSLIB\menu\theme\default\page1.png" />
     <Content Include="JSLIB\pagination\pagination.js" />
     <Content Include="JSLIB\TabPageController\TabPageController.js" />
+    <Content Include="JSLIB\TabPageController\theme\default\close.png" />
     <Content Include="JSLIB\zTree\css\awesomeStyle\awesome.css" />
     <Content Include="JSLIB\zTree\css\awesomeStyle\img\loading.gif" />
     <Content Include="JSLIB\zTree\css\demo.css" />

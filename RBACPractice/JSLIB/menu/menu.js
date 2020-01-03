@@ -126,7 +126,7 @@ CMenu.prototype.GenerateDemoData = function () {
 
     var menuItem = new CMenuItem();
     menuItem.Caption = "A3";
-    menuItem.Url = "";
+    menuItem.Url = "A3.html";
     menuItem.ID = "A3";
     menuItem.ParentID = "A";
     menuItem.Sort = 3;
@@ -135,7 +135,7 @@ CMenu.prototype.GenerateDemoData = function () {
 
     var menuItem = new CMenuItem();
     menuItem.Caption = "A4";
-    menuItem.Url = "";
+    menuItem.Url = "A4.html";
     menuItem.ID = "A4";
     menuItem.ParentID = "A";
     menuItem.Sort = 4;
@@ -153,7 +153,7 @@ CMenu.prototype.GenerateDemoData = function () {
 
     var menuItem = new CMenuItem();
     menuItem.Caption = "B1";
-    menuItem.Url = "/Html/Menu/B1.html";
+    menuItem.Url = "B1.html";
     menuItem.ID = "B1";
     menuItem.ParentID = "B";
     menuItem.Sort = 1;
@@ -162,7 +162,7 @@ CMenu.prototype.GenerateDemoData = function () {
 
     var menuItem = new CMenuItem();
     menuItem.Caption = "B2";
-    menuItem.Url = "";
+    menuItem.Url = "B2.html";
     menuItem.ID = "B2";
     menuItem.ParentID = "B";
     menuItem.Sort = 2;
@@ -180,7 +180,7 @@ CMenu.prototype.GenerateDemoData = function () {
 
     var menuItem = new CMenuItem();
     menuItem.Caption = "C1";
-    menuItem.Url = "/Html/Menu/C1.html";
+    menuItem.Url = "C1.html";
     menuItem.ID = "C1";
     menuItem.ParentID = "C";
     menuItem.Sort = 1;
@@ -189,7 +189,7 @@ CMenu.prototype.GenerateDemoData = function () {
 
     var menuItem = new CMenuItem();
     menuItem.Caption = "C4";
-    menuItem.Url = "";
+    menuItem.Url = "C4.html";
     menuItem.ID = "C4";
     menuItem.ParentID = "C";
     menuItem.Sort = 4;
@@ -207,7 +207,7 @@ CMenu.prototype.GenerateDemoData = function () {
 
     var menuItem = new CMenuItem();
     menuItem.Caption = "D2";
-    menuItem.Url = "";
+    menuItem.Url = "D2.html";
     menuItem.ID = "D2";
     menuItem.ParentID = "D";
     menuItem.Sort = 2;
@@ -216,7 +216,7 @@ CMenu.prototype.GenerateDemoData = function () {
 
     var menuItem = new CMenuItem();
     menuItem.Caption = "D4";
-    menuItem.Url = "";
+    menuItem.Url = "D4.html";
     menuItem.ID = "D4";
     menuItem.ParentID = "D";
     menuItem.Sort = 4;
@@ -225,7 +225,7 @@ CMenu.prototype.GenerateDemoData = function () {
 
     var menuItem = new CMenuItem();
     menuItem.Caption = "D3";
-    menuItem.Url = "";
+    menuItem.Url = "D3.html";
     menuItem.ID = "D3";
     menuItem.ParentID = "D";
     menuItem.Sort = 3;
@@ -234,7 +234,7 @@ CMenu.prototype.GenerateDemoData = function () {
 
     var menuItem = new CMenuItem();
     menuItem.Caption = "D1";
-    menuItem.Url = "/Html/Menu/D1.html";
+    menuItem.Url = "D1.html";
     menuItem.ID = "D1";
     menuItem.ParentID = "D";
     menuItem.Sort = 1;
@@ -243,7 +243,7 @@ CMenu.prototype.GenerateDemoData = function () {
 
     var menuItem = new CMenuItem();
     menuItem.Caption = "C2";
-    menuItem.Url = "";
+    menuItem.Url = "C2.html";
     menuItem.ID = "C2";
     menuItem.ParentID = "C";
     menuItem.Sort = 2;
@@ -252,7 +252,7 @@ CMenu.prototype.GenerateDemoData = function () {
 
     var menuItem = new CMenuItem();
     menuItem.Caption = "C3";
-    menuItem.Url = "";
+    menuItem.Url = "C3.html";
     menuItem.ID = "C3";
     menuItem.ParentID = "C";
     menuItem.Sort = 3;
@@ -261,7 +261,7 @@ CMenu.prototype.GenerateDemoData = function () {
 
     var menuItem = new CMenuItem();
     menuItem.Caption = "B3";
-    menuItem.Url = "";
+    menuItem.Url = "B3.html";
     menuItem.ID = "B3";
     menuItem.ParentID = "B";
     menuItem.Sort = 3;
@@ -270,7 +270,7 @@ CMenu.prototype.GenerateDemoData = function () {
 
     var menuItem = new CMenuItem();
     menuItem.Caption = "B4";
-    menuItem.Url = "";
+    menuItem.Url = "B4.html";
     menuItem.ID = "B4";
     menuItem.ParentID = "B";
     menuItem.Sort = 4;
@@ -279,7 +279,7 @@ CMenu.prototype.GenerateDemoData = function () {
 
     var menuItem = new CMenuItem();
     menuItem.Caption = "A1";
-    menuItem.Url = "/Html/Menu/A1.html";
+    menuItem.Url = "A1.html";
     menuItem.ID = "A1";
     menuItem.ParentID = "A";
     menuItem.Sort = 1;
@@ -288,7 +288,7 @@ CMenu.prototype.GenerateDemoData = function () {
 
     var menuItem = new CMenuItem();
     menuItem.Caption = "A2";
-    menuItem.Url = "";
+    menuItem.Url = "A2.html";
     menuItem.ID = "A2";
     menuItem.ParentID = "A";
     menuItem.Sort = 2;

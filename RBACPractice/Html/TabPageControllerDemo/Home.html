@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <meta charset="utf-8" />
+    <link href="Home.css" rel="stylesheet" />
+    <link href="/JSLIB/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/JSLIB/menu/theme/default/menu.css" rel="stylesheet" />
+    <script src="/JSLIB/jQuery/jquery-3.4.1.min.js"></script>
+    <script src="/JSLIB/layer/layer.js"></script>
+    <script src="/JSLIB/menu/menu.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            var Menu = new CMenu();
+            Menu.GenerateDemoData();
+            Menu.SortMenuItems('');
+            Menu.GenerateMenuHtml($('#Menu'));
+        });
+    </script>
+</head>
+<body>
+    <div id="Header">header</div>
+    <div id="Center">
+        <div id="CenterLeft">
+            <div id="Menu">
+            </div>
+        </div>
+        <div id="CenterRight">
+            CRight
+        </div>
+    </div>
+    <div id="Footer">footer</div>
+</body>
+</html>
