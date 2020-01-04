@@ -7,59 +7,46 @@
     <script src="../../JSLIB/TabPageController/TabPageController.js"></script>
     <script type="text/javascript">
 
-        var mTabController = new CTabController();
+        var mTabPageController = new CTabPageController();
 
         $(function () {
-            mTabController.TabContainer = $('#TabContainer');
+            $('input[type=button]').on('click', btnPage_OnClick);
+
+            mTabPageController.TabContainer = $('#TabContainer');
+            mTabPageController.PageContainer = $('#pageContainer');
+            mTabPageController.CreateNav();
         });
 
         function ShowTab(paraId, paraName, paraUrl) {
-            mTabController.Show(paraId, paraName, paraUrl);
+            mTabPageController.Show(paraId, paraName, paraUrl);
         }
 
-        function btnPageA1_OnClick() {
-            ShowTab('A1', 'A1', 'A1.html');
+        function btnPage_OnClick(event) {
+            var lVal = $(event.currentTarget).val();
+            ShowTab(lVal, lVal, lVal + '.html');
         }
-
-        function btnPageB1_OnClick() {
-            ShowTab('B1', 'B1', 'B1.html');
-        }
-
-        function Show(pId, src) {
-            var isNew = true;
-
-            for (var i = 0; i < FrameArr.length; i++) {
-                if (FrameArr[i].attr('id') == pId) {
-                    isNew = false;
-                    FrameArr[i].css('display', 'block');
-                } else {
-                    FrameArr[i].css('display', 'none');
-                }
-            }
-
-            if (isNew) {
-                var lFrame = $('<iframe>');
-
-                lFrame.attr('id', pId);
-                lFrame.attr('src', src);
-                lFrame.attr('frameborder', 'no');
-                lFrame.css('width', '800px');
-                lFrame.css('height', '600px');
-                lFrame.css('background-color', '#654321');
-
-                $('#pageContainer').append(lFrame);
-                FrameArr.push(lFrame);
-            }
-        }
-
     </script>
 </head>
 <body>
-    <input type="button" id="btnPageA1" value="A1" onclick="btnPageA1_OnClick()" />
-    <input type="button" id="btnPageB1" value="B1" onclick="btnPageB1_OnClick()" />
-    <div id="TabContainer" style="width: 800px; height: 20px;border:1px solid green; "></div>
+    <input type="button" value="A1" />
+    <input type="button" value="A2" />
+    <input type="button" value="A3" />
+    <input type="button" value="A4" />
+    <input type="button" value="B1" />
+    <input type="button" value="B2" />
+    <input type="button" value="B3" />
+    <input type="button" value="B4" />
+    <input type="button" value="C1" />
+    <input type="button" value="C2" />
+    <input type="button" value="C3" />
+    <input type="button" value="C4" />
+    <input type="button" value="D1" />
+    <input type="button" value="D2" />
+    <input type="button" value="D3" />
+    <input type="button" value="D4" />
+    <div id="TabContainer" style="width: 800px; height: 20px;overflow:hidden; "></div>
     <div id="pageContainer" style="width:800px;height:600px;background-color:#123456;">
-
     </div>
+
 </body>
 </html>

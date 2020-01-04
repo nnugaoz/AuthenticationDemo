@@ -106,6 +106,7 @@
     <Content Include="Html\TabPageControllerDemo\D4.html" />
     <Content Include="Html\TabPageControllerDemo\Home.css" />
     <Content Include="Html\TabPageControllerDemo\Home.html" />
+    <Content Include="Html\TabPageControllerDemo\HtmlPage1.html" />
     <Content Include="Html\TabPageControllerDemo\main.html" />
     <Content Include="Html\TabPageControllerDemo\TestPage.html" />
     <Content Include="Html\T_Menu\T_MenuEdit.html" />
@@ -153,7 +154,9 @@
     <Content Include="JSLIB\menu\theme\default\page1.png" />
     <Content Include="JSLIB\pagination\pagination.js" />
     <Content Include="JSLIB\TabPageController\TabPageController.js" />
+    <Content Include="JSLIB\TabPageController\theme\default\backword.png" />
     <Content Include="JSLIB\TabPageController\theme\default\close.png" />
+    <Content Include="JSLIB\TabPageController\theme\default\forword.png" />
     <Content Include="JSLIB\zTree\css\awesomeStyle\awesome.css" />
     <Content Include="JSLIB\zTree\css\awesomeStyle\img\loading.gif" />
     <Content Include="JSLIB\zTree\css\demo.css" />
