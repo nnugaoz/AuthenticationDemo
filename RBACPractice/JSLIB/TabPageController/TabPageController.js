@@ -297,15 +297,34 @@ CTabPageController.prototype.RemoveTabPageById = function (id) {
         this.TabPages.splice(i, 1);
     }
 
+    var j = i;
+    for (; j < this.TabPages.length; j++) {
+        if (this.TabContainer.find('div[id=tab' + this.TabPages[j].Id + ']').css('display') == 'none') {
+            this.TabContainer.find('div[id=tab' + this.TabPages[j].Id + ']').css('display', 'block');
+            break;
+        }
+    }
+
+    if (j == this.TabPages.length) {
+        for (j = i - 1; j >= 0; j--) {
+            if (this.TabContainer.find('div[id=tab' + this.TabPages[j].Id + ']').css('display') == 'none') {
+                this.TabContainer.find('div[id=tab' + this.TabPages[j].Id + ']').css('display', 'block');
+                break;
+            }
+        }
+    }
+
     if (this.CurrentTagePageIndex == i) {
         if (i < this.TabPages.length) {
             //设置后一页为当前页
             this.SetCurrentTabPageById(this.TabPages[i].Id);
-        } else if (i - 1 >= 0 && i - 1 < lTabPageController.TabPages.length) {
+        } else if (i - 1 >= 0 && i - 1 < this.TabPages.length) {
             //设置前一页为当前页
             this.SetCurrentTabPageById(this.TabPages[i - 1].Id);
         } else {
-            lTabPageController.CurrentTagePageIndex = -1;
+            this.CurrentTagePageIndex = -1;
         }
+    } else if (this.CurrentTagePageIndex > i) {
+        this.CurrentTagePageIndex--;
     }
 }
