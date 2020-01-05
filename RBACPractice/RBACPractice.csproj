@@ -156,6 +156,7 @@
     <Content Include="JSLIB\TabPageController\TabPageController.js" />
     <Content Include="JSLIB\TabPageController\theme\default\backword.png" />
     <Content Include="JSLIB\TabPageController\theme\default\close.png" />
+    <Content Include="JSLIB\TabPageController\theme\default\closeMouseover.png" />
     <Content Include="JSLIB\TabPageController\theme\default\forword.png" />
     <Content Include="JSLIB\zTree\css\awesomeStyle\awesome.css" />
     <Content Include="JSLIB\zTree\css\awesomeStyle\img\loading.gif" />
