@@ -3,6 +3,9 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>T_User列表 </title>
+    <link href="../../JSLIB/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="../../JSLIB/jQuery/jquery-3.4.1.min.js"></script>
+    <script src="../../JSLIB/layer/layer.js"></script>
     <script src="../../JSLIB/pagination/pagination.js"></script>
     <script type='text/javascript'>
         $(function () {
@@ -32,6 +35,13 @@
             NameCol.Type = 'TXT';
             NameCol.DataField = 'Name';
             lPConfig.Columns.push(NameCol);
+
+            var RoleNamesCol = new PaginationColumnConfiguration();
+            RoleNamesCol.HeaderText = '角色';
+            RoleNamesCol.Type = 'TXT';
+            RoleNamesCol.DataField = 'RoleNames';
+            lPConfig.Columns.push(RoleNamesCol);
+
             var EditManCol = new PaginationColumnConfiguration();
             EditManCol.HeaderText = '编辑人';
             EditManCol.Type = 'TXT';

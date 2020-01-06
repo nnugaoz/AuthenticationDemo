@@ -7,6 +7,7 @@
     <link href="../../JSLIB/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
     <script src="../../JSLIB/jQuery/jquery-3.4.1.min.js"></script>
     <script src="../../JSLIB/layer/layer.js"></script>
+    <script src="../../JSLIB/CheckBoxGroup/CheckBoxGroup.js"></script>
     <script type="text/javascript">
         $(function () {
             $('#btnSubmit').on('click', btnSubmit_OnClick);
@@ -16,26 +17,14 @@
                 , url: '/Handler/T_Role.ashx?RequestMethod=Select'
                 , success: function (pData) {
                     var lData = JSON.parse(pData);
-                    for (var i = 0; i < lData.length; i++) {
-                        if (i % 2 == 0) {
-                            var newRow = $('<div class="row">');
-
-
-                        }
-                        var lSelectedItem = $('<div style="float:left;margin-right:20px;">');
-                        var lSelectedNameSpan = $('<span>');
-                        var lDeleteIcon = $('<a href="javascript:void(0);"><img alt="删除" src="../../Image/deleteSelectedItem.png" class="img-rounded" />');
-
-                        lSelectedItem.attr('id', lData[i].ID);
-                        lSelectedNameSpan.text(lData[i].Name);
-
-                        //lDeleteIcon.on('click', DeleteSelectedItem_OnClick);
-
-                        lSelectedItem.append(lSelectedNameSpan);
-                        lSelectedItem.append(lDeleteIcon);
-
-                        $('#divItemList').append(lSelectedItem);
-                    }
+                    var lCheckBoxGroup = new CheckBoxGroup();
+                    lCheckBoxGroup.colCnt = 1;
+                    lCheckBoxGroup.dataSource = lData;
+                    lCheckBoxGroup.container = $('#divItemList');
+                    lCheckBoxGroup.displayMem = 'Name';
+                    lCheckBoxGroup.valueMem = 'ID';
+                    lCheckBoxGroup.checkboxName = 'Role';
+                    lCheckBoxGroup.Init();
                 }
             });
         });

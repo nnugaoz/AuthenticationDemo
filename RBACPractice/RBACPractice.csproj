@@ -135,6 +135,7 @@
     <Content Include="JSLIB\bootstrap-3.3.7-dist\js\bootstrap.js" />
     <Content Include="JSLIB\bootstrap-3.3.7-dist\js\bootstrap.min.js" />
     <Content Include="JSLIB\bootstrap-3.3.7-dist\js\npm.js" />
+    <Content Include="JSLIB\CheckBoxGroup\CheckBoxGroup.js" />
     <Content Include="JSLIB\Common\Common.js" />
     <Content Include="JSLIB\jQuery\jquery-3.4.1.min.js" />
     <Content Include="JSLIB\layer\layer.js" />
@@ -221,6 +222,7 @@
     <Compile Include="Model\T_MenuModel.cs" />
     <Compile Include="Model\T_RoleModel.cs" />
     <Compile Include="Model\T_Role_MenuModel.cs" />
+    <Compile Include="Model\V_UserModel.cs" />
     <Compile Include="Model\T_UserModel.cs" />
     <Compile Include="Model\T_User_RoleModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

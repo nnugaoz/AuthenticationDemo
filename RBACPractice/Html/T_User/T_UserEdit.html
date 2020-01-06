@@ -8,6 +8,7 @@
     <script src="../../JSLIB/jQuery/jquery-3.4.1.min.js"></script>
     <script src="../../JSLIB/layer/layer.js"></script>
     <script src="../../JSLIB/Common/Common.js"></script>
+    <script src="../../JSLIB/CheckBoxGroup/CheckBoxGroup.js"></script>
     <script type='text/javascript'>
         $(function () {
             var ID = GetParameterByName('ID');
@@ -18,13 +19,27 @@
             });
             $('#btnSubmit').on('click', btnSubmit_OnClick);
         });
+
         function PageInit(pData) {
             var lData = JSON.parse(pData);
-            $('#ID').val(lData[0].ID);
-            $('#Name').val(lData[0].Name);
-            $('#EditMan').val(lData[0].EditMan);
-            $('#EditDate').val(lData[0].EditDate);
+            $('#ID').val(lData.UserData[0].UID);
+            $('#Name').val(lData.UserData[0].UName);
+            $('#EditMan').val(lData.UserData[0].EditMan);
+            $('#EditDate').val(lData.UserData[0].EditDate);
+
+            var lCheckBoxGroup = new CheckBoxGroup();
+            lCheckBoxGroup.colCnt = 1;
+            lCheckBoxGroup.container = $('#divRoleList');
+            lCheckBoxGroup.dataSource = lData.RoleData;
+            lCheckBoxGroup.displayMem = "Name";
+            lCheckBoxGroup.valueMem = "ID";
+            lCheckBoxGroup.checkboxName = "Role";
+
+            lCheckBoxGroup.Init();
+
+            lCheckBoxGroup.SetCheckedByValue(lData.UserData[0].RIDs);
         }
+
         function btnSubmit_OnClick(event) {
             event.preventDefault();
             var formData = new FormData($('form')[0]);
@@ -65,12 +80,21 @@
                 <input type='text' id='ID' name='ID' class='form-control' />
             </div>
         </div>
+
         <div class='form-group'>
             <label for='Name' class='col-sm-2 control-label'>姓名</label>
             <div class='col-sm-8'>
                 <input type='text' id='Name' name='Name' class='form-control' />
             </div>
         </div>
+
+        <div class='form-group'>
+            <label for='Name' class='col-sm-2 control-label'>角色</label>
+            <div class='col-sm-8' id="divRoleList">
+
+            </div>
+        </div>
+
         <div class='form-group' style='visibility:hidden'>
             <label for='EditMan' class='col-sm-2 control-label'>编辑人</label>
             <div class='col-sm-8'>
