@@ -8,6 +8,7 @@
     <script src="../../JSLIB/jQuery/jquery-3.4.1.min.js"></script>
     <script src="../../JSLIB/layer/layer.js"></script>
     <script src="../../JSLIB/Common/Common.js"></script>
+    <script src="../../JSLIB/CheckBoxGroup/CheckBoxGroup.js"></script>
     <script type='text/javascript'>
         $(function () {
             var ID = GetParameterByName('ID');
@@ -20,10 +21,21 @@
         });
         function PageInit(pData) {
             var lData = JSON.parse(pData);
-            $('#ID').val(lData[0].ID);
-            $('#Name').val(lData[0].Name);
-            $('#EditMan').val(lData[0].EditMan);
-            $('#EditDate').val(lData[0].EditDate);
+            $('#ID').val(lData.RoleData[0].ID);
+            $('#Name').val(lData.RoleData[0].Name);
+            $('#EditMan').val(lData.RoleData[0].EditMan);
+            $('#EditDate').val(lData.RoleData[0].EditDate);
+
+            var lCheckBoxGroupMenu = new CheckBoxGroup();
+            lCheckBoxGroupMenu.checkboxName = "Menu";
+            lCheckBoxGroupMenu.colCnt = 1;
+            lCheckBoxGroupMenu.container = $('#MenuList');
+            lCheckBoxGroupMenu.dataSource = lData.MenuData;
+            lCheckBoxGroupMenu.displayMem = "Name";
+            lCheckBoxGroupMenu.valueMem = "ID";
+            lCheckBoxGroupMenu.Init();
+            lCheckBoxGroupMenu.SetCheckedByValue(lData.RoleData[0].MIDs);
+
         }
         function btnSubmit_OnClick(event) {
             event.preventDefault();
@@ -69,6 +81,12 @@
             <label for='Name' class='col-sm-2 control-label'>角色名称</label>
             <div class='col-sm-8'>
                 <input type='text' id='Name' name='Name' class='form-control' />
+            </div>
+        </div>
+        <div class='form-group'>
+            <label for='MenuList' class='col-sm-2 control-label'>菜单列表</label>
+            <div class='col-sm-8' id="MenuList">
+
             </div>
         </div>
         <div class='form-group' style='visibility:hidden'>

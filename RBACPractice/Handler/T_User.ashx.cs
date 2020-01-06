@@ -67,7 +67,8 @@ public class T_User : IHttpHandler
         int BeginIndex = Convert.ToInt32(context.Request.Params["BeginIndex"].ToString());
         int EndIndex = Convert.ToInt32(context.Request.Params["EndIndex"].ToString());
         string Name = context.Request.Params["Name"].ToString();
-        lDT = lDao.SelectPage(Name, BeginIndex, EndIndex);
+        string RoleID = context.Request.Params["RoleID"].ToString();
+        lDT = lDao.SelectPage(Name, RoleID, BeginIndex, EndIndex);
         context.Response.Write(JsonConvert.SerializeObject(lDT));
     }
     private void Delete(HttpContext context)
@@ -85,13 +86,30 @@ public class T_User : IHttpHandler
     }
     private void Update(HttpContext context)
     {
-        T_UserModel lModel = new T_UserModel();
+        V_UserModel lModel = new V_UserModel();
+        lModel.UserRoleList = new List<T_User_RoleModel>();
+
         lModel.ID = context.Request.Params["ID"].ToString();
         lModel.Name = context.Request.Params["Name"].ToString();
         lModel.EditMan = context.Request.Params["EditMan"].ToString();
         lModel.EditDate = context.Request.Params["EditDate"].ToString();
         lModel.EditMan = "Admin";
         lModel.EditDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
+
+        string[] lRIDArr = context.Request.Params["Role"].ToString().Split(new char[] { ',' });
+        T_User_RoleModel lUserRoleModel = null;
+
+        for (int i = 0; i < lRIDArr.Length; i++)
+        {
+            lUserRoleModel = new T_User_RoleModel();
+            lUserRoleModel.ID = Guid.NewGuid().ToString();
+            lUserRoleModel.UID = lModel.ID;
+            lUserRoleModel.RID = lRIDArr[i];
+            lUserRoleModel.EditMan = "Admin";
+            lUserRoleModel.EditDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
+            lModel.UserRoleList.Add(lUserRoleModel);
+        }
+
         T_UserDao lDao = new T_UserDao();
         if (lDao.Update(lModel) > 0)
         {

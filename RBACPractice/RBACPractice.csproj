@@ -137,6 +137,7 @@
     <Content Include="JSLIB\bootstrap-3.3.7-dist\js\npm.js" />
     <Content Include="JSLIB\CheckBoxGroup\CheckBoxGroup.js" />
     <Content Include="JSLIB\Common\Common.js" />
+    <Content Include="JSLIB\DropDownList\DropDownList.js" />
     <Content Include="JSLIB\jQuery\jquery-3.4.1.min.js" />
     <Content Include="JSLIB\layer\layer.js" />
     <Content Include="JSLIB\layer\mobile\layer.js" />
@@ -220,6 +221,7 @@
       <DependentUpon>T_User_Role.ashx</DependentUpon>
     </Compile>
     <Compile Include="Model\T_MenuModel.cs" />
+    <Compile Include="Model\V_RoleModel.cs" />
     <Compile Include="Model\T_RoleModel.cs" />
     <Compile Include="Model\T_Role_MenuModel.cs" />
     <Compile Include="Model\V_UserModel.cs" />

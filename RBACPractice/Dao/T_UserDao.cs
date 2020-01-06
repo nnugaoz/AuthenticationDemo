@@ -61,7 +61,7 @@ public class T_UserDao
     public static string SelectPageSQL()
     {
         string lSQL = "";
-        lSQL += "EXEC T_User_Page @Name,@BeginIndex,@EndIndex";
+        lSQL += "EXEC T_User_Page @Name,@RoleID,@BeginIndex,@EndIndex";
         return lSQL;
     }
     public static string ImportSQL()
@@ -132,13 +132,60 @@ public class T_UserDao
         MsSqlHelper lMSSqlHelper = new MsSqlHelper();
         return lMSSqlHelper.ExecuteSQL(lSQL, lParams.ToArray());
     }
+
+    public int Update(V_UserModel V_UserModel)
+    {
+        Dictionary<string, SqlParameter[]> lSQLDic = new Dictionary<string, SqlParameter[]>();
+        string lSQL = "";
+        List<SqlParameter> lParams = null;
+
+        lSQL = T_User_RoleDao.DeleteByUIDSQL();
+        lParams = new List<SqlParameter>();
+        lParams.Add(new SqlParameter("@UID", V_UserModel.ID));
+        lSQLDic.Add(lSQL, lParams.ToArray());
+
+        lSQL = UpdateSQL();
+        lParams = new List<SqlParameter>();
+        lParams.Add(new SqlParameter("@ID", V_UserModel.ID));
+        lParams.Add(new SqlParameter("@Name", V_UserModel.Name));
+        lParams.Add(new SqlParameter("@EditMan", V_UserModel.EditMan));
+        lParams.Add(new SqlParameter("@EditDate", V_UserModel.EditDate));
+        lSQLDic.Add(lSQL, lParams.ToArray());
+
+        for (int i = 0; i < V_UserModel.UserRoleList.Count; i++)
+        {
+            lSQL = T_User_RoleDao.InsertSQL();
+            lParams = new List<SqlParameter>();
+            lParams.Add(new SqlParameter("@ID", V_UserModel.UserRoleList[i].ID));
+            lParams.Add(new SqlParameter("@UID", V_UserModel.UserRoleList[i].UID));
+            lParams.Add(new SqlParameter("@RID", V_UserModel.UserRoleList[i].RID));
+            lParams.Add(new SqlParameter("@EditMan", V_UserModel.EditMan));
+            lParams.Add(new SqlParameter("@EditDate", V_UserModel.EditDate));
+            lSQLDic.Add(lSQL + new string(' ', i), lParams.ToArray());
+        }
+        MsSqlHelper lMSSqlHelper = new MsSqlHelper();
+
+        return lMSSqlHelper.ExecuteSQLWithTransaction(lSQLDic);
+    }
+
     public int Delete(string pID)
     {
-        string lSQL = DeleteSQL();
-        List<SqlParameter> lParams = new List<SqlParameter>();
+        string lSQL = "";
+        List<SqlParameter> lParams = null;
+        Dictionary<string, SqlParameter[]> lSQLDic = new Dictionary<string, SqlParameter[]>();
+
+        lSQL = T_User_RoleDao.DeleteByUIDSQL();
+        lParams = new List<SqlParameter>();
+        lParams.Add(new SqlParameter("UID", pID));
+        lSQLDic.Add(lSQL, lParams.ToArray());
+
+        lSQL = DeleteSQL();
+        lParams = new List<SqlParameter>();
         lParams.Add(new SqlParameter("@ID", pID));
+        lSQLDic.Add(lSQL, lParams.ToArray());
+
         MsSqlHelper lMSSqlHelper = new MsSqlHelper();
-        return lMSSqlHelper.ExecuteSQL(lSQL, lParams.ToArray());
+        return lMSSqlHelper.ExecuteSQLWithTransaction(lSQLDic);
     }
     public DataTable Select()
     {
@@ -148,12 +195,13 @@ public class T_UserDao
         lDT = lMSSqlHelper.GetDataTable(lSQL);
         return lDT;
     }
-    public DataTable SelectPage(string Name, int BeginIndex, int EndIndex)
+    public DataTable SelectPage(string Name, string RoleID, int BeginIndex, int EndIndex)
     {
         string lSQL = SelectPageSQL();
         DataTable lDT = null;
         List<SqlParameter> lParams = new List<SqlParameter>();
         lParams.Add(new SqlParameter("@Name", Name));
+        lParams.Add(new SqlParameter("@RoleID", RoleID));
         lParams.Add(new SqlParameter("@BeginIndex", BeginIndex));
         lParams.Add(new SqlParameter("@EndIndex", EndIndex));
         MsSqlHelper lMSSqlHelper = new MsSqlHelper();
