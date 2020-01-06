@@ -297,6 +297,8 @@ CTabPageController.prototype.RemoveTabPageById = function (id) {
         this.TabPages.splice(i, 1);
     }
 
+    //关掉一个标签，空出一个位置，需要补上一个标签
+    //先从后面补，再从前面补
     var j = i;
     for (; j < this.TabPages.length; j++) {
         if (this.TabContainer.find('div[id=tab' + this.TabPages[j].Id + ']').css('display') == 'none') {
