@@ -86,8 +86,10 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Global.asax" />
     <Content Include="Html\Home\Home.css" />
     <Content Include="Html\Home\Home.html" />
+    <Content Include="Html\Login\Login.html" />
     <Content Include="Html\TabPageControllerDemo\A1.html" />
     <Content Include="Html\TabPageControllerDemo\A2.html" />
     <Content Include="Html\TabPageControllerDemo\A3.html" />
@@ -204,6 +206,12 @@
     <Compile Include="Dao\T_User_RoleDao.cs" />
     <Compile Include="DBHelper\MsSqlHelper.cs" />
     <Compile Include="ExcelHelper\NPOIExcelHelper.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Handler\Login.ashx.cs">
+      <DependentUpon>Login.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Handler\RequestResult.cs" />
     <Compile Include="Handler\T_Menu.ashx.cs">
       <DependentUpon>T_Menu.ashx</DependentUpon>
@@ -246,6 +254,7 @@
     <Content Include="Handler\T_Role_Menu.ashx" />
     <Content Include="Handler\T_User.ashx" />
     <Content Include="Handler\T_User_Role.ashx" />
+    <Content Include="Handler\Login.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

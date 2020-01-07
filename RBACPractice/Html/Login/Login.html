@@ -1,0 +1,71 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="../../JSLIB/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="../../JSLIB/jQuery/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#Login').on('click', Login_OnClick);
+        });
+
+        function Login_OnClick() {
+            debugger;
+            $.ajax({
+                type: 'post'
+                , url: '/Handler/Login.ashx?RequestMethod=login'
+                , data: { "UserName": $('#UserName').val(), "Password": $('#Password').val() }
+                , success: function (pData) {
+                    var lData = JSON.parse(pData);
+                    if (lData.Status == '1') {
+                        window.location.href = '/Html/Home/Home.html';
+                    } else {
+                        alert(lData.Msg);
+                    }
+                }
+            });
+        }
+    </script>
+    <title></title>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="UserName" class="control-label">用户名</label>
+                    <input type="text" id="UserName" class="form-control" />
+                </div>
+            </div>
+            <div class="col-md-4">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="Password" class="control-label">密码</label>
+                    <input type="password" id="Password" class="form-control" />
+                </div>
+            </div>
+            <div class="col-md-4">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-4">
+                <div class="form-group text-center">
+                    <input type="button" class="btn-primary" id="Login" value="登录" />
+                </div>
+            </div>
+            <div class="col-md-4">
+            </div>
+        </div>
+    </div>
+</body>
+</html>
