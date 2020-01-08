@@ -4,11 +4,14 @@ using System.Linq;
 using System.Web;
 using System.Web.Security;
 using System.Web.SessionState;
+using log4net;
 
 namespace RBACPractice
 {
     public class Global : System.Web.HttpApplication
     {
+
+        ILog mLogger = LogManager.GetLogger("Global");
 
         protected void Application_Start(object sender, EventArgs e)
         {
@@ -22,6 +25,7 @@ namespace RBACPractice
 
         protected void Application_BeginRequest(object sender, EventArgs e)
         {
+            mLogger.Info("Application_BeginRequest");
             string lRequestUserID = "";
 
             if (Context.Request.Path != "/Handler/Login.ashx")
