@@ -1,11 +1,11 @@
-public class T_MenuModel{
+public class T_PermissionModel{
 //主键
 //MaxLength=50
 public string ID{get;set;}
-//菜单名称
+//权限名称
 //MaxLength=50
 public string Name{get;set;}
-//父菜单ID
+//父权限ID
 //MaxLength=50
 public string PID{get;set;}
 //排序

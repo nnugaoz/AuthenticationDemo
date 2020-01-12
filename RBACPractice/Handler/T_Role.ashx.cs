@@ -55,7 +55,7 @@ public class T_Role : IHttpHandler
         lDS.Tables.Add(lDTRoleData.Copy());
 
         DataTable lDTMenuData = null;
-        T_MenuDao lMenuDao = new T_MenuDao();
+        T_PermissionDao lMenuDao = new T_PermissionDao();
         lDTMenuData = lMenuDao.Select();
         lDTMenuData.TableName = "MenuData";
         lDS.Tables.Add(lDTMenuData.Copy());
@@ -88,7 +88,7 @@ public class T_Role : IHttpHandler
     private void Update(HttpContext context)
     {
         V_RoleModel lModel = new V_RoleModel();
-        lModel.RoleMenuList = new List<T_Role_MenuModel>();
+        lModel.RoleMenuList = new List<T_Role_PermissionModel>();
 
         lModel.ID = context.Request.Params["ID"].ToString();
         lModel.Name = context.Request.Params["Name"].ToString();
@@ -98,11 +98,11 @@ public class T_Role : IHttpHandler
         lModel.EditDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
 
         string[] lMenuArr = context.Request.Params["Menu"].ToString().Split(new char[] { ',' });
-        T_Role_MenuModel lRoleMenuModel = null;
+        T_Role_PermissionModel lRoleMenuModel = null;
 
         for (int i = 0; i < lMenuArr.Length; i++)
         {
-            lRoleMenuModel = new T_Role_MenuModel();
+            lRoleMenuModel = new T_Role_PermissionModel();
             lRoleMenuModel.ID = Guid.NewGuid().ToString();
             lRoleMenuModel.RID = lModel.ID;
             lRoleMenuModel.MID = lMenuArr[i];
@@ -124,7 +124,7 @@ public class T_Role : IHttpHandler
     private void Insert(HttpContext context)
     {
         V_RoleModel lModel = new V_RoleModel();
-        lModel.RoleMenuList = new List<T_Role_MenuModel>();
+        lModel.RoleMenuList = new List<T_Role_PermissionModel>();
 
         lModel.ID = context.Request.Params["ID"].ToString();
         lModel.Name = context.Request.Params["Name"].ToString();
@@ -135,11 +135,11 @@ public class T_Role : IHttpHandler
         lModel.EditDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
 
         string[] lMenus = context.Request.Params["Menu"].ToString().Split(new char[] { ',' });
-        T_Role_MenuModel lRoleMenuModel = null;
+        T_Role_PermissionModel lRoleMenuModel = null;
 
         for (int i = 0; i < lMenus.Length; i++)
         {
-            lRoleMenuModel = new T_Role_MenuModel();
+            lRoleMenuModel = new T_Role_PermissionModel();
             lRoleMenuModel.ID = Guid.NewGuid().ToString();
             lRoleMenuModel.RID = lModel.ID;
             lRoleMenuModel.MID = lMenus[i];

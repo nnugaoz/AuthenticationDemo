@@ -4,14 +4,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Security;
 using System.Web.SessionState;
-using log4net;
 
 namespace RBACPractice
 {
     public class Global : System.Web.HttpApplication
     {
-
-        ILog mLogger = LogManager.GetLogger("Global");
 
         protected void Application_Start(object sender, EventArgs e)
         {
@@ -25,20 +22,17 @@ namespace RBACPractice
 
         protected void Application_BeginRequest(object sender, EventArgs e)
         {
-            mLogger.Info("Application_BeginRequest");
-            string lRequestUserID = "";
 
-            if (Context.Request.Path != "/Handler/Login.ashx")
+        }
+
+        protected void Application_EndRequest(object sender, EventArgs e)
+        {
+            if (Context.Request.IsAuthenticated)
             {
-                if (Context.Session != null)
-                {
-                    lRequestUserID = Context.Session["UserID"].ToString() ?? "";
-                }
-
-                if (lRequestUserID == "")
-                {
-                    Context.Response.Redirect("/Html/Login/Login.html");
-                }
+                string lUserName = Context.User.Identity.Name;
+                HttpCookie lCookie = new HttpCookie("NName", lUserName);
+                lCookie.Expires = DateTime.Now.AddMinutes(10);
+                Context.Response.AppendCookie(lCookie);
             }
         }
 

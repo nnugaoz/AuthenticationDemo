@@ -80,6 +80,17 @@ public class T_UserDao
         lSQL += ")";
         return lSQL;
     }
+
+    private string CheckSQL()
+    {
+        String lSQL = "";
+        lSQL = "SELECT COUNT(1)";
+        lSQL += " FROM T_User";
+        lSQL += " WHERE Name=@Name";
+        lSQL += " AND Password=@Password";
+        return lSQL;
+    }
+
     public int Insert(T_UserModel T_UserModel)
     {
         string lSQL = InsertSQL();
@@ -187,6 +198,7 @@ public class T_UserDao
         MsSqlHelper lMSSqlHelper = new MsSqlHelper();
         return lMSSqlHelper.ExecuteSQLWithTransaction(lSQLDic);
     }
+
     public DataTable Select()
     {
         string lSQL = SelectSQL();
@@ -195,6 +207,7 @@ public class T_UserDao
         lDT = lMSSqlHelper.GetDataTable(lSQL);
         return lDT;
     }
+
     public DataTable SelectPage(string Name, string RoleID, int BeginIndex, int EndIndex)
     {
         string lSQL = SelectPageSQL();
@@ -208,6 +221,7 @@ public class T_UserDao
         lDT = lMSSqlHelper.GetDataTable(lSQL, lParams.ToArray());
         return lDT;
     }
+
     public DataTable SelectByID(string ID)
     {
         string lSQL = SelectByIDSQL();
@@ -218,6 +232,7 @@ public class T_UserDao
         lDT = lMSSqlHelper.GetDataTable(lSQL, lParams.ToArray());
         return lDT;
     }
+
     public int Import(string lFileName)
     {
         int lRet = -1;
@@ -247,6 +262,7 @@ public class T_UserDao
         }
         return lRet;
     }
+
     internal void Export(ref string lExcelFilePath)
     {
         NPOIExcelHelper lExcelHelper = new NPOIExcelHelper();
@@ -256,4 +272,26 @@ public class T_UserDao
         lDS.Tables.Add(lDT.Copy());
         lExcelHelper.DataSetExport(lDS, ref lExcelFilePath);
     }
+
+    public Boolean Check(string Name, string Password)
+    {
+        Boolean lRet = false;
+        String lSQL = "";
+        List<SqlParameter> lParams = new List<SqlParameter>();
+        MsSqlHelper lSQLHelper = new MsSqlHelper();
+        DataTable lDT = null;
+
+        lSQL = CheckSQL();
+        lParams.Add(new SqlParameter("@Name", Name));
+        lParams.Add(new SqlParameter("@Password", Password));
+        lDT = lSQLHelper.GetDataTable(lSQL, lParams.ToArray());
+
+        if (lDT != null && lDT.Rows.Count > 0 && Convert.ToInt32(lDT.Rows[0][0].ToString()) > 0)
+        {
+            lRet = true;
+        }
+        return lRet;
+    }
+
+
 }

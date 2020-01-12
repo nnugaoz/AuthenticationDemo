@@ -2,7 +2,7 @@ using Newtonsoft.Json;
 using System;
 using System.Data;
 using System.Web;
-public class T_Role_Menu : IHttpHandler
+public class T_Role_Permission : IHttpHandler
 {
 public void ProcessRequest(HttpContext context)
 {
@@ -38,14 +38,14 @@ switch (lRequestMethod)
 private void Select(HttpContext context)
 {
 DataTable lDT = null;
-T_Role_MenuDao lDao = new T_Role_MenuDao();
+T_Role_PermissionDao lDao = new T_Role_PermissionDao();
 lDT = lDao.Select();
 context.Response.Write(JsonConvert.SerializeObject(lDT));
 }
 private void SelectByID(HttpContext context)
 {
 DataTable lDT = null;
-T_Role_MenuDao lDao = new T_Role_MenuDao();
+T_Role_PermissionDao lDao = new T_Role_PermissionDao();
 String ID = context.Request.Params["ID"].ToString();
 lDT = lDao.SelectByID(ID);
 context.Response.Write(JsonConvert.SerializeObject(lDT));
@@ -53,7 +53,7 @@ context.Response.Write(JsonConvert.SerializeObject(lDT));
 private void SelectPage(HttpContext context)
 {
 DataTable lDT = null;
-T_Role_MenuDao lDao = new T_Role_MenuDao();
+T_Role_PermissionDao lDao = new T_Role_PermissionDao();
 int BeginIndex = Convert.ToInt32(context.Request.Params["BeginIndex"].ToString());
 int EndIndex = Convert.ToInt32(context.Request.Params["EndIndex"].ToString());
 string RID = context.Request.Params["RID"].ToString();
@@ -64,7 +64,7 @@ context.Response.Write(JsonConvert.SerializeObject(lDT));
 private void Delete(HttpContext context)
 {
 string lID = context.Request.Params["ID"].ToString();
-T_Role_MenuDao lDao = new T_Role_MenuDao();
+T_Role_PermissionDao lDao = new T_Role_PermissionDao();
 if (lDao.Delete(lID) > 0)
 {
     context.Response.Write("1");
@@ -76,7 +76,7 @@ else
 }
 private void Update(HttpContext context)
  {
-T_Role_MenuModel lModel = new T_Role_MenuModel();
+T_Role_PermissionModel lModel = new T_Role_PermissionModel();
 lModel.ID = context.Request.Params["ID"].ToString();
 lModel.RID = context.Request.Params["RID"].ToString();
 lModel.MID = context.Request.Params["MID"].ToString();
@@ -84,7 +84,7 @@ lModel.EditMan = context.Request.Params["EditMan"].ToString();
 lModel.EditDate = context.Request.Params["EditDate"].ToString();
 lModel.EditMan = "Admin";
 lModel.EditDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
-T_Role_MenuDao lDao = new T_Role_MenuDao();
+T_Role_PermissionDao lDao = new T_Role_PermissionDao();
 if (lDao.Update(lModel) > 0)
 {
     context.Response.Write("1");
@@ -96,7 +96,7 @@ else
  }
 private void Insert(HttpContext context)
 {
-T_Role_MenuModel lModel = new T_Role_MenuModel();
+T_Role_PermissionModel lModel = new T_Role_PermissionModel();
 lModel.ID = context.Request.Params["ID"].ToString();
 lModel.RID = context.Request.Params["RID"].ToString();
 lModel.MID = context.Request.Params["MID"].ToString();
@@ -105,7 +105,7 @@ lModel.EditDate = context.Request.Params["EditDate"].ToString();
 lModel.ID = Guid.NewGuid().ToString();
 lModel.EditMan = "Admin";
 lModel.EditDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
-T_Role_MenuDao lDao = new T_Role_MenuDao();
+T_Role_PermissionDao lDao = new T_Role_PermissionDao();
 if (lDao.Insert(lModel) > 0)
 {
     context.Response.Write("1");
@@ -124,7 +124,7 @@ if (context.Request.Files[0].ContentType == "application/vnd.openxmlformats-offi
 string lFileSept = DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss_fff") ;
 string lFileName = @"E:\00_Temp\" + lFileSept + context.Request.Files[0].FileName;
 context.Request.Files[0].SaveAs(lFileName);
-T_Role_MenuDao lDao = new T_Role_MenuDao();
+T_Role_PermissionDao lDao = new T_Role_PermissionDao();
 if (lDao.Import(lFileName) == 1)
 {
 context.Response.Write('1');
@@ -147,7 +147,7 @@ private void Export(HttpContext context)
 {
 RequestResult lRR = new RequestResult();
 String lExcelFilePath = "";
-T_Role_MenuDao lDao = new T_Role_MenuDao();
+T_Role_PermissionDao lDao = new T_Role_PermissionDao();
 lDao.Export(ref lExcelFilePath);
 lRR.Msg = @"\TempFile\" + lExcelFilePath;
 context.Response.Write(JsonConvert.SerializeObject(lRR));

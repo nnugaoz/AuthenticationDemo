@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Data;
 using DBHelper;
-public class T_Role_MenuDao
+public class T_Role_PermissionDao
 {
     public static string InsertSQL()
     {
         string lSQL = "";
-        lSQL += "INSERT INTO T_Role_Menu(";
+        lSQL += "INSERT INTO T_Role_Permission(";
         lSQL += "ID";
         lSQL += ",RID";
         lSQL += ",MID";
@@ -27,7 +27,7 @@ public class T_Role_MenuDao
     public static string DeleteSQL()
     {
         string lSQL = "";
-        lSQL += "DELETE FROM T_Role_Menu ";
+        lSQL += "DELETE FROM T_Role_Permission ";
         lSQL += " WHERE ID=@ID";
         return lSQL;
     }
@@ -35,7 +35,7 @@ public class T_Role_MenuDao
     internal static string DeleteByRIDSQL()
     {
         string lSQL = "";
-        lSQL += "DELETE FROM T_Role_Menu ";
+        lSQL += "DELETE FROM T_Role_Permission ";
         lSQL += " WHERE RID=@RID";
         return lSQL;
     }
@@ -43,7 +43,7 @@ public class T_Role_MenuDao
     public static string UpdateSQL()
     {
         string lSQL = "";
-        lSQL += "UPDATE T_Role_Menu SET ";
+        lSQL += "UPDATE T_Role_Permission SET ";
         lSQL += "ID=@ID";
         lSQL += ",RID=@RID";
         lSQL += ",MID=@MID";
@@ -61,7 +61,7 @@ public class T_Role_MenuDao
         lSQL += ",MID";
         lSQL += ",EditMan";
         lSQL += ",EditDate";
-        lSQL += " FROM T_Role_Menu";
+        lSQL += " FROM T_Role_Permission";
         return lSQL;
     }
     public static string SelectByIDSQL()
@@ -73,20 +73,20 @@ public class T_Role_MenuDao
         lSQL += ",MID";
         lSQL += ",EditMan";
         lSQL += ",EditDate";
-        lSQL += " FROM T_Role_Menu";
+        lSQL += " FROM T_Role_Permission";
         lSQL += " WHERE ID=@ID";
         return lSQL;
     }
     public static string SelectPageSQL()
     {
         string lSQL = "";
-        lSQL += "EXEC T_Role_Menu_Page @RID,@MID,@BeginIndex,@EndIndex";
+        lSQL += "EXEC T_Role_Permission_Page @RID,@MID,@BeginIndex,@EndIndex";
         return lSQL;
     }
     public static string ImportSQL()
     {
         string lSQL = "";
-        lSQL += "INSERT INTO T_Role_Menu(";
+        lSQL += "INSERT INTO T_Role_Permission(";
         lSQL += "ID";
         lSQL += ",RID";
         lSQL += ",MID";
@@ -101,27 +101,27 @@ public class T_Role_MenuDao
         lSQL += ")";
         return lSQL;
     }
-    public int Insert(T_Role_MenuModel T_Role_MenuModel)
+    public int Insert(T_Role_PermissionModel T_Role_PermissionModel)
     {
         string lSQL = InsertSQL();
         List<SqlParameter> lParams = new List<SqlParameter>();
-        lParams.Add(new SqlParameter("@ID", T_Role_MenuModel.ID));
-        lParams.Add(new SqlParameter("@RID", T_Role_MenuModel.RID));
-        lParams.Add(new SqlParameter("@MID", T_Role_MenuModel.MID));
-        lParams.Add(new SqlParameter("@EditMan", T_Role_MenuModel.EditMan));
-        lParams.Add(new SqlParameter("@EditDate", T_Role_MenuModel.EditDate));
+        lParams.Add(new SqlParameter("@ID", T_Role_PermissionModel.ID));
+        lParams.Add(new SqlParameter("@RID", T_Role_PermissionModel.RID));
+        lParams.Add(new SqlParameter("@MID", T_Role_PermissionModel.MID));
+        lParams.Add(new SqlParameter("@EditMan", T_Role_PermissionModel.EditMan));
+        lParams.Add(new SqlParameter("@EditDate", T_Role_PermissionModel.EditDate));
         MsSqlHelper lMSSqlHelper = new MsSqlHelper();
         return lMSSqlHelper.ExecuteSQL(lSQL, lParams.ToArray());
     }
-    public int Update(T_Role_MenuModel T_Role_MenuModel)
+    public int Update(T_Role_PermissionModel T_Role_PermissionModel)
     {
         string lSQL = UpdateSQL();
         List<SqlParameter> lParams = new List<SqlParameter>();
-        lParams.Add(new SqlParameter("@ID", T_Role_MenuModel.ID));
-        lParams.Add(new SqlParameter("@RID", T_Role_MenuModel.RID));
-        lParams.Add(new SqlParameter("@MID", T_Role_MenuModel.MID));
-        lParams.Add(new SqlParameter("@EditMan", T_Role_MenuModel.EditMan));
-        lParams.Add(new SqlParameter("@EditDate", T_Role_MenuModel.EditDate));
+        lParams.Add(new SqlParameter("@ID", T_Role_PermissionModel.ID));
+        lParams.Add(new SqlParameter("@RID", T_Role_PermissionModel.RID));
+        lParams.Add(new SqlParameter("@MID", T_Role_PermissionModel.MID));
+        lParams.Add(new SqlParameter("@EditMan", T_Role_PermissionModel.EditMan));
+        lParams.Add(new SqlParameter("@EditDate", T_Role_PermissionModel.EditDate));
         MsSqlHelper lMSSqlHelper = new MsSqlHelper();
         return lMSSqlHelper.ExecuteSQL(lSQL, lParams.ToArray());
     }

@@ -10,10 +10,9 @@
         });
 
         function Login_OnClick() {
-            debugger;
             $.ajax({
                 type: 'post'
-                , url: '/Handler/Login.ashx?RequestMethod=login'
+                , url: '/Handler/Login.ashx?RequestMethod=Login'
                 , data: { "UserName": $('#UserName').val(), "Password": $('#Password').val() }
                 , success: function (pData) {
                     var lData = JSON.parse(pData);

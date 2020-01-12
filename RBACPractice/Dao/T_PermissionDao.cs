@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Data;
 using DBHelper;
-public class T_MenuDao
+public class T_PermissionDao
 {
     public static string InsertSQL()
     {
         string lSQL = "";
-        lSQL += "INSERT INTO T_Menu(";
+        lSQL += "INSERT INTO T_Permission(";
         lSQL += "ID";
         lSQL += ",Name";
         lSQL += ",PID";
@@ -31,14 +31,14 @@ public class T_MenuDao
     public static string DeleteSQL()
     {
         string lSQL = "";
-        lSQL += "DELETE FROM T_Menu ";
+        lSQL += "DELETE FROM T_Permission ";
         lSQL += " WHERE ID=@ID";
         return lSQL;
     }
     public static string UpdateSQL()
     {
         string lSQL = "";
-        lSQL += "UPDATE T_Menu SET ";
+        lSQL += "UPDATE T_Permission SET ";
         lSQL += "ID=@ID";
         lSQL += ",Name=@Name";
         lSQL += ",PID=@PID";
@@ -60,9 +60,10 @@ public class T_MenuDao
         lSQL += ",Addr";
         lSQL += ",EditMan";
         lSQL += ",EditDate";
-        lSQL += " FROM T_Menu";
+        lSQL += " FROM T_Permission";
         return lSQL;
     }
+
     public static string SelectByIDSQL()
     {
         string lSQL = "";
@@ -74,20 +75,20 @@ public class T_MenuDao
         lSQL += ",Addr";
         lSQL += ",EditMan";
         lSQL += ",EditDate";
-        lSQL += " FROM T_Menu";
+        lSQL += " FROM T_Permission";
         lSQL += " WHERE ID=@ID";
         return lSQL;
     }
     public static string SelectPageSQL()
     {
         string lSQL = "";
-        lSQL += "EXEC T_Menu_Page @Name,@PID,@Sort,@Addr,@BeginIndex,@EndIndex";
+        lSQL += "EXEC T_Permission_Page @Name,@PID,@Sort,@Addr,@BeginIndex,@EndIndex";
         return lSQL;
     }
     public static string ImportSQL()
     {
         string lSQL = "";
-        lSQL += "INSERT INTO T_Menu(";
+        lSQL += "INSERT INTO T_Permission(";
         lSQL += "ID";
         lSQL += ",Name";
         lSQL += ",PID";
@@ -106,31 +107,51 @@ public class T_MenuDao
         lSQL += ")";
         return lSQL;
     }
-    public int Insert(T_MenuModel T_MenuModel)
+
+    private string SelectMenuByUserNameSQL()
+    {
+        string lSQL = "";
+        lSQL += "select T_Permission.ID";
+        lSQL += " ,T_Permission.Name";
+        lSQL += " ,T_Permission.PID";
+        lSQL += " ,T_Permission.Sort";
+        lSQL += " ,T_Permission.Addr";
+        lSQL += " ,T_Permission.RIdentify";
+        lSQL += " ,T_Permission.EditMan";
+        lSQL += " ,T_Permission.EditDate";
+        lSQL += " from T_User";
+        lSQL += " LEFT JOIN T_User_Role ON T_User.ID = T_User_Role.UID";
+        lSQL += " LEFT JOIN T_Role_Permission ON T_User_Role.RID = T_Role_Permission.RID";
+        lSQL += " LEFT JOIN T_Permission ON T_Role_Permission.MID = T_Permission.ID";
+        lSQL += " where T_User.Name = @UserName";
+        return lSQL;
+    }
+
+    public int Insert(T_PermissionModel T_PermissionModel)
     {
         string lSQL = InsertSQL();
         List<SqlParameter> lParams = new List<SqlParameter>();
-        lParams.Add(new SqlParameter("@ID", T_MenuModel.ID));
-        lParams.Add(new SqlParameter("@Name", T_MenuModel.Name));
-        lParams.Add(new SqlParameter("@PID", T_MenuModel.PID));
-        lParams.Add(new SqlParameter("@Sort", T_MenuModel.Sort));
-        lParams.Add(new SqlParameter("@Addr", T_MenuModel.Addr));
-        lParams.Add(new SqlParameter("@EditMan", T_MenuModel.EditMan));
-        lParams.Add(new SqlParameter("@EditDate", T_MenuModel.EditDate));
+        lParams.Add(new SqlParameter("@ID", T_PermissionModel.ID));
+        lParams.Add(new SqlParameter("@Name", T_PermissionModel.Name));
+        lParams.Add(new SqlParameter("@PID", T_PermissionModel.PID));
+        lParams.Add(new SqlParameter("@Sort", T_PermissionModel.Sort));
+        lParams.Add(new SqlParameter("@Addr", T_PermissionModel.Addr));
+        lParams.Add(new SqlParameter("@EditMan", T_PermissionModel.EditMan));
+        lParams.Add(new SqlParameter("@EditDate", T_PermissionModel.EditDate));
         MsSqlHelper lMSSqlHelper = new MsSqlHelper();
         return lMSSqlHelper.ExecuteSQL(lSQL, lParams.ToArray());
     }
-    public int Update(T_MenuModel T_MenuModel)
+    public int Update(T_PermissionModel T_PermissionModel)
     {
         string lSQL = UpdateSQL();
         List<SqlParameter> lParams = new List<SqlParameter>();
-        lParams.Add(new SqlParameter("@ID", T_MenuModel.ID));
-        lParams.Add(new SqlParameter("@Name", T_MenuModel.Name));
-        lParams.Add(new SqlParameter("@PID", T_MenuModel.PID));
-        lParams.Add(new SqlParameter("@Sort", T_MenuModel.Sort));
-        lParams.Add(new SqlParameter("@Addr", T_MenuModel.Addr));
-        lParams.Add(new SqlParameter("@EditMan", T_MenuModel.EditMan));
-        lParams.Add(new SqlParameter("@EditDate", T_MenuModel.EditDate));
+        lParams.Add(new SqlParameter("@ID", T_PermissionModel.ID));
+        lParams.Add(new SqlParameter("@Name", T_PermissionModel.Name));
+        lParams.Add(new SqlParameter("@PID", T_PermissionModel.PID));
+        lParams.Add(new SqlParameter("@Sort", T_PermissionModel.Sort));
+        lParams.Add(new SqlParameter("@Addr", T_PermissionModel.Addr));
+        lParams.Add(new SqlParameter("@EditMan", T_PermissionModel.EditMan));
+        lParams.Add(new SqlParameter("@EditDate", T_PermissionModel.EditDate));
         MsSqlHelper lMSSqlHelper = new MsSqlHelper();
         return lMSSqlHelper.ExecuteSQL(lSQL, lParams.ToArray());
     }
@@ -175,6 +196,18 @@ public class T_MenuDao
         lDT = lMSSqlHelper.GetDataTable(lSQL, lParams.ToArray());
         return lDT;
     }
+
+    internal DataTable SelectMenuByUserName(string UserName)
+    {
+        string lSQL = SelectMenuByUserNameSQL();
+        DataTable lDT = null;
+        List<SqlParameter> lParams = new List<SqlParameter>();
+        lParams.Add(new SqlParameter("@UserName", UserName));
+        MsSqlHelper lMSSqlHelper = new MsSqlHelper();
+        lDT = lMSSqlHelper.GetDataTable(lSQL, lParams.ToArray());
+        return lDT;
+    }
+
     public int Import(string lFileName)
     {
         int lRet = -1;

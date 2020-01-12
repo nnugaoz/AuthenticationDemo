@@ -111,16 +111,16 @@
     <Content Include="Html\TabPageControllerDemo\HtmlPage1.html" />
     <Content Include="Html\TabPageControllerDemo\main.html" />
     <Content Include="Html\TabPageControllerDemo\TestPage.html" />
-    <Content Include="Html\T_Menu\T_MenuEdit.html" />
-    <Content Include="Html\T_Menu\T_MenuList.html" />
-    <Content Include="Html\T_Menu\T_MenuNew.html" />
+    <Content Include="Html\T_Permission\T_PermissionEdit.html" />
+    <Content Include="Html\T_Permission\T_PermissionList.html" />
+    <Content Include="Html\T_Permission\T_PermissionNew.html" />
     <Content Include="Html\T_Role\T_RoleEdit.html" />
     <Content Include="Html\T_Role\T_RoleListPopup.html" />
     <Content Include="Html\T_Role\T_RoleList.html" />
     <Content Include="Html\T_Role\T_RoleNew.html" />
-    <Content Include="Html\T_Role_Menu\T_Role_MenuEdit.html" />
-    <Content Include="Html\T_Role_Menu\T_Role_MenuList.html" />
-    <Content Include="Html\T_Role_Menu\T_Role_MenuNew.html" />
+    <Content Include="Html\T_Role_Permission\T_Role_PermissionEdit.html" />
+    <Content Include="Html\T_Role_Permission\T_Role_PermissionList.html" />
+    <Content Include="Html\T_Role_Permission\T_Role_PermissionNew.html" />
     <Content Include="Html\T_User\T_UserEdit.html" />
     <Content Include="Html\T_User\T_UserList.html" />
     <Content Include="Html\T_User\T_UserNew.html" />
@@ -199,7 +199,7 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Dao\T_MenuDao.cs" />
+    <Compile Include="Dao\T_PermissionDao.cs" />
     <Compile Include="Dao\T_RoleDao.cs" />
     <Compile Include="Dao\T_Role_MenuDao.cs" />
     <Compile Include="Dao\T_UserDao.cs" />
@@ -212,9 +212,10 @@
     <Compile Include="Handler\Login.ashx.cs">
       <DependentUpon>Login.ashx</DependentUpon>
     </Compile>
+    <Compile Include="Handler\RBACUser.cs" />
     <Compile Include="Handler\RequestResult.cs" />
-    <Compile Include="Handler\T_Menu.ashx.cs">
-      <DependentUpon>T_Menu.ashx</DependentUpon>
+    <Compile Include="Handler\T_Permission.ashx.cs">
+      <DependentUpon>T_Permission.ashx</DependentUpon>
     </Compile>
     <Compile Include="Handler\T_Role.ashx.cs">
       <DependentUpon>T_Role.ashx</DependentUpon>
@@ -249,7 +250,7 @@
     <Content Include="JSLIB\zTree\css\awesomeStyle\awesome.less" />
     <Content Include="JSLIB\zTree\css\awesomeStyle\fa.less" />
     <Content Include="packages.config" />
-    <Content Include="Handler\T_Menu.ashx" />
+    <Content Include="Handler\T_Permission.ashx" />
     <Content Include="Handler\T_Role.ashx" />
     <Content Include="Handler\T_Role_Menu.ashx" />
     <Content Include="Handler\T_User.ashx" />

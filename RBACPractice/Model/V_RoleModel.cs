@@ -15,5 +15,5 @@ public class V_RoleModel
     //MaxLength=3
     public string EditDate { get; set; }
 
-    public List<T_Role_MenuModel> RoleMenuList { get; set; }
+    public List<T_Role_PermissionModel> RoleMenuList { get; set; }
 }

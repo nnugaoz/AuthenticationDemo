@@ -107,7 +107,7 @@ public class T_RoleDao
 
         for (int i = 0; i < V_RoleModel.RoleMenuList.Count; i++)
         {
-            lSQL = T_Role_MenuDao.InsertSQL();
+            lSQL = T_Role_PermissionDao.InsertSQL();
             lParams = new List<SqlParameter>();
             lParams.Add(new SqlParameter("@ID", V_RoleModel.RoleMenuList[i].ID));
             lParams.Add(new SqlParameter("@RID", V_RoleModel.RoleMenuList[i].RID));
@@ -139,7 +139,7 @@ public class T_RoleDao
         string lSQL = "";
         List<SqlParameter> lParams = null;
 
-        lSQL = T_Role_MenuDao.DeleteByRIDSQL();
+        lSQL = T_Role_PermissionDao.DeleteByRIDSQL();
         lParams = new List<SqlParameter>();
         lParams.Add(new SqlParameter("@RID", V_RoleModel.ID));
         lSQLDic.Add(lSQL, lParams.ToArray());
@@ -154,7 +154,7 @@ public class T_RoleDao
 
         for (int i = 0; i < V_RoleModel.RoleMenuList.Count; i++)
         {
-            lSQL = T_Role_MenuDao.InsertSQL();
+            lSQL = T_Role_PermissionDao.InsertSQL();
             lParams = new List<SqlParameter>();
             lParams.Add(new SqlParameter("@ID", V_RoleModel.RoleMenuList[i].ID));
             lParams.Add(new SqlParameter("@RID", V_RoleModel.RoleMenuList[i].RID));
@@ -180,7 +180,7 @@ public class T_RoleDao
         lParams.Add(new SqlParameter("@ID", pID));
         lSQLDic.Add(lSQL, lParams.ToArray());
 
-        lSQL = T_Role_MenuDao.DeleteByRIDSQL();
+        lSQL = T_Role_PermissionDao.DeleteByRIDSQL();
         lParams = new List<SqlParameter>();
         lParams.Add(new SqlParameter("@RID", pID));
         lSQLDic.Add(lSQL, lParams.ToArray());

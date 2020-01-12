@@ -7,50 +7,31 @@
     <link href="../../JSLIB/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
     <script src="../../JSLIB/jQuery/jquery-3.4.1.min.js"></script>
     <script src="../../JSLIB/layer/layer.js"></script>
-    <script src="../../JSLIB/Common/Common.js"></script>
-    <script type='text/javascript'>
+    <script type="text/javascript">
         $(function () {
-            var ID = GetParameterByName('ID');
-            $.ajax({
-                type: 'get'
-                 , url: '/Handler/T_Role_Menu.ashx?RequestMethod=SelectByID&ID=' + ID
-             , success: function (pData) { PageInit(pData); }
-            });
             $('#btnSubmit').on('click', btnSubmit_OnClick);
         });
-        function PageInit(pData) {
-            var lData = JSON.parse(pData);
-            $('#ID').val(lData[0].ID);
-            $('#RID').val(lData[0].RID);
-            $('#MID').val(lData[0].MID);
-            $('#EditMan').val(lData[0].EditMan);
-            $('#EditDate').val(lData[0].EditDate);
-        }
         function btnSubmit_OnClick(event) {
             event.preventDefault();
             var formData = new FormData($('form')[0]);
             $.ajax({
                 type: 'post'
             , url: $('form').attr('action')
-            , contentType: false
-            , processData: false
             , data: formData
+            , processData: false
+            , contentType: false
             , success: function (pData) {
                 if (pData === '1') {
-                    layer.alert('保存成功！'
-                    , { icon: 1 }
-                    , function (index) {
+                    layer.alert('保存成功!', { icon: 1 }, function (index) {
                         layer.close(index);
                         index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
                         parent.layer.close(index); //再执行关闭
                         parent.Init();
-                    });
+                    })
                 } else {
-                    layer.alert('保存失败！'
-                    , { icon: 2 }
-                    , function (index) {
+                    layer.alert('保存失败!', { icon: 2 }, function (index) {
                         layer.close(index);
-                    });
+                    })
                 }
             }
             });
@@ -59,7 +40,7 @@
     </script>
 </head>
 <body style='overflow:hidden;'>
-    <form method='POST' action='/Handler/T_Role_Menu.ashx?RequestMethod=Update' class='form-horizontal'>
+    <form method='POST' action='/Handler/T_Role_Permission.ashx?RequestMethod=Insert' class='form-horizontal'>
         <div class='form-group' style='visibility:hidden'>
             <label for='ID' class='col-sm-2 control-label'>主键</label>
             <div class='col-sm-8'>
@@ -73,7 +54,7 @@
             </div>
         </div>
         <div class='form-group'>
-            <label for='MID' class='col-sm-2 control-label'>菜单ID</label>
+            <label for='MID' class='col-sm-2 control-label'>权限ID</label>
             <div class='col-sm-8'>
                 <input type='text' id='MID' name='MID' class='form-control' />
             </div>

@@ -1,11 +1,11 @@
-public class T_Role_MenuModel{
+public class T_Role_PermissionModel{
 //主键
 //MaxLength=50
 public string ID{get;set;}
 //角色ID
 //MaxLength=50
 public string RID{get;set;}
-//菜单ID
+//权限ID
 //MaxLength=50
 public string MID{get;set;}
 //编辑人

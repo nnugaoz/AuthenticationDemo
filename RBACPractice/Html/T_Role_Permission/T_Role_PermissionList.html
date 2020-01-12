@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"> 
 <head > 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>T_Role_Menu列表 </title>
+<title>T_Role_Permission列表 </title>
     <script src="../../JSLIB/pagination/pagination.js"></script>
 <script type='text/javascript'>
 $(function () {
@@ -24,19 +24,19 @@ $('#MID').val('');
 function Init() {
 var RID = $('#RID').val();
 var MID = $('#MID').val();
-$('#T_Role_MenuList').empty();
+$('#T_Role_PermissionList').empty();
 var lPConfig = new PaginationConfiguration();
-lPConfig.RequestUrl = '/Handler/T_Role_Menu.ashx?RequestMethod=SelectPage'
+lPConfig.RequestUrl = '/Handler/T_Role_Permission.ashx?RequestMethod=SelectPage'
 lPConfig.RequestUrl += '&RID='+RID;
 lPConfig.RequestUrl += '&MID='+MID;
-lPConfig.PageContainerID = 'T_Role_MenuList';
+lPConfig.PageContainerID = 'T_Role_PermissionList';
 var RIDCol = new PaginationColumnConfiguration();
 RIDCol.HeaderText = '角色ID';
 RIDCol.Type = 'TXT';
 RIDCol.DataField = 'RID';
 lPConfig.Columns.push(RIDCol);
 var MIDCol = new PaginationColumnConfiguration();
-MIDCol.HeaderText = '菜单ID';
+MIDCol.HeaderText = '权限ID';
 MIDCol.Type = 'TXT';
 MIDCol.DataField = 'MID';
 lPConfig.Columns.push(MIDCol);
@@ -64,14 +64,14 @@ DelCol.DataField = '删除';
 DelCol.CssClass = 'btn btn-success';
 DelCol.OnClickEventHandler = btnDel_OnClick;
 lPConfig.Columns.push(DelCol);
-var T_Role_MenuListPagination = new Pagination(lPConfig);
-T_Role_MenuListPagination.RequestData(1);
+var T_Role_PermissionListPagination = new Pagination(lPConfig);
+T_Role_PermissionListPagination.RequestData(1);
 }
 function btnEdit_OnClick(event) {
 layer.open({
 type: 2
 , title: '编辑'
-, content: '/Html/T_Role_Menu/T_Role_MenuEdit.html?ID=' + event.data.RowData.ID
+, content: '/Html/T_Role_Permission/T_Role_PermissionEdit.html?ID=' + event.data.RowData.ID
 , area: ['800px', '600px']
 });
 }
@@ -79,7 +79,7 @@ function btnDel_OnClick(event) {
 layer.confirm('您确认要删除此条记录吗？', { icon: 3, title: '提示' }, function (index) {
 $.ajax({
 type: 'get'
-, url: '/Handler/T_Role_Menu.ashx?RequestMethod=Delete&ID=' + event.data.RowData.ID
+, url: '/Handler/T_Role_Permission.ashx?RequestMethod=Delete&ID=' + event.data.RowData.ID
 , success: function (pData) {
 if (pData == '1') {
 layer.alert('删除成功！', { icon: 1 });
@@ -95,7 +95,7 @@ function btnNew_OnClick() {
 layer.open({
 type: 2
 , title: '新增'
-, content: '/Html/T_Role_Menu/T_Role_MenuNew.html'
+, content: '/Html/T_Role_Permission/T_Role_PermissionNew.html'
 , area: ['800px', '600px']
 });
 }
@@ -104,7 +104,7 @@ var formData = new FormData();
 formData.append('fileImport', $('#fileImport')[0].files[0]);
 $.ajax({
 type: 'post'
-, url: '/Handler/T_Role_Menu.ashx?RequestMethod=Import'
+, url: '/Handler/T_Role_Permission.ashx?RequestMethod=Import'
 , data: formData
 , contentType: false
 , cache: false
@@ -130,7 +130,7 @@ function btnExport_OnClick(event) {
 $.ajax({
 async: false
 , type: 'GET'
-, url: '/Handler/T_Role_Menu.ashx?RequestMethod=Export'
+, url: '/Handler/T_Role_Permission.ashx?RequestMethod=Export'
 , success: function(pData) {
 var lData = JSON.parse(pData);
 if (lData.Status === '1')
@@ -153,7 +153,7 @@ layer.alert('导出失败', { icon: 2 });
 <input type='text' id='RID' name='RID' class='form-control' />
 </div>
 <div class='form-group'>
-<label for='MID'>菜单ID</label>
+<label for='MID'>权限ID</label>
 <input type='text' id='MID' name='MID' class='form-control' />
 </div>
 <input type='button' class='btn btn-success' value='检索' id='btnSearch' />
@@ -164,7 +164,7 @@ layer.alert('导出失败', { icon: 2 });
 <input type = 'button' id = 'btnImport' class='btn btn-success' value='导入' />
 <input type = 'button' id='btnExport' class='btn btn-success' value='导出' />
 <input type = 'file' id='fileImport' name ='fileImport' accept ='.xls,.xlsx' style ='display:none;' />
-<div id='T_Role_MenuList' style='margin-top:20px;'></div>
+<div id='T_Role_PermissionList' style='margin-top:20px;'></div>
 </div>
 </body> 
 </html> 

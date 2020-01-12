@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>T_Menu列表 </title>
+    <title>T_Permission列表 </title>
     <link href="../../JSLIB/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
     <script src="../../JSLIB/jQuery/jquery-3.4.1.min.js"></script>
     <script src="../../JSLIB/layer/layer.js"></script>
@@ -31,21 +31,21 @@
             var PID = $('#PID').val();
             var Sort = $('#Sort').val();
             var Addr = $('#Addr').val();
-            $('#T_MenuList').empty();
+            $('#T_PermissionList').empty();
             var lPConfig = new PaginationConfiguration();
-            lPConfig.RequestUrl = '/Handler/T_Menu.ashx?RequestMethod=SelectPage'
+            lPConfig.RequestUrl = '/Handler/T_Permission.ashx?RequestMethod=SelectPage'
             lPConfig.RequestUrl += '&Name=' + Name;
             lPConfig.RequestUrl += '&PID=' + PID;
             lPConfig.RequestUrl += '&Sort=' + Sort;
             lPConfig.RequestUrl += '&Addr=' + Addr;
-            lPConfig.PageContainerID = 'T_MenuList';
+            lPConfig.PageContainerID = 'T_PermissionList';
             var NameCol = new PaginationColumnConfiguration();
-            NameCol.HeaderText = '菜单名称';
+            NameCol.HeaderText = '权限名称';
             NameCol.Type = 'TXT';
             NameCol.DataField = 'Name';
             lPConfig.Columns.push(NameCol);
             var PIDCol = new PaginationColumnConfiguration();
-            PIDCol.HeaderText = '父菜单ID';
+            PIDCol.HeaderText = '父权限ID';
             PIDCol.Type = 'TXT';
             PIDCol.DataField = 'PID';
             lPConfig.Columns.push(PIDCol);
@@ -83,14 +83,14 @@
             DelCol.CssClass = 'btn btn-success';
             DelCol.OnClickEventHandler = btnDel_OnClick;
             lPConfig.Columns.push(DelCol);
-            var T_MenuListPagination = new Pagination(lPConfig);
-            T_MenuListPagination.RequestData(1);
+            var T_PermissionListPagination = new Pagination(lPConfig);
+            T_PermissionListPagination.RequestData(1);
         }
         function btnEdit_OnClick(event) {
             layer.open({
                 type: 2
             , title: '编辑'
-            , content: '/Html/T_Menu/T_MenuEdit.html?ID=' + event.data.RowData.ID
+            , content: '/Html/T_Permission/T_PermissionEdit.html?ID=' + event.data.RowData.ID
             , area: ['800px', '600px']
             });
         }
@@ -98,7 +98,7 @@
             layer.confirm('您确认要删除此条记录吗？', { icon: 3, title: '提示' }, function (index) {
                 $.ajax({
                     type: 'get'
-                , url: '/Handler/T_Menu.ashx?RequestMethod=Delete&ID=' + event.data.RowData.ID
+                , url: '/Handler/T_Permission.ashx?RequestMethod=Delete&ID=' + event.data.RowData.ID
                 , success: function (pData) {
                     if (pData == '1') {
                         layer.alert('删除成功！', { icon: 1 });
@@ -114,7 +114,7 @@
             //layer.open({
             //    type: 2
             //, title: '新增'
-            //, content: '/Html/T_Menu/T_MenuNew.html'
+            //, content: '/Html/T_Permission/T_PermissionNew.html'
             //, area: ['800px', '600px']
             //});
             layer.alert("确认");
@@ -124,7 +124,7 @@
             formData.append('fileImport', $('#fileImport')[0].files[0]);
             $.ajax({
                 type: 'post'
-            , url: '/Handler/T_Menu.ashx?RequestMethod=Import'
+            , url: '/Handler/T_Permission.ashx?RequestMethod=Import'
             , data: formData
             , contentType: false
             , cache: false
@@ -148,7 +148,7 @@
             $.ajax({
                 async: false
             , type: 'GET'
-            , url: '/Handler/T_Menu.ashx?RequestMethod=Export'
+            , url: '/Handler/T_Permission.ashx?RequestMethod=Export'
             , success: function (pData) {
                 var lData = JSON.parse(pData);
                 if (lData.Status === '1') {
@@ -165,11 +165,11 @@
 <body>
     <div class='form-inline' style='padding:10px;'>
         <div class='form-group'>
-            <label for='Name'>菜单名称</label>
+            <label for='Name'>权限名称</label>
             <input type='text' id='Name' name='Name' class='form-control' />
         </div>
         <div class='form-group'>
-            <label for='PID'>父菜单ID</label>
+            <label for='PID'>父权限ID</label>
             <input type='text' id='PID' name='PID' class='form-control' />
         </div>
         <div class='form-group'>
@@ -188,7 +188,7 @@
         <input type='button' id='btnImport' class='btn btn-success' value='导入' />
         <input type='button' id='btnExport' class='btn btn-success' value='导出' />
         <input type='file' id='fileImport' name='fileImport' accept='.xls,.xlsx' style='display:none;' />
-        <div id='T_MenuList' style='margin-top:20px;'></div>
+        <div id='T_PermissionList' style='margin-top:20px;'></div>
     </div>
 </body>
 </html>
