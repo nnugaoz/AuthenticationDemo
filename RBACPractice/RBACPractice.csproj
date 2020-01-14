@@ -90,27 +90,12 @@
     <Content Include="Html\Home\Home.css" />
     <Content Include="Html\Home\Home.html" />
     <Content Include="Html\Login\Login.html" />
-    <Content Include="Html\TabPageControllerDemo\A1.html" />
-    <Content Include="Html\TabPageControllerDemo\A2.html" />
-    <Content Include="Html\TabPageControllerDemo\A3.html" />
-    <Content Include="Html\TabPageControllerDemo\A4.html" />
-    <Content Include="Html\TabPageControllerDemo\B1.html" />
-    <Content Include="Html\TabPageControllerDemo\B2.html" />
-    <Content Include="Html\TabPageControllerDemo\B3.html" />
-    <Content Include="Html\TabPageControllerDemo\B4.html" />
-    <Content Include="Html\TabPageControllerDemo\C1.html" />
-    <Content Include="Html\TabPageControllerDemo\C2.html" />
-    <Content Include="Html\TabPageControllerDemo\C3.html" />
-    <Content Include="Html\TabPageControllerDemo\C4.html" />
-    <Content Include="Html\TabPageControllerDemo\D1.html" />
-    <Content Include="Html\TabPageControllerDemo\D2.html" />
-    <Content Include="Html\TabPageControllerDemo\D3.html" />
-    <Content Include="Html\TabPageControllerDemo\D4.html" />
-    <Content Include="Html\TabPageControllerDemo\Home.css" />
-    <Content Include="Html\TabPageControllerDemo\Home.html" />
-    <Content Include="Html\TabPageControllerDemo\HtmlPage1.html" />
-    <Content Include="Html\TabPageControllerDemo\main.html" />
-    <Content Include="Html\TabPageControllerDemo\TestPage.html" />
+    <Content Include="Html\T_Dictionary\T_DictionaryEdit.html" />
+    <Content Include="Html\T_Dictionary\T_DictionaryList.html" />
+    <Content Include="Html\T_Dictionary\T_DictionaryNew.html" />
+    <Content Include="Html\T_Dictionary_Type\T_Dictionary_TypeEdit.html" />
+    <Content Include="Html\T_Dictionary_Type\T_Dictionary_TypeList.html" />
+    <Content Include="Html\T_Dictionary_Type\T_Dictionary_TypeNew.html" />
     <Content Include="Html\T_Permission\T_PermissionEdit.html" />
     <Content Include="Html\T_Permission\T_PermissionEdit2.html" />
     <Content Include="Html\T_Permission\T_PermissionList.html" />
@@ -202,6 +187,8 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dao\T_DictionaryDao.cs" />
+    <Compile Include="Dao\T_Dictionary_TypeDao.cs" />
     <Compile Include="Dao\T_PermissionDao.cs" />
     <Compile Include="Dao\T_RoleDao.cs" />
     <Compile Include="Dao\T_Role_MenuDao.cs" />
@@ -217,6 +204,12 @@
     </Compile>
     <Compile Include="Handler\RBACUser.cs" />
     <Compile Include="Handler\RequestResult.cs" />
+    <Compile Include="Handler\T_Dictionary.ashx.cs">
+      <DependentUpon>T_Dictionary.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handler\T_Dictionary_Type.ashx.cs">
+      <DependentUpon>T_Dictionary_Type.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Handler\T_Permission.ashx.cs">
       <DependentUpon>T_Permission.ashx</DependentUpon>
     </Compile>
@@ -232,6 +225,8 @@
     <Compile Include="Handler\T_User_Role.ashx.cs">
       <DependentUpon>T_User_Role.ashx</DependentUpon>
     </Compile>
+    <Compile Include="Model\T_DictionaryModel.cs" />
+    <Compile Include="Model\T_Dictionary_TypeModel.cs" />
     <Compile Include="Model\T_MenuModel.cs" />
     <Compile Include="Model\V_RoleModel.cs" />
     <Compile Include="Model\T_RoleModel.cs" />
@@ -259,6 +254,8 @@
     <Content Include="Handler\T_User.ashx" />
     <Content Include="Handler\T_User_Role.ashx" />
     <Content Include="Handler\Login.ashx" />
+    <Content Include="Handler\T_Dictionary.ashx" />
+    <Content Include="Handler\T_Dictionary_Type.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -17,6 +17,7 @@ DropDownList.prototype.Init = function () {
 
     var lSelect = $('<select>');
     lSelect.attr('id', this.id);
+    lSelect.attr('name', this.id);
     lSelect.addClass('form-control');
 
     var lOption = $('<option>');

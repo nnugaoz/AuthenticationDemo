@@ -3,6 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title></title>
+    <link href="../../JSLIB/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="../../JSLIB/zTree/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
     <script src="../../JSLIB/jQuery/jquery-3.4.1.min.js"></script>
     <script src="../../JSLIB/zTree/js/jquery.ztree.all.min.js"></script>
@@ -37,8 +38,26 @@
     </script>
 </head>
 <body>
-
-    <div id="treeDemo" class="ztree"></div>
-
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div id="treeDemo" class="ztree"></div>
+            </div>
+            <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="txtParentPermissionName" class="control-label">父级权限</label>
+                        <input type="text" id="txtParentPermissionName" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="txtPermission" class="control-label">权限名称</label>
+                        <input type="text" id="txtPermission" class="form-control" />
+                    </div>
+                <div class="form-group">
+                    <label for="txtPermission" class="control-label">权限类型</label>
+                    <input type="text" id="txtPermission" class="form-control" />
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
