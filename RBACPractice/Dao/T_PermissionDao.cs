@@ -111,7 +111,7 @@ public class T_PermissionDao
     private string SelectMenuByUserNameSQL()
     {
         string lSQL = "";
-        lSQL += "select T_Permission.ID";
+        lSQL += "SELECT T_Permission.ID";
         lSQL += " ,T_Permission.Name";
         lSQL += " ,T_Permission.PID";
         lSQL += " ,T_Permission.Sort";
@@ -119,11 +119,11 @@ public class T_PermissionDao
         lSQL += " ,T_Permission.RIdentify";
         lSQL += " ,T_Permission.EditMan";
         lSQL += " ,T_Permission.EditDate";
-        lSQL += " from T_User";
+        lSQL += " FROM T_User";
         lSQL += " LEFT JOIN T_User_Role ON T_User.ID = T_User_Role.UID";
         lSQL += " LEFT JOIN T_Role_Permission ON T_User_Role.RID = T_Role_Permission.RID";
         lSQL += " LEFT JOIN T_Permission ON T_Role_Permission.MID = T_Permission.ID";
-        lSQL += " where T_User.Name = @UserName";
+        lSQL += " WHERE T_User.Name = @UserName";
         return lSQL;
     }
 

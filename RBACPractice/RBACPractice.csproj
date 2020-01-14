@@ -112,8 +112,11 @@
     <Content Include="Html\TabPageControllerDemo\main.html" />
     <Content Include="Html\TabPageControllerDemo\TestPage.html" />
     <Content Include="Html\T_Permission\T_PermissionEdit.html" />
+    <Content Include="Html\T_Permission\T_PermissionEdit2.html" />
     <Content Include="Html\T_Permission\T_PermissionList.html" />
+    <Content Include="Html\T_Permission\T_PermissionList2.html" />
     <Content Include="Html\T_Permission\T_PermissionNew.html" />
+    <Content Include="Html\T_Permission\T_PermissionNew2.html" />
     <Content Include="Html\T_Role\T_RoleEdit.html" />
     <Content Include="Html\T_Role\T_RoleListPopup.html" />
     <Content Include="Html\T_Role\T_RoleList.html" />

@@ -111,13 +111,12 @@
             });
         }
         function btnNew_OnClick() {
-            //layer.open({
-            //    type: 2
-            //, title: '新增'
-            //, content: '/Html/T_Permission/T_PermissionNew.html'
-            //, area: ['800px', '600px']
-            //});
-            layer.alert("确认");
+            layer.open({
+                type: 2
+            , title: '新增'
+            , content: '/Html/T_Permission/T_PermissionNew.html'
+            , area: ['800px', '600px']
+            });
         }
         function fileImport_OnChange() {
             var formData = new FormData();
@@ -141,9 +140,11 @@
             }
             });
         }
+
         function btnImport_OnClick() {
             $('#fileImport').click();
         }
+
         function btnExport_OnClick(event) {
             $.ajax({
                 async: false

@@ -43,11 +43,6 @@ public class T_Permission : IHttpHandler
     }
     private void Select(HttpContext context)
     {
-        //获取当前验证用户的用户名
-        String lUserName = context.User.Identity.Name;
-        RBACUser lRBACUser = new RBACUser(lUserName);
-        lRBACUser.HasPermission("T_Permission_Select");
-
         DataTable lDT = null;
         T_PermissionDao lDao = new T_PermissionDao();
         lDT = lDao.Select();
