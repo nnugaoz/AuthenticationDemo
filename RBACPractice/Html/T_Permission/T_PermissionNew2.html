@@ -7,6 +7,7 @@
     <link href="../../JSLIB/zTree/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
     <script src="../../JSLIB/jQuery/jquery-3.4.1.min.js"></script>
     <script src="../../JSLIB/zTree/js/jquery.ztree.all.min.js"></script>
+    <script src="../../JSLIB/DropDownList/DropDownList.js"></script>
     <script type="text/javascript">
         $(function () {
             var setting = {
@@ -23,39 +24,95 @@
                 },
                 view: {
                     showIcon: false
+                },
+                callback: {
+                    onClick: treeNode_OnClick
                 }
             };
 
             $.ajax({
-                type: 'get'
-                , url: '/Handler/T_Permission.ashx?RequestMethod=Select'
+                type: 'GET'
+                , url: '/Handler/T_Permission.ashx?RequestMethod=NewPageInit'
                 , success: function (pData) {
                     var lData = JSON.parse(pData);
-                    $.fn.zTree.init($("#treeDemo"), setting, lData);
+                    $.fn.zTree.init($("#treeDemo"), setting, lData.PermissionList);
+
+                    var lDropDownList = new DropDownList();
+                    lDropDownList.container = $('#divPermissionType');
+                    lDropDownList.id = 'TypeDID'
+                    lDropDownList.dataSource = lData.PermissionTypeList;
+                    lDropDownList.valMen = 'ID';
+                    lDropDownList.dispMem = 'DValue';
+                    lDropDownList.Init();
                 }
             });
+
+            $('#btnSave').on('click', btnSave_OnClick);
         });
+
+        function treeNode_OnClick(event, treeId, treeNode) {
+            $('#PID').val(treeNode.ID);
+            $('#PName').val(treeNode.Name);
+        }
+
+        function btnSave_OnClick() {
+            var formData = new FormData($('form')[0]);
+            $.ajax({
+                type: 'POST'
+                , url: $('form').attr('action')
+                , data: formData
+                , processData: false
+                , contentType: false
+                , success: function (pData) {
+                    var lData = JSON.parse(pData);
+
+                }
+            });
+        }
+
     </script>
 </head>
 <body>
     <div class="container">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div id="treeDemo" class="ztree"></div>
             </div>
-            <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="txtParentPermissionName" class="control-label">父级权限</label>
-                        <input type="text" id="txtParentPermissionName" class="form-control" />
+            <div class="col-md-8">
+                <form method="post" action="/Handler/T_Permission.ashx?RequestMethod=Insert">
+
+                    <div class="form-group" style="display:none">
+                        <label for="PID" class="control-label">父级权限ID</label>
+                        <input type="text" name="PID" id="PID" class="form-control" />
                     </div>
+
                     <div class="form-group">
-                        <label for="txtPermission" class="control-label">权限名称</label>
-                        <input type="text" id="txtPermission" class="form-control" />
+                        <label for="PName" class="control-label">父级权限</label>
+                        <input type="text" name="PName" id="PName" class="form-control" />
                     </div>
-                <div class="form-group">
-                    <label for="txtPermission" class="control-label">权限类型</label>
-                    <input type="text" id="txtPermission" class="form-control" />
-                </div>
+
+                    <div class="form-group">
+                        <label for="Name" class="control-label">权限名称</label>
+                        <input type="text" name="Name" id="Name" class="form-control" />
+                    </div>
+
+                    <div class="form-group" id="divPermissionType">
+                        <label for="TypeDicID" class="control-label">权限类型</label>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="RIdentify" class="control-label">资源标识</label>
+                        <input type="text" name="RIdentify" id="RIdentify" class="form-control" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Addr" class="control-label">菜单地址</label>
+                        <input type="text" name="Addr" id="Addr" class="form-control" />
+                    </div>
+
+                    <input type="button" id="btnSave" class="btn btn-success" value="保存" />
+
+                </form>
             </div>
         </div>
     </div>

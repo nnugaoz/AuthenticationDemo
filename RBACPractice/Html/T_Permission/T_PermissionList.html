@@ -3,89 +3,55 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>T_Permission列表 </title>
+    <link href="../../JSLIB/zTree/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
     <link href="../../JSLIB/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
     <script src="../../JSLIB/jQuery/jquery-3.4.1.min.js"></script>
     <script src="../../JSLIB/layer/layer.js"></script>
-    <script src="../../JSLIB/pagination/pagination.js"></script>
+    <script src="../../JSLIB/zTree/js/jquery.ztree.all.min.js"></script>
+
     <script type='text/javascript'>
         $(function () {
             Init();
-            $('#btnSearch').on('click', btnSearch_OnClick);
-            $('#btnClear').on('click', btnClear_OnClick);
             $('#btnNew').on('click', btnNew_OnClick);
+            $('#btnEdit').on('click', btnEdit_OnClick);
+            $('#btnDel').on('click', btnDel_OnClick);
+
             $('#btnImport').on('click', btnImport_OnClick);
             $('#fileImport').on('change', fileImport_OnChange);
             $('#btnExport').on('click', btnExport_OnClick);
         })
-        function btnSearch_OnClick() {
-            Init();
-        }
-        function btnClear_OnClick() {
-            $('#Name').val('');
-            $('#PID').val('');
-            $('#Sort').val('');
-            $('#Addr').val('');
-        }
+
         function Init() {
-            var Name = $('#Name').val();
-            var PID = $('#PID').val();
-            var Sort = $('#Sort').val();
-            var Addr = $('#Addr').val();
-            $('#T_PermissionList').empty();
-            var lPConfig = new PaginationConfiguration();
-            lPConfig.RequestUrl = '/Handler/T_Permission.ashx?RequestMethod=SelectPage'
-            lPConfig.RequestUrl += '&Name=' + Name;
-            lPConfig.RequestUrl += '&PID=' + PID;
-            lPConfig.RequestUrl += '&Sort=' + Sort;
-            lPConfig.RequestUrl += '&Addr=' + Addr;
-            lPConfig.PageContainerID = 'T_PermissionList';
-            var NameCol = new PaginationColumnConfiguration();
-            NameCol.HeaderText = '权限名称';
-            NameCol.Type = 'TXT';
-            NameCol.DataField = 'Name';
-            lPConfig.Columns.push(NameCol);
-            var PIDCol = new PaginationColumnConfiguration();
-            PIDCol.HeaderText = '父权限ID';
-            PIDCol.Type = 'TXT';
-            PIDCol.DataField = 'PID';
-            lPConfig.Columns.push(PIDCol);
-            var SortCol = new PaginationColumnConfiguration();
-            SortCol.HeaderText = '排序';
-            SortCol.Type = 'TXT';
-            SortCol.DataField = 'Sort';
-            lPConfig.Columns.push(SortCol);
-            var AddrCol = new PaginationColumnConfiguration();
-            AddrCol.HeaderText = '地址';
-            AddrCol.Type = 'TXT';
-            AddrCol.DataField = 'Addr';
-            lPConfig.Columns.push(AddrCol);
-            var EditManCol = new PaginationColumnConfiguration();
-            EditManCol.HeaderText = '编辑人';
-            EditManCol.Type = 'TXT';
-            EditManCol.DataField = 'EditMan';
-            lPConfig.Columns.push(EditManCol);
-            var EditDateCol = new PaginationColumnConfiguration();
-            EditDateCol.HeaderText = '编辑时间';
-            EditDateCol.Type = 'TXT';
-            EditDateCol.DataField = 'EditDate';
-            lPConfig.Columns.push(EditDateCol);
-            var EditCol = new PaginationColumnConfiguration();
-            EditCol.HeaderText = '编辑';
-            EditCol.Type = 'BTN';
-            EditCol.DataField = '编辑';
-            EditCol.CssClass = 'btn btn-success';
-            EditCol.OnClickEventHandler = btnEdit_OnClick;
-            lPConfig.Columns.push(EditCol);
-            var DelCol = new PaginationColumnConfiguration();
-            DelCol.HeaderText = '删除';
-            DelCol.Type = 'BTN';
-            DelCol.DataField = '删除';
-            DelCol.CssClass = 'btn btn-success';
-            DelCol.OnClickEventHandler = btnDel_OnClick;
-            lPConfig.Columns.push(DelCol);
-            var T_PermissionListPagination = new Pagination(lPConfig);
-            T_PermissionListPagination.RequestData(1);
+            var setting = {
+                data: {
+                    simpleData: {
+                        enable: true
+                        , idKey: 'ID'
+                        , pIdKey: 'PID'
+                        , rootPId: ''
+                    },
+                    key: {
+                        name: 'Name'
+                    }
+                },
+                view: {
+                    showIcon: false
+                }
+            };
+
+            $.ajax({
+                type: 'get'
+                , url: '/Handler/T_Permission.ashx?RequestMethod=Select'
+                , success: function (pData) {
+                    var lData = JSON.parse(pData);
+                    $.fn.zTree.init($("#T_PermissionTree"), setting, lData);
+                }
+            });
+
+            $('#T_PermissionTree').empty();
+
         }
+
         function btnEdit_OnClick(event) {
             layer.open({
                 type: 2
@@ -94,7 +60,9 @@
             , area: ['800px', '600px']
             });
         }
+
         function btnDel_OnClick(event) {
+            var lID = '';
             layer.confirm('您确认要删除此条记录吗？', { icon: 3, title: '提示' }, function (index) {
                 $.ajax({
                     type: 'get'
@@ -110,34 +78,36 @@
                 });
             });
         }
+
         function btnNew_OnClick() {
             layer.open({
                 type: 2
-            , title: '新增'
-            , content: '/Html/T_Permission/T_PermissionNew.html'
-            , area: ['800px', '600px']
+                , title: '新增'
+                , content: '/Html/T_Permission/T_PermissionNew.html'
+                , area: ['800px', '600px']
             });
         }
+
         function fileImport_OnChange() {
             var formData = new FormData();
             formData.append('fileImport', $('#fileImport')[0].files[0]);
             $.ajax({
-                type: 'post'
-            , url: '/Handler/T_Permission.ashx?RequestMethod=Import'
-            , data: formData
-            , contentType: false
-            , cache: false
-            , processData: false
-            , success: function (pData) {
-                if (pData === '1') {
-                    layer.alert('导入成功！', { icon: 1 });
-                    Init();
+                type: 'POST'
+                , url: '/Handler/T_Permission.ashx?RequestMethod=Import'
+                , data: formData
+                , contentType: false
+                , cache: false
+                , processData: false
+                , success: function (pData) {
+                    if (pData === '1') {
+                        layer.alert('导入成功！', { icon: 1 });
+                        Init();
+                    }
+                    else {
+                        layer.alert('导入失败！', { icon: 1 });
+                        Init();
+                    }
                 }
-                else {
-                    layer.alert('导入失败！', { icon: 1 });
-                    Init();
-                }
-            }
             });
         }
 
@@ -161,35 +131,18 @@
             }
             });
         }
+
     </script>
 </head>
 <body>
-    <div class='form-inline' style='padding:10px;'>
-        <div class='form-group'>
-            <label for='Name'>权限名称</label>
-            <input type='text' id='Name' name='Name' class='form-control' />
-        </div>
-        <div class='form-group'>
-            <label for='PID'>父权限ID</label>
-            <input type='text' id='PID' name='PID' class='form-control' />
-        </div>
-        <div class='form-group'>
-            <label for='Sort'>排序</label>
-            <input type='text' id='Sort' name='Sort' class='form-control' />
-        </div>
-        <div class='form-group'>
-            <label for='Addr'>地址</label>
-            <input type='text' id='Addr' name='Addr' class='form-control' />
-        </div>
-        <input type='button' class='btn btn-success' value='检索' id='btnSearch' />
-        <input type='button' class='btn btn-primary' value='清空' id='btnClear' />
-    </div>
     <div style='padding:10px'>
         <input type='button' id='btnNew' class='btn btn-success' value='新增' />
+        <input type='button' id='btnEdit' class='btn btn-primary' value='编辑' />
+        <input type='button' id='btnDel' class='btn btn-warning' value='删除' />
         <input type='button' id='btnImport' class='btn btn-success' value='导入' />
         <input type='button' id='btnExport' class='btn btn-success' value='导出' />
         <input type='file' id='fileImport' name='fileImport' accept='.xls,.xlsx' style='display:none;' />
-        <div id='T_PermissionList' style='margin-top:20px;'></div>
+        <div id='T_PermissionTree' class="ztree" style='margin-top:20px;font-size:14px;'></div>
     </div>
 </body>
 </html>

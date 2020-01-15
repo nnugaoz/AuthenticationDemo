@@ -99,7 +99,6 @@
     <Content Include="Html\T_Permission\T_PermissionEdit.html" />
     <Content Include="Html\T_Permission\T_PermissionEdit2.html" />
     <Content Include="Html\T_Permission\T_PermissionList.html" />
-    <Content Include="Html\T_Permission\T_PermissionList2.html" />
     <Content Include="Html\T_Permission\T_PermissionNew.html" />
     <Content Include="Html\T_Permission\T_PermissionNew2.html" />
     <Content Include="Html\T_Role\T_RoleEdit.html" />
@@ -227,7 +226,7 @@
     </Compile>
     <Compile Include="Model\T_DictionaryModel.cs" />
     <Compile Include="Model\T_Dictionary_TypeModel.cs" />
-    <Compile Include="Model\T_MenuModel.cs" />
+    <Compile Include="Model\T_PermissionModel.cs" />
     <Compile Include="Model\V_RoleModel.cs" />
     <Compile Include="Model\T_RoleModel.cs" />
     <Compile Include="Model\T_Role_MenuModel.cs" />

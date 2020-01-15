@@ -14,6 +14,12 @@ public string Sort{get;set;}
 //地址
 //MaxLength=200
 public string Addr{get;set;}
+//权限类型字典表ID
+//MaxLength=200
+public string TypeDID { get; set; }
+//权限标识
+//MaxLength=50
+public string RIdentify { get; set; }
 //编辑人
 //MaxLength=50
 public string EditMan{get;set;}

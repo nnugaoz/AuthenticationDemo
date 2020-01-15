@@ -22,17 +22,18 @@ public class T_Permission : IHttpHandler
             case "Select":
                 Select(context);
                 break;
+            case "NewPageInit":
+                NewPageInit(context);
+                break;
             case "SelectPage":
                 SelectPage(context);
                 break;
             case "SelectByID":
                 SelectByID(context);
                 break;
-
             case "SelectMenu":
                 SelectMenu(context);
                 break;
-
             case "Import":
                 Import(context);
                 break;
@@ -41,6 +42,26 @@ public class T_Permission : IHttpHandler
                 break;
         }
     }
+
+    private void NewPageInit(HttpContext context)
+    {
+        DataSet lDS = new DataSet();
+        DataTable lDT = null;
+        T_PermissionDao lPermissionDao = new T_PermissionDao();
+        lDT = lPermissionDao.Select();
+        lDT.TableName = "PermissionList";
+        lDS.Tables.Add(lDT.Copy());
+
+        lDT = null;
+        T_DictionaryDao lDictionaryDao = new T_DictionaryDao();
+        lDT = lDictionaryDao.SelectByType("PermissionType");
+        lDT.TableName = "PermissionTypeList";
+        lDS.Tables.Add(lDT.Copy());
+
+        context.Response.Write(JsonConvert.SerializeObject(lDS));
+
+    }
+
     private void Select(HttpContext context)
     {
         DataTable lDT = null;
@@ -117,16 +138,17 @@ public class T_Permission : IHttpHandler
     private void Insert(HttpContext context)
     {
         T_PermissionModel lModel = new T_PermissionModel();
-        lModel.ID = context.Request.Params["ID"].ToString();
+
         lModel.Name = context.Request.Params["Name"].ToString();
         lModel.PID = context.Request.Params["PID"].ToString();
-        lModel.Sort = context.Request.Params["Sort"].ToString();
+        //lModel.Sort = context.Request.Params["Sort"].ToString();
         lModel.Addr = context.Request.Params["Addr"].ToString();
-        lModel.EditMan = context.Request.Params["EditMan"].ToString();
-        lModel.EditDate = context.Request.Params["EditDate"].ToString();
+        lModel.TypeDID = context.Request.Params["TypeDID"].ToString();
+        lModel.RIdentify = context.Request.Params["RIdentify"].ToString();
         lModel.ID = Guid.NewGuid().ToString();
         lModel.EditMan = "Admin";
         lModel.EditDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
+
         T_PermissionDao lDao = new T_PermissionDao();
         if (lDao.Insert(lModel) > 0)
         {

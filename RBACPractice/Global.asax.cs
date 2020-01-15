@@ -27,12 +27,19 @@ namespace RBACPractice
 
         protected void Application_EndRequest(object sender, EventArgs e)
         {
-            if (Context.Request.IsAuthenticated)
+            try
             {
-                string lUserName = Context.User.Identity.Name;
-                HttpCookie lCookie = new HttpCookie("NName", lUserName);
-                lCookie.Expires = DateTime.Now.AddMinutes(10);
-                Context.Response.AppendCookie(lCookie);
+                if (Context.Request.IsAuthenticated && Context.Response.IsClientConnected)
+                {
+                    string lUserName = Context.User.Identity.Name;
+                    HttpCookie lCookie = new HttpCookie("NName", lUserName);
+                    lCookie.Expires = DateTime.Now.AddMinutes(10);
+                    Context.Response.AppendCookie(lCookie);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
             }
         }
 
