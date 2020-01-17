@@ -1,0 +1,238 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" style="width:100%;height:100%">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <link href="../JavaScript/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../JavaScript/zTree/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
+    <script src="../JavaScript/jQuery/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=3.0&ak=eH5dZzlbt0puXQEAG1GgdunmSW7qVjse"></script>
+    <script src="../JavaScript/zTree/js/jquery.ztree.all.min.js"></script>
+    <script type="text/javascript">
+        var map = null;
+
+        $(function () {
+            var lComLineBusTreeSettings = {
+                data: {
+                    simpleData: {
+                        enable: true
+                        , idKey: 'Id'
+                        , pIdKey: 'pId'
+                        , rootPId: ''
+                    }
+                }
+                , check: {
+                    enable: true
+                    , chkboxType: { 'Y': '', 'N': '' }
+                }
+                , callback: {
+                    onCheck: TreeNode_OnCheck
+                }
+            }
+
+            var lComLineBusTreeData = [
+                { Id: '1', pId: '', name: '如皋星星公交公司' }
+                , { Id: '101', pId: '1', name: '101路' }
+                , { Id: '66600', pId: '101', name: '苏F66600' }
+                , { Id: '66601', pId: '101', name: '苏F66601' }
+                , { Id: '66602', pId: '101', name: '苏F66602' }
+                , { Id: '66603', pId: '101', name: '苏F66603' }
+
+                , { Id: '102', pId: '1', name: '102路' }
+                , { Id: '66610', pId: '102', name: '苏F66610' }
+                , { Id: '66611', pId: '102', name: '苏F66611' }
+                , { Id: '66612', pId: '102', name: '苏F66612' }
+                , { Id: '66613', pId: '102', name: '苏F66613' }
+
+                , { Id: '103', pId: '1', name: '103路' }
+                , { Id: '66620', pId: '103', name: '苏F66620' }
+                , { Id: '66621', pId: '103', name: '苏F66621' }
+                , { Id: '66622', pId: '103', name: '苏F66622' }
+                , { Id: '66623', pId: '103', name: '苏F66623' }
+
+                , { Id: '104', pId: '1', name: '104路' }
+                , { Id: '66630', pId: '104', name: '苏F66630' }
+                , { Id: '66631', pId: '104', name: '苏F66631' }
+                , { Id: '66632', pId: '104', name: '苏F66632' }
+                , { Id: '66633', pId: '104', name: '苏F66633' }
+
+                , { Id: '2', pId: '', name: '如皋飞鹤公交公司' }
+                , { Id: '201', pId: '2', name: '201路' }
+                , { Id: '66800', pId: '201', name: '苏F66800' }
+                , { Id: '66801', pId: '201', name: '苏F66801' }
+                , { Id: '66802', pId: '201', name: '苏F66802' }
+                , { Id: '66803', pId: '201', name: '苏F66803' }
+
+                , { Id: '202', pId: '2', name: '202路' }
+                , { Id: '66810', pId: '202', name: '苏F66810' }
+                , { Id: '66811', pId: '202', name: '苏F66811' }
+                , { Id: '66812', pId: '202', name: '苏F66812' }
+                , { Id: '66813', pId: '202', name: '苏F66813' }
+
+                , { Id: '203', pId: '2', name: '203路' }
+                , { Id: '66820', pId: '203', name: '苏F66820' }
+                , { Id: '66821', pId: '203', name: '苏F66821' }
+                , { Id: '66822', pId: '203', name: '苏F66822' }
+                , { Id: '66823', pId: '203', name: '苏F66823' }
+
+                , { Id: '204', pId: '2', name: '204路' }
+                , { Id: '66830', pId: '204', name: '苏F66830' }
+                , { Id: '66831', pId: '204', name: '苏F66831' }
+                , { Id: '66832', pId: '204', name: '苏F66832' }
+                , { Id: '66833', pId: '204', name: '苏F66833' }
+
+            ];
+
+            $.fn.zTree.init($('#divComLineBusTree'), lComLineBusTreeSettings, lComLineBusTreeData);
+            var treeObj = $.fn.zTree.getZTreeObj("divComLineBusTree");
+            treeObj.expandAll(true);
+
+            map = new BMap.Map("divMapContainer");
+            var point = new BMap.Point(120.885506, 32.03671);
+            map.centerAndZoom(point, 15);
+            map.enableScrollWheelZoom(true);
+            var mStart = false;
+
+            //map.addEventListener("mousedown", function (e) {
+            //    mStart = !mStart;
+            //});
+
+            //map.addEventListener("mousemove", function (e) {
+            //    if (mStart) {
+            //        var lng = e.point.lng;
+            //        var lat = e.point.lat;
+            //        console.log(lng + "," + lat)
+            //    }
+            //});
+
+            $('#btnDisparture').on('click', btnDisparture_OnClick);
+
+        });
+
+        var mLineArr = new Array();
+        var mBusMarker = null;
+
+        function TreeNode_OnCheck(event, treeId, treeNode) {
+
+            var lID = treeNode.Id;
+            switch (lID) {
+                case '101':
+                    lID = 'CD288980-3966-4855-B877-296861425AC6'
+                    break;
+
+                case '102':
+                    lID = 'CD288980-3966-4855-B877-296861425AC7'
+                    break;
+
+                case '103':
+                    lID = 'CD288980-3966-4855-B877-296861425AC8'
+                    break;
+
+                case '104':
+                    lID = 'CD288980-3966-4855-B877-296861425AC9'
+                    break;
+            }
+
+            if (treeNode.checked) {
+                var lineElem = { ID: '', PolyLine: null, StationMarker: null };
+
+
+                $.ajax({
+                    type: 'get'
+                     , url: '/Handler/Line.ashx?LineID=' + lID
+                     , success: function (pData) {
+                         var lData = JSON.parse(pData);
+                         var lLineTracksArr = new Array();
+                         for (var i = 0; i < lData.Data[0].length; i++) {
+                             lLineTracksArr.push(new BMap.Point(lData.Data[0][i].Lng, lData.Data[0][i].Lat));
+                         }
+                         var polyline = new BMap.Polyline(lLineTracksArr, { strokeColor: "blue", strokeWeight: 6, strokeOpacity: 0.5 });
+                         map.addOverlay(polyline);
+
+                         lineElem.ID = lID;
+                         lineElem.PolyLine = polyline;
+                         lineElem.StationMarker = new Array();
+
+                         for (var i = 0; i < lData.Data[1].length; i++) {
+                             var point = new BMap.Point(lData.Data[1][i].Lng, lData.Data[1][i].Lat);
+
+                             var myIcon = new BMap.Icon("busstation.png", new BMap.Size(32, 32), {
+                                 anchor: new BMap.Size(16, 32)
+                             });
+                             var marker = new BMap.Marker(point, { icon: myIcon });
+
+                             //marker.enableDragging();
+                             //marker.addEventListener('click', function (event) { alert('你点击了标注！'); });
+                             //marker.addEventListener('dragend', function (event) { alert("当前位置：" + event.point.lng + ", " + event.point.lat); });
+
+                             map.addOverlay(marker);
+                             lineElem.StationMarker.push(marker);
+
+                             if (i == 0) {
+                                 var point = new BMap.Point(lData.Data[1][i].Lng, lData.Data[1][i].Lat);
+                                 var myIcon = new BMap.Icon("bus.png", new BMap.Size(32, 32), {
+                                     anchor: new BMap.Size(16, 32)
+                                 });
+                                 mBusMarker = new BMap.Marker(point, { icon: myIcon });
+                                 map.addOverlay(mBusMarker);
+                             }
+                         }
+                         mLineArr.push(lineElem);
+
+                     }
+                });
+            } else {
+                for (var i = 0; i < mLineArr.length; i++) {
+                    if (mLineArr[i].ID == lID) {
+                        map.removeOverlay(mLineArr[i].PolyLine);
+                        for (var j = 0; j < mLineArr[i].StationMarker.length; j++) {
+                            map.removeOverlay(mLineArr[i].StationMarker[j]);
+                        }
+                    }
+                }
+            }
+        }
+
+        function btnDisparture_OnClick(event) {
+            var seq = 0;
+
+            //每5秒钟取一次数据
+            setInterval(function () {
+                seq += 1;
+                $.ajax({
+                    type: 'get'
+                    , url: '/Handler/TrackData.ashx?Line=4&Seq=' + seq
+                    , success: function (pData) {
+                        var lData = JSON.parse(pData);
+                        map.removeOverlay(mBusMarker);
+                        var point = new BMap.Point(lData.Data[0][0].Lng, lData.Data[0][0].Lat);
+                        var myIcon = new BMap.Icon("bus.png", new BMap.Size(32, 32), {
+                            anchor: new BMap.Size(16, 32)
+                        });
+                        mBusMarker = new BMap.Marker(point, { icon: myIcon });
+                        map.addOverlay(mBusMarker);
+                    }
+                });
+            }, 100);
+        }
+
+    </script>
+</head>
+<body style="width:100%;height:100%">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4">
+                <div id="divComLineBusTree" class="ztree">
+
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div id="divMapContainer" style="width:800px;height:800px;">
+
+                </div>
+                <input type="button" id="btnDisparture" value="发车" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+</body>
+</html>

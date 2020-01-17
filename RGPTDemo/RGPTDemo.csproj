@@ -64,26 +64,86 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Html\bus.png" />
+    <Content Include="Html\busstation.png" />
     <Content Include="Html\Line\Line.html" />
     <Content Include="Html\Map\BaiduAPI.txt" />
     <Content Include="Html\Map\BMGeoFence.html" />
     <Content Include="Html\Map\HtmlPage1.html" />
     <Content Include="Html\Map\marker.png" />
+    <Content Include="Html\在线地图监控.html" />
     <Content Include="JavaScript\baidumap\GeoUtils.js" />
+    <Content Include="JavaScript\bootstrap-3.3.7-dist\css\bootstrap-theme.css" />
+    <Content Include="JavaScript\bootstrap-3.3.7-dist\css\bootstrap-theme.min.css" />
+    <Content Include="JavaScript\bootstrap-3.3.7-dist\css\bootstrap.css" />
+    <Content Include="JavaScript\bootstrap-3.3.7-dist\css\bootstrap.min.css" />
+    <Content Include="JavaScript\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="JavaScript\bootstrap-3.3.7-dist\js\bootstrap.js" />
+    <Content Include="JavaScript\bootstrap-3.3.7-dist\js\bootstrap.min.js" />
+    <Content Include="JavaScript\bootstrap-3.3.7-dist\js\npm.js" />
     <Content Include="JavaScript\jQuery\jquery-3.4.1.min.js" />
+    <Content Include="JavaScript\zTree\css\awesomeStyle\awesome.css" />
+    <Content Include="JavaScript\zTree\css\awesomeStyle\img\loading.gif" />
+    <Content Include="JavaScript\zTree\css\demo.css" />
+    <Content Include="JavaScript\zTree\css\metroStyle\img\line_conn.png" />
+    <Content Include="JavaScript\zTree\css\metroStyle\img\loading.gif" />
+    <Content Include="JavaScript\zTree\css\metroStyle\img\metro.gif" />
+    <Content Include="JavaScript\zTree\css\metroStyle\img\metro.png" />
+    <Content Include="JavaScript\zTree\css\metroStyle\metroStyle.css" />
+    <Content Include="JavaScript\zTree\css\zTreeStyle\img\diy\1_close.png" />
+    <Content Include="JavaScript\zTree\css\zTreeStyle\img\diy\1_open.png" />
+    <Content Include="JavaScript\zTree\css\zTreeStyle\img\diy\2.png" />
+    <Content Include="JavaScript\zTree\css\zTreeStyle\img\diy\3.png" />
+    <Content Include="JavaScript\zTree\css\zTreeStyle\img\diy\4.png" />
+    <Content Include="JavaScript\zTree\css\zTreeStyle\img\diy\5.png" />
+    <Content Include="JavaScript\zTree\css\zTreeStyle\img\diy\6.png" />
+    <Content Include="JavaScript\zTree\css\zTreeStyle\img\diy\7.png" />
+    <Content Include="JavaScript\zTree\css\zTreeStyle\img\diy\8.png" />
+    <Content Include="JavaScript\zTree\css\zTreeStyle\img\diy\9.png" />
+    <Content Include="JavaScript\zTree\css\zTreeStyle\img\line_conn.gif" />
+    <Content Include="JavaScript\zTree\css\zTreeStyle\img\loading.gif" />
+    <Content Include="JavaScript\zTree\css\zTreeStyle\img\zTreeStandard.gif" />
+    <Content Include="JavaScript\zTree\css\zTreeStyle\img\zTreeStandard.png" />
+    <Content Include="JavaScript\zTree\css\zTreeStyle\zTreeStyle.css" />
+    <Content Include="JavaScript\zTree\js\jquery-1.4.4.min.js" />
+    <Content Include="JavaScript\zTree\js\jquery.ztree.all.js" />
+    <Content Include="JavaScript\zTree\js\jquery.ztree.all.min.js" />
+    <Content Include="JavaScript\zTree\js\jquery.ztree.core.js" />
+    <Content Include="JavaScript\zTree\js\jquery.ztree.core.min.js" />
+    <Content Include="JavaScript\zTree\js\jquery.ztree.excheck.js" />
+    <Content Include="JavaScript\zTree\js\jquery.ztree.excheck.min.js" />
+    <Content Include="JavaScript\zTree\js\jquery.ztree.exedit.js" />
+    <Content Include="JavaScript\zTree\js\jquery.ztree.exedit.min.js" />
+    <Content Include="JavaScript\zTree\js\jquery.ztree.exhide.js" />
+    <Content Include="JavaScript\zTree\js\jquery.ztree.exhide.min.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dao\LineDao.cs" />
+    <Compile Include="Dao\TrackDataDao.cs" />
     <Compile Include="Handler\Line.ashx.cs">
       <DependentUpon>Line.ashx</DependentUpon>
     </Compile>
     <Compile Include="Handler\RequestResponse.cs" />
+    <Compile Include="Handler\TrackData.ashx.cs">
+      <DependentUpon>TrackData.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Handler\Line.ashx" />
     <Content Include="packages.config" />
+    <Content Include="JavaScript\zTree\css\awesomeStyle\awesome.less" />
+    <Content Include="JavaScript\zTree\css\awesomeStyle\fa.less" />
+    <Content Include="JavaScript\bootstrap-3.3.7-dist\css\bootstrap-theme.css.map" />
+    <Content Include="JavaScript\bootstrap-3.3.7-dist\css\bootstrap-theme.min.css.map" />
+    <Content Include="JavaScript\bootstrap-3.3.7-dist\css\bootstrap.css.map" />
+    <Content Include="JavaScript\bootstrap-3.3.7-dist\css\bootstrap.min.css.map" />
+    <Content Include="JavaScript\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="JavaScript\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="JavaScript\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="JavaScript\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Handler\TrackData.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
