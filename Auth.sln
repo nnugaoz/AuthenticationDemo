@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auth", "Auth\Auth.csproj", "{5BC6B245-11BD-4C00-AAF7-55AF220CFAE6}"
 EndProject
@@ -12,6 +12,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tools", "Tools\Tools.csproj", "{F842F35C-484E-4025-97FC-0202D00E7577}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RBACPractice", "RBACPractice\RBACPractice.csproj", "{AF13D789-BDAB-4C17-90AF-84222DF2981C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RGPTSimulator", "RGPTSimulator\RGPTSimulator.csproj", "{3CC88D04-8256-4279-826E-0AEA6636A754}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{AF13D789-BDAB-4C17-90AF-84222DF2981C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF13D789-BDAB-4C17-90AF-84222DF2981C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AF13D789-BDAB-4C17-90AF-84222DF2981C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3CC88D04-8256-4279-826E-0AEA6636A754}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3CC88D04-8256-4279-826E-0AEA6636A754}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3CC88D04-8256-4279-826E-0AEA6636A754}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3CC88D04-8256-4279-826E-0AEA6636A754}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
