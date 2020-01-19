@@ -36,7 +36,7 @@ namespace RGPTDemo.Dao
             lDT = lMsSqlHelper.GetDataTable(lSQL, lParams);
 
             return lDT;
-        }
+        }        
 
     }
 }

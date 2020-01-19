@@ -36,10 +36,10 @@ namespace RGPTSimulator
                 lModel.Lng = lng;
                 lModel.Lat = lat;
                 lModel.CarID = CarID;
-                lModel.CollectTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss,fff");
+                lModel.CollectTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                 lModel.Speed = "20";
                 lCarTrackDao.Insert(lModel);
-                System.Threading.Thread.Sleep(1000);
+                System.Threading.Thread.Sleep(5000);
                 seq += 1;
                 lDT = lTrackDataDao.SelectByLineIDAndSeq(LineID, seq);
             }

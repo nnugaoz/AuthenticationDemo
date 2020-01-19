@@ -71,6 +71,7 @@
     <Content Include="Html\Map\BMGeoFence.html" />
     <Content Include="Html\Map\HtmlPage1.html" />
     <Content Include="Html\Map\marker.png" />
+    <Content Include="Html\RealTimeMonitor.js" />
     <Content Include="Html\在线地图监控.html" />
     <Content Include="JavaScript\baidumap\GeoUtils.js" />
     <Content Include="JavaScript\bootstrap-3.3.7-dist\css\bootstrap-theme.css" />
@@ -121,6 +122,7 @@
   <ItemGroup>
     <Compile Include="Dao\LineDao.cs" />
     <Compile Include="Dao\TrackDataDao.cs" />
+    <Compile Include="Dao\T_Line_Departure_ScheduleDao.cs" />
     <Compile Include="Handler\Line.ashx.cs">
       <DependentUpon>Line.ashx</DependentUpon>
     </Compile>
@@ -128,6 +130,7 @@
     <Compile Include="Handler\TrackData.ashx.cs">
       <DependentUpon>TrackData.ashx</DependentUpon>
     </Compile>
+    <Compile Include="Model\T_Line_Departure_ScheduleModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

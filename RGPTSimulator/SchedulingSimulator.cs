@@ -31,8 +31,8 @@ namespace RGPTSimulator
                     for (int i = 0; i < lDT.Rows.Count; i++)
                     {
                         lCarID = lDT.Rows[i]["CarID"].ToString();
-                        lLineID = lDT.Rows[i]["LineID"].ToString();
-                        CarTrackSimulator lCarTrackSimulator = new CarTrackSimulator();
+                        lLineID = lDT.Rows[i]["LID"].ToString();
+                         CarTrackSimulator lCarTrackSimulator = new CarTrackSimulator();
                         lCarTrackSimulator.CarID = lCarID;
                         lCarTrackSimulator.LineID = lLineID;
                         lCarTrackSimulator.Simulator();

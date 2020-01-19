@@ -9,6 +9,8 @@ namespace RGPTSimulator
     {
         static void Main(string[] args)
         {
+            SchedulingSimulator lScheduleMinitor = new SchedulingSimulator();
+            lScheduleMinitor.ScheduleMinitor();
         }
     }
 }
