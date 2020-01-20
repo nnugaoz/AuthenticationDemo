@@ -12,10 +12,14 @@ namespace RGPTSimulator
     /// </summary>
     class SchedulingSimulator
     {
+
         public void ScheduleMinitor()
         {
             DataTable lDT = null;
             T_Line_Departure_ScheduleDao lLine_Departure_ScheduleDao = new T_Line_Departure_ScheduleDao();
+            Console.WriteLine("调度模拟器已启动......");
+
+
             //循环今日发车时刻表
             while (true)
             {
@@ -23,6 +27,8 @@ namespace RGPTSimulator
                 string lTime = DateTime.Now.ToString("HH:mm");
                 string lCarID = "";
                 string lLineID = "";
+                string lCarNO = "";
+                string lLineName = "";
 
                 lDT = lLine_Departure_ScheduleDao.SelectByDatetime(lDate, lTime);
 
@@ -30,18 +36,24 @@ namespace RGPTSimulator
                 {
                     for (int i = 0; i < lDT.Rows.Count; i++)
                     {
+
                         lCarID = lDT.Rows[i]["CarID"].ToString();
                         lLineID = lDT.Rows[i]["LID"].ToString();
-                         CarTrackSimulator lCarTrackSimulator = new CarTrackSimulator();
+                        lCarNO = lDT.Rows[i]["CarNO"].ToString();
+                        lLineName = lDT.Rows[i]["LineName"].ToString();
+
+                        CarTrackSimulator lCarTrackSimulator = new CarTrackSimulator();
                         lCarTrackSimulator.CarID = lCarID;
                         lCarTrackSimulator.LineID = lLineID;
-                        lCarTrackSimulator.Simulator();
+
+                        System.Threading.Thread lThread = new System.Threading.Thread(new System.Threading.ThreadStart(new Action(lCarTrackSimulator.Simulator)));
+                        lThread.Start();
+                        Console.WriteLine(lDate + " " + lTime + " " + lLineName + " " + lCarNO + " " + "已发车......");
                     }
                 }
 
                 System.Threading.Thread.Sleep(60000);
             }
         }
-
     }
 }

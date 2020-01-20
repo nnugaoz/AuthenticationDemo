@@ -84,16 +84,20 @@ public class T_Line_Departure_ScheduleDao
     {
         string lSQL = "";
         lSQL += "SELECT ";
-        lSQL += "ID";
-        lSQL += ",LID";
-        lSQL += ",DDate";
-        lSQL += ",DTime";
-        lSQL += ",CarID";
-        lSQL += ",EditMan";
-        lSQL += ",EditDate";
-        lSQL += " FROM T_Line_Departure_Schedule";
-        lSQL += " WHERE DDate=@DDate";
-        lSQL += " AND DTime=@DTime";
+        lSQL += "T1.ID";
+        lSQL += ",T1.LID";
+        lSQL += ",T1.DDate";
+        lSQL += ",T1.DTime";
+        lSQL += ",T1.CarID";
+        lSQL += ",T1.EditMan";
+        lSQL += ",T1.EditDate";
+        lSQL += ",T2.Name AS LineName";
+        lSQL += ",T3.CarNO";
+        lSQL += " FROM T_Line_Departure_Schedule T1";
+        lSQL += " LEFT JOIN T_Line T2 ON T1.LID=T2.ID";
+        lSQL += " LEFT JOIN T_Car T3 ON T1.CarID=T3.ID";
+        lSQL += " WHERE T1.DDate=@DDate";
+        lSQL += " AND T1.DTime=@DTime";
         return lSQL;
     }
     public static string SelectPageSQL()
@@ -197,7 +201,7 @@ public class T_Line_Departure_ScheduleDao
         return lDT;
     }
 
-    public DataTable SelectByDatetime(string DDate,string DTime)
+    public DataTable SelectByDatetime(string DDate, string DTime)
     {
         string lSQL = SelectByDatetimeSQL();
         DataTable lDT = null;

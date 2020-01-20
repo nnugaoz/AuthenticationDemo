@@ -80,8 +80,20 @@ RealTimeMonitor.prototype.StartLineMonitoring = function (LineID) {
                  //在地图上添加车辆标识
                  that.Map.addOverlay(mBusMarker);
 
+                 //创建车号标识
+                 var mCarNoLabel = new BMap.Label(lData.Data[2][i].CarNO, { position: point })
+                 mCarNoLabel.setStyle({ border: 'none', backgroundColor: '#33a0fa' });
+
+                 //在地图上添加车号标识
+                 that.Map.addOverlay(mCarNoLabel);
+
+                 var lCarMarker = new CarMarker();
+                 lCarMarker.CarID = lData.Data[2][i].CarID;
+                 lCarMarker.CarIconMarker = mBusMarker;
+                 lCarMarker.CarNoMarker = mCarNoLabel;
+
                  //记录车辆标识
-                 lMonitoredLine.CarMarkerList.push(mBusMarker);
+                 lMonitoredLine.CarMarkerList.push(lCarMarker);
              }
 
              //将被监控线路加入监控线路数组
@@ -110,7 +122,9 @@ RealTimeMonitor.prototype.StopLineMonitoring = function (LineID) {
                 this.Map.removeOverlay(this.MonitoredLineList[i].StationMarkerList[j]);
             }
             for (var j = 0; j < this.MonitoredLineList[i].CarMarkerList.length; j++) {
-                this.Map.removeOverlay(this.MonitoredLineList[i].CarMarkerList[j]);
+                var lCarMarker = this.MonitoredLineList[i].CarMarkerList[j];
+                this.Map.removeOverlay(lCarMarker.CarIconMarker);
+                this.Map.removeOverlay(lCarMarker.CarNoMarker);
             }
             this.MonitoredLineList.splice(i, 1);
             break;
@@ -120,7 +134,7 @@ RealTimeMonitor.prototype.StopLineMonitoring = function (LineID) {
 
 //刷新线路上车辆的实时位置
 RealTimeMonitor.prototype.Refresh = function (event) {
-    
+
     var that = event.MonitorObj;
 
     for (var i = 0; i < that.MonitoredLineList.length; i++) {
@@ -130,33 +144,62 @@ RealTimeMonitor.prototype.Refresh = function (event) {
             , url: '/Handler/Line.ashx?RequestMethod=GetLatestPosition&LineID=' + lLineID
             , success: function (pData) {
                 var lData = JSON.parse(pData);
-                //刷新线路上的车辆信息，先删除，后添加
+                //刷新线路上的车辆信息
                 for (var i = 0; i < that.MonitoredLineList.length; i++) {
                     if (that.MonitoredLineList[i].LineID == lLineID) {
-                        for (var j = 0; j < that.MonitoredLineList[i].CarMarkerList.length; j++) {
-                            that.Map.removeOverlay(that.MonitoredLineList[i].CarMarkerList[j]);
-                        }
-                        that.MonitoredLineList[i].CarMarkerList = new Array();
 
                         //解析目前线路上安排的车辆信息
                         for (var k = 0; k < lData.Data[0].length; k++) {
+                            //车辆ID
+                            var lCarID = lData.Data[0][k].CarID;
 
                             //车辆经纬度
                             var point = new BMap.Point(lData.Data[0][k].Lng, lData.Data[0][k].Lat);
 
-                            //车辆图标
-                            var myIcon = new BMap.Icon("bus.png", new BMap.Size(32, 32), {
-                                anchor: new BMap.Size(16, 32)
-                            });
+                            var lAlreadyExist = false;
+                            for (var j = 0; j < that.MonitoredLineList[i].CarMarkerList.length; j++) {
 
-                            //创建车辆标识
-                            var mBusMarker = new BMap.Marker(point, { icon: myIcon });
+                                var lCarMarker = that.MonitoredLineList[i].CarMarkerList[j];
 
-                            //在地图上添加车辆标识
-                            that.Map.addOverlay(mBusMarker);
+                                if (lCarMarker.CarID == lCarID) {
+                                    //该车已在地图上绘制
+                                    lAlreadyExist = true;
 
-                            //记录车辆标识
-                            that.MonitoredLineList[i].CarMarkerList.push(mBusMarker);
+                                    //设置最新位置
+                                    lCarMarker.CarIconMarker.setPosition(point);
+                                    lCarMarker.CarNoMarker.setPosition(point);
+                                    break;
+                                }
+                            }
+
+                            if (!lAlreadyExist) {
+
+                                //车辆图标
+                                var myIcon = new BMap.Icon("bus.png", new BMap.Size(32, 32), {
+                                    anchor: new BMap.Size(16, 32)
+                                });
+
+                                //创建车辆标识
+                                var mBusMarker = new BMap.Marker(point, { icon: myIcon });
+
+                                //在地图上添加车辆标识
+                                that.Map.addOverlay(mBusMarker);
+
+                                //创建车号标识
+                                var mCarNoLabel = new BMap.Label(lData.Data[0][k].CarNO, { position: point })
+                                mCarNoLabel.setStyle({ border: 'none', backgroundColor: '#33a0fa' });
+
+                                //在地图上添加车号标识
+                                that.Map.addOverlay(mCarNoLabel);
+
+                                var lCarMarker = new CarMarker();
+                                lCarMarker.CarID = lCarID;
+                                lCarMarker.CarIconMarker = mBusMarker;
+                                lCarMarker.CarNoMarker = mCarNoLabel;
+
+                                //记录车辆标识
+                                that.MonitoredLineList[i].CarMarkerList.push(lCarMarker);
+                            }
                         }
                         break;
                     }
@@ -172,4 +215,10 @@ function MonitoredLine() {
     this.LinePolyLine = null;
     this.StationMarkerList = new Array();
     this.CarMarkerList = new Array();
+}
+
+function CarMarker() {
+    this.CarIconMarker = null;
+    this.CarNoMarker = null;
+    this.CarID = "";
 }

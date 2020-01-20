@@ -44,6 +44,7 @@
 
             // 创建标注对象并添加到地图
             addMarker(map, point);
+            addLabel(map, point);
 
             var polyline = new BMap.Polyline([
                     new BMap.Point(120.88736549240558, 32.03639627224456)
@@ -94,6 +95,12 @@
             marker.addEventListener('click', function (event) { alert('你点击了标注！'); });
             marker.addEventListener('dragend', function (event) { alert("当前位置：" + event.point.lng + ", " + event.point.lat); });
             map.addOverlay(marker);
+        }
+
+        function addLabel(map, point) {  // 创建图标对象
+            var label = new BMap.Label('文本标注', { offset: { width: -100, height: -100 }, position: point });
+            label.setStyle({ border: 'none', backgroundColor: '#33a0fa' });
+            map.addOverlay(label);
         }
 
     </script>
