@@ -34,11 +34,19 @@
 
             var lComLineBusTreeData = [
                 { Id: '1', pId: '', name: '如皋星星公交公司' }
-                , { Id: 'CD288980-3966-4855-B877-296861425AC6', pId: '1', name: '101路' }
-                , { Id: '66600', pId: 'CD288980-3966-4855-B877-296861425AC6', name: '苏F66600' }
-                , { Id: '66601', pId: 'CD288980-3966-4855-B877-296861425AC6', name: '苏F66601' }
-                , { Id: '66602', pId: 'CD288980-3966-4855-B877-296861425AC6', name: '苏F66602' }
-                , { Id: '66603', pId: 'CD288980-3966-4855-B877-296861425AC6', name: '苏F66603' }
+                , { Id: 'CD288980-3966-4855-B877-296861425AC6', pId: '1', name: '101路(上行)' }
+                , { Id: '12001', pId: 'CD288980-3966-4855-B877-296861425AC6', name: '苏F12001' }
+                , { Id: '12002', pId: 'CD288980-3966-4855-B877-296861425AC6', name: '苏F12002' }
+                , { Id: '12003', pId: 'CD288980-3966-4855-B877-296861425AC6', name: '苏F12003' }
+                , { Id: '12004', pId: 'CD288980-3966-4855-B877-296861425AC6', name: '苏F12004' }
+                , { Id: '12005', pId: 'CD288980-3966-4855-B877-296861425AC6', name: '苏F12005' }
+
+                , { Id: 'CD288980-3966-4855-B877-296861425AD6', pId: '1', name: '101路(下行)' }
+                , { Id: '12001', pId: 'CD288980-3966-4855-B877-296861425AD6', name: '苏F12001' }
+                , { Id: '12002', pId: 'CD288980-3966-4855-B877-296861425AD6', name: '苏F12002' }
+                , { Id: '12003', pId: 'CD288980-3966-4855-B877-296861425AD6', name: '苏F12003' }
+                , { Id: '12004', pId: 'CD288980-3966-4855-B877-296861425AD6', name: '苏F12004' }
+                , { Id: '12005', pId: 'CD288980-3966-4855-B877-296861425AD6', name: '苏F12005' }
 
                 , { Id: 'CD288980-3966-4855-B877-296861425AC7', pId: '1', name: '102路' }
                 , { Id: '66610', pId: 'CD288980-3966-4855-B877-296861425AC7', name: '苏F66610' }
@@ -63,7 +71,7 @@
             var treeObj = $.fn.zTree.getZTreeObj("divComLineBusTree");
             treeObj.expandAll(true);
 
-            mRealTimeMonitor = new RealTimeMonitor('divMapContainer');
+            mRealTimeMonitor = new RealTimeMonitor('divMapContainer', 120.885506, 32.03671);
 
             //map.addEventListener("mousedown", function (e) {
             //    mStart = !mStart;
